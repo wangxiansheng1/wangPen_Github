@@ -1,4 +1,4 @@
-//页面rem
+ //页面rem
 (function (doc, win) {
           var docEl = doc.documentElement,
             resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',

@@ -367,5 +367,5 @@ $(".list_style").click(function() {
 	}
 })
 
-//返回顶部
+//返回顶部 
 goBack2Top();

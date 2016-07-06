@@ -1,12 +1,5 @@
 //加载banner列表
-
-/*URLS.SERVER_URL  = "http://192.168.200.175:8080/lehu-app-back/";
-
-URLS.appNewIndexFirst = "initIndex.do";*/
-
 function ajax() {
-
-
 	$.post(URLS.SERVER_URL + URLS.appNewIndexFirst, {}, function(data) {
 		//console.log(URLS.SERVER_URL + URLS.appNewIndexFirst);
 		$("html").attr("data_type", data.type);
@@ -513,3 +506,6 @@ connectWebViewJavascriptBridge(function(bridge) {
 	})
 
 })
+
+//返回顶部 
+goBack2Top();

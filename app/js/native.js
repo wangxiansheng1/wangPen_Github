@@ -14,13 +14,12 @@ if (/iphone|ipad|ipod/.test(ua)) {
 if (native.platfrom === "android") {
 URLS.SERVER_URL = JSInterface.getServerUrl();
 URLS.IMAGE_URL = JSInterface.getImageUrl();
-//URLS.SERVER_URL = "http://192.168.19.22:8082/";
 } else if (native.platfrom == "ios") {
 	URLS.SERVER_URL = "http://192.168.19.22:8082/";
 	URLS.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
 } else {
 	URLS.SERVER_URL = "http://192.168.19.22:8082/";
-	URLS.SERVER_URL = "http://192.168.19.22:8082/";
+	URLS.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
 }
 
 
