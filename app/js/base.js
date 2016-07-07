@@ -1,4 +1,4 @@
- //页面rem
+//页面rem
 (function (doc, win) {
           var docEl = doc.documentElement,
             resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
@@ -44,7 +44,7 @@ $(document).ready(function(e) {
 //图片预加载
 function lazyload(){
 	$('.lazyload').picLazyLoad({
-	threshold: 200
+	threshold: 400
 	});
 }
 
@@ -133,9 +133,11 @@ var goBack2Top = function() {
 		};
 		return a.init()
 	};
+$(document).ready(function(e) {
+    $("body").css("visibility","visible");$("body").addClass("jbox");
+});
 
-
-setTimeout(function () {$("body").css("visibility","visible");$("body").addClass("jbox");}, 300);
+setTimeout(function () {$("body").css("visibility","visible");$("body").addClass("jbox");}, 200);
 
 //获取url
 function GetQueryString(name) {

@@ -15,10 +15,10 @@ if (native.platfrom === "android") {
 URLS.SERVER_URL = JSInterface.getServerUrl();
 URLS.IMAGE_URL = JSInterface.getImageUrl();
 } else if (native.platfrom == "ios") {
-	URLS.SERVER_URL = "http://192.168.19.22:8082/";
+	URLS.SERVER_URL = "http://218.91.54.162:9006/";
 	URLS.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
 } else {
-	URLS.SERVER_URL = "http://192.168.19.22:8082/";
+	URLS.SERVER_URL = "http://218.91.54.162:9006/";
 	URLS.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
 }
 
@@ -77,4 +77,27 @@ native.getUserId = function() {
 	}
 
 	return defer.promise();
+}
+
+
+//请求公用函数
+function ajaxPost(url,data,success,error,timeout){
+	//设置请求超时时间
+	if(!timeout){
+		timeout = 2000;
+	}
+	$.ajax({
+		type: 'POST',
+		timeout : timeout,
+		url: url ,
+		data: data ,
+		success: function(data){
+			
+			success(data);
+		} ,
+		error : function(){
+			error();
+		},
+		dataType: 'json'
+	});
 }

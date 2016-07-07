@@ -1,7 +1,6 @@
 CACHE MANIFEST
-#上面一句必须
-#v1.0.5
-#需要缓存的文件
+#v1.1.68
+
 CACHE:
 css/global_m.css
 css/layout_2015.css
@@ -19,9 +18,10 @@ js/huiyin/common/url.js
 js/native.js
 js/huiyin/http/index.js
 js/huiyin/http/list.js
-#不需要缓存的文件
+
+
 NETWORK:
 *
-#无法访问页面
+
 FALLBACK:
-index.html
+404.html

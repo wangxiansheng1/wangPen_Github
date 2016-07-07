@@ -86,10 +86,11 @@ function goodsCategoryList() {
 	}
 	console.log(URLS.SERVER_URL + URLS.goodsCategoryList + '?' + paramsStr.substr(0, paramsStr.length - 1));
 
-
-	//URLS.SERVER_URL+URLS.goodsCategoryList   'http://192.168.200.70:8088/lehu-app-back/h5Goods/goodsList.do'
-	$.post(URLS.SERVER_URL+URLS.goodsCategoryList, param, function(data) {
-
+	var url = URLS.SERVER_URL + URLS.goodsCategoryList;
+	var data = param;
+	//成功回调函数
+	var success = function(data){
+		
 		var html = "";
 		//总页数
 		totalPageNum = data.totalPageNum;
@@ -180,8 +181,18 @@ function goodsCategoryList() {
 		if (param["pageIndex"] == data["totalPageNum"]) {
 			nlist_no();
 		}
+		
+	};
+	
+	//失败回调函数
+	var error = function (){
+		//location.href ="404.html";
+	};
 
-	}, "json");
+	ajaxPost(url,data,success,error);
+	
+	//URLS.SERVER_URL+URLS.goodsCategoryList   'http://192.168.200.70:8088/lehu-app-back/h5Goods/goodsList.do'
+	
 }
 
 
@@ -206,18 +217,24 @@ $(window).scroll(function() {
 	var srollPos = $(window).scrollTop(); //滚动条距顶部距离(页面超出窗口的高度)
 	totalheight = parseFloat($(window).height()) + parseFloat(srollPos); //滚动条当前位置距顶部距离+浏览器的高度
 	if (($(document).height() - totalheight) <= range) { //页面底部与滚动条底部的距离<range
-
+	
+	if(huadong){
 		param["pageIndex"]++;
 		
 
 		goodsCategoryList();
-
+		huadong = false;
 		
 		$('.lazyload').picLazyLoad({
-			threshold: 600
+			threshold: 800
 		}); //图片延时加载
+	}
+	
+		
 		
 
+	}else {
+		huadong = true;
 	}
 
 });
@@ -341,12 +358,12 @@ $(document).ready(function(e) {
 	var try_select_top = $(".nlist_top").offset().top;
 	$(window).scroll(function() {
 		var s = $(window).scrollTop();
-		if (s > try_select_top) {
+		if (s >= try_select_top) {
 			$(".nlist_top").css("position", "fixed");
 			$(".nlist_list").css("margin-top", ".795rem");
 
-		} else {
-			$(".nlist_top").css("position", "relative");
+		} else if(s < try_select_top){
+			$(".nlist_top").css("position", "static");
 			$(".nlist_list").css("margin-top", "0");
 		};
 	});

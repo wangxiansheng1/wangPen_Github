@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html>
+<html manifest="app.manifest">
 <head>
 <meta charset="utf-8">
 <title>汇银乐虎全球家|汇集全球海外进口商品，进口食品，进口零食，进口母婴，进口美妆，海外原产地直采。</title>
@@ -14,7 +14,6 @@
 <link href="css/layout_2015.css" rel="stylesheet">
 <link href="images/Shortcut_114_114.png" rel="apple-touch-icon-precomposed">
 <link href="images/Shortcut_114_114.png" rel="Shortcut Icon" type="image/x-icon">
-<meta name="apple-itunes-app" content="app-id=477927812"> 
 <link rel="stylesheet" href="css/plus/swiper.min.css">
 </head>
 
@@ -24,7 +23,8 @@
 <!--顶部-->
 <div class="nheader_list">
     <div class="nindex_fanhui" onClick="back_fun()"></div>
-    <div class="nindex_sousuo" onClick="search_fun()"><em></em><b class="nkeyword">全球购，找到好口碑</b></div>
+    <div class="nindex_sousuo" onClick="search_fun()" unselectable="on" style="-moz-user-select:none;-webkit-user-select:none;" onselectstart="return false;"><em></em><b class="nkeyword">全球购，找到好口碑</b></div>
+    <div class="list_style list_style_kuai"></div>
 </div>
 <!--/顶部-->
 <!--站内搜索关键词-->
@@ -67,7 +67,6 @@
 <img src="images/no.png" class="nlist_no">
 
 <a href="#" class="fix_go_top"></a>
-<div class="list_style list_style_kuai"></div>
 </div>
 <!--zepto框架-->
 <script type="text/javascript" src="js/zepto.min.js" charset="utf-8"></script>

@@ -1,6 +1,10 @@
 //加载banner列表
 function ajax() {
-	$.post(URLS.SERVER_URL + URLS.appNewIndexFirst, {}, function(data) {
+	var url = URLS.SERVER_URL + URLS.appNewIndexFirst;
+	var data = {};
+	//成功回调函数
+	var success = function(data){
+		
 		//console.log(URLS.SERVER_URL + URLS.appNewIndexFirst);
 		$("html").attr("data_type", data.type);
 		//加载_幻灯片	
@@ -19,7 +23,10 @@ function ajax() {
 		var swiper = new Swiper('.nbanner .swiper-container', {
 			pagination: '.nbanner .swiper-pagination',
 			autoplay: 2000,
+			autoplayDisableOnInteraction : false,
+			speed:300,
 			loop: true,
+			
 		});
 
 		//点击_幻灯片
@@ -277,7 +284,7 @@ function ajax() {
 			$(".nfaxian_top").empty();
 			$(".nfaxian_top").prepend('<span><em>发现</em></span>');
 
-			$.post(URLS.SERVER_URL + URLS.appNewIndexFirst, {}, function(data) {
+	
 				//console.log(URLS.SERVER_URL + URLS.appNewIndexFirst);
 				var html = "";
 				var showList = data.showList;
@@ -411,8 +418,7 @@ function ajax() {
 				})
 
 
-			}, "json");
-
+		
 		}, 1500);
 
 		//加载_400电话
@@ -425,32 +431,32 @@ function ajax() {
 		};
 		native.nativeFun(jsonParams);
 
-	}, "json");
+	};
+	
+	//失败回调函数
+	var error = function (){
+		//location.href ="404.html";
+	};
 
-
-
-
+	ajaxPost(url,data,success,error);
 }
+
 
 
 ajax();
 
 
-
 //扫描
 function scan_code_fun() {
-
 	var jsonParams = {
 		'funName': 'scan_code_fun',
 		'params': {}
 	};
 	native.nativeFun(jsonParams);
-
 };
 
 //消息
 function message_fun() {
-
 	var jsonParams = {
 		'funName': 'message_fun',
 		'params': {}
@@ -460,7 +466,6 @@ function message_fun() {
 
 //搜索
 function search_fun() {
-
 	var jsonParams = {
 		'funName': 'search_fun',
 		'params': {}
@@ -509,3 +514,4 @@ connectWebViewJavascriptBridge(function(bridge) {
 
 //返回顶部 
 goBack2Top();
+

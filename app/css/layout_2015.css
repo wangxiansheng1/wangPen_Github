@@ -104,7 +104,7 @@
 .nlist_list_kuai .nlist_list_jiage{ width:94%; margin-top:.2rem; padding:0 3%}
 .nlist_list_kuai .nlist_list_pinglun{ display:none;}
 
-.list_style{ width:.8rem; height:.8rem; display:block; position:fixed; z-index:9; cursor:pointer; bottom:.2rem; right:.2rem; background:url(../images/list02.png) no-repeat; background-size:100%;}
+.list_style{ width:.55rem; height:.51rem; display:block; float:right;margin: .15rem .05rem 0 0;cursor:pointer; bottom:.2rem; right:.2rem; background:url(../images/list02.png) no-repeat; background-size:100%;}
 .list_style_kuai{ background:url(../images/list01.png) no-repeat;background-size:100%;}
 
 .nlist_nomore{ width:40%; height:auto; display:none; margin:.5rem auto 1rem;    border-radius: 1.2rem;}
@@ -195,7 +195,8 @@
 .npost_xiangqing{ width:100%; height:auto; display:block; float:left; margin-bottom:.98rem;}
 .npost_xiangqing img{ width:100% !important; height:auto; display:block; float:left;}
 
-.fix_go_top{width:.78rem; height:.78rem; border-radius:.78rem; border:1px solid #b3b3b3; display:none; position:fixed; z-index:9; cursor:pointer; bottom:1.2rem; right:.2rem; background: url(../images/dingbu.png) no-repeat; background-size:100%; z-index:5;}
+.fix_go_top{width:.78rem; height:.78rem; border-radius:.78rem; border:1px solid #b3b3b3; display:none; position:fixed; z-index:9; cursor:pointer; bottom:.5rem; right:.2rem; background: url(../images/dingbu.png) no-repeat; background-size:100%; z-index:5;}
+.fix_go_top_list{ bottom:1.2rem;}
 
 .cover-decision {width: 100%;opacity: .7;height: 100%;position: fixed;background-color: #000;top: 0;left: 0;z-index: 6;}
 
