@@ -16,13 +16,12 @@
 </head>
 
 <body>
-<img src="images/n01.jpg" class="n01"/>
-<img src="images/n02.jpg" class="n02" />
+<img src="images/n01.jpg" class="n01" />
 <!--zepto框架-->
 <script src="js/zepto.min.js"></script>
 
 
-<script src="js/base.js"></script>
+
 
 <script type="application/ecmascript">
 var native = function() {}
@@ -50,6 +49,7 @@ native.nativeFun = function(params) {
 }
 
 
+
 $(".n01").click(function() {
 	var jsonParams = {
 		'funName': 'reload_web_fun',
@@ -59,15 +59,9 @@ $(".n01").click(function() {
 	console.log(search_fun);
 });
 
-$(".n02").click(function() {
-	var jsonParams = {
-		'funName': 'back_fun',
-		'params': {}
-	};
-	native.nativeFun(jsonParams);
-	console.log('back_fun');
-});
 </script>
+
+<script src="js/base.js"></script>
 
 </body>
 </html>

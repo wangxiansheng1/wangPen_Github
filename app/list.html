@@ -17,8 +17,9 @@
 <link rel="stylesheet" href="css/plus/swiper.min.css">
 </head>
 
-<body class="nwrapper_list">
+<body class="nwrapper_list one_loading">
 <div class="nwrapper">
+<div class="ajax_noload"><img src="images/wifi.png">网络请求失败，请稍候再试<span><img src="images/sx.png"></span></div>
 
 <!--顶部-->
 <div class="nheader_list">
@@ -50,7 +51,7 @@
 <!--select-->
 <div class="nlist_top">
     <span class="cur" id="salesvolume">销量</span>
-    <span id="price">价格</span>
+    <span id="price" class="sheng0 ">价格</span>
     <span id="countreview">评价</span>
     <span id="viewcount">人气</span>
 </div>
@@ -66,7 +67,7 @@
 <!--没有商品提示-->
 <img src="images/no.png" class="nlist_no">
 
-<a href="#" class="fix_go_top"></a>
+<a href="#" class="fix_go_top" onclick="return false;"></a>
 </div>
 <!--zepto框架-->
 <script type="text/javascript" src="js/zepto.min.js" charset="utf-8"></script>

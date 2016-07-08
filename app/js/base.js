@@ -15,31 +15,6 @@
 })(document, window);
 
 
-$(document).ready(function(e) {
-    //顶部变色效果	
-	$(window).scroll(function() {
-        var s = $(window).scrollTop();
-        if (s > 100) {
-            $(".nheader_cover").animate({opacity:0.8});
-			$(".nindex_sousuo").animate({color:'#ffffff'});
-        } else {
-            $(".nheader_cover").animate({opacity:0});
-			$(".nindex_sousuo").animate({color:'#a0a0a0'});
-        };
-	});
-    //幻灯片
-	/*var swiper = new Swiper('.nbanner .swiper-container', {
-        pagination: '.nbanner .swiper-pagination',
-        autoplay: 2000,
-    });*/
-	//倒计时
-	/*$(".getting-started")
-    .countdown("2016/07/01", function(event) {
-      $(this).html(
-        event.strftime('<em>%H</em>:<em>%M</em>:<em>%S</em>')
-      );
-    });*/			
-});
 
 //图片预加载
 function lazyload(){
@@ -148,3 +123,11 @@ function GetQueryString(name) {
     }
     return null;
 }
+
+$(".ajax_noload").click(function() {
+	var jsonParams = {
+		'funName': 'reload_web_fun',
+		'params': {}
+	};
+	native.nativeFun(jsonParams);
+})

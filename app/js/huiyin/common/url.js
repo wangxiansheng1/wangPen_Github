@@ -17,6 +17,3 @@ URLS.queryFilteredRegion = "queryFilteredRegion.do";
 URLS.addCart = "addCart.do";
 URLS.cartPromptlyInitLoad = "cartPromptlyInitLoad.do";
 URLS.getKey = "getKey.do";
-
-
-

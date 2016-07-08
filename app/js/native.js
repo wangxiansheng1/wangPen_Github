@@ -84,7 +84,7 @@ native.getUserId = function() {
 function ajaxPost(url,data,success,error,timeout){
 	//设置请求超时时间
 	if(!timeout){
-		timeout = 2000;
+		timeout = 5000;
 	}
 	$.ajax({
 		type: 'POST',

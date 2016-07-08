@@ -1,5 +1,6 @@
 ﻿var param = {};
 
+
 //1销量2价格3评价4人气
 if (GetQueryString("sortMode")) {
 	param["sortMode"] = GetQueryString("sortMode");
@@ -74,7 +75,7 @@ param["pageSize"] = 10;
 
 //当前第几页
 param["pageIndex"] = 1;
-
+//URLS.SERVER_URL = "http://192.168.200.70:8088/lehu-app-back/";
 var totalPageNum="";
 //加载商品列表	
 function goodsCategoryList() {
@@ -137,6 +138,7 @@ function goodsCategoryList() {
 			}
 			$("#ajax_goodsList").append(html);
 			lazyload();
+			$(".nwrapper_list").removeClass("one_loading");
 			//商品点击事件
 
 				$(".nlist_list_main").unbind('click').click(function () {
@@ -187,6 +189,7 @@ function goodsCategoryList() {
 	//失败回调函数
 	var error = function (){
 		//location.href ="404.html";
+		$(".ajax_noload").show();
 	};
 
 	ajaxPost(url,data,success,error);
@@ -200,7 +203,7 @@ function goodsCategoryList() {
 goodsCategoryList();
 
 //滚动加载
-var range = 800; //距下边界长度/单位px
+var range = 400; //距下边界长度/单位px
 
 var huadong = true;
 
@@ -215,27 +218,38 @@ $(window).scroll(function() {
 	
 	
 	var srollPos = $(window).scrollTop(); //滚动条距顶部距离(页面超出窗口的高度)
+	
 	totalheight = parseFloat($(window).height()) + parseFloat(srollPos); //滚动条当前位置距顶部距离+浏览器的高度
-	if (($(document).height() - totalheight) <= range) { //页面底部与滚动条底部的距离<range
-	
-	if(huadong){
-		param["pageIndex"]++;
-		
-
-		goodsCategoryList();
-		huadong = false;
-		
-		$('.lazyload').picLazyLoad({
-			threshold: 800
-		}); //图片延时加载
-	}
 	
 		
 		
-
-	}else {
-		huadong = true;
-	}
+		if(($(document).height() == totalheight)){
+			param["pageIndex"]++;
+				
+				goodsCategoryList();
+				
+				
+				$('.lazyload').picLazyLoad({
+					threshold: 1000
+				}); //图片延时加载
+		}else {
+			if (($(document).height() - totalheight) <= range) { //页面底部与滚动条底部的距离<range
+			if(huadong){
+				huadong = false;
+				param["pageIndex"]++;
+				
+				goodsCategoryList();
+				
+				
+				$('.lazyload').picLazyLoad({
+					threshold: 1000
+				}); //图片延时加载
+				
+			}
+		}else {
+			huadong = true;
+		}
+		}
 
 });
 
@@ -246,34 +260,62 @@ $("#salesvolume").click(function() {
 	if ($(this).hasClass("cur")) {} else {
 		$(".nlist_nomore").css("display", "none");
 		$(".nlist_loading").css("display", "block");
+		$(".nwrapper_list").addClass("one_loading");
 		param["pageIndex"] = 1;
 		param["sort"] = 2;
 		param["sortMode"] = 1;
+		param["sortType"]=2;
 		$("#ajax_goodsList").empty();
 		goodsCategoryList();
 	}
 
 });
+
 //价格
 $("#price").click(function() {
-	if ($(this).hasClass("cur")) {} else {
+	if ($(this).hasClass("sheng")) {
+		$(this).removeClass("sheng");
+		$(this).addClass("jiang");
 		$(".nlist_nomore").css("display", "none");
 		$(".nlist_loading").css("display", "block");
+		$(".nwrapper_list").addClass("one_loading");
 		param["pageIndex"] = 1;
 		param["sort"] = 2;
 		param["sortMode"] = 2;
+		param["sortType"]=2;
 		$("#ajax_goodsList").empty();
 		goodsCategoryList();
+		
+		}
+	
+	 else {
+		$(this).removeClass("jiang");
+		$(this).addClass("sheng");
+		$(".nlist_nomore").css("display", "none");
+		$(".nlist_loading").css("display", "block");
+		$(".nwrapper_list").addClass("one_loading");
+		param["pageIndex"] = 1;
+		param["sort"] = 2;
+		param["sortMode"] = 2;
+		param["sortType"]=1;
+		$("#ajax_goodsList").empty();
+		goodsCategoryList();
+		
+		
 	}
 });
+
+
 //评价
 $("#countreview").click(function() {
 	if ($(this).hasClass("cur")) {} else {
 		$(".nlist_nomore").css("display", "none");
 		$(".nlist_loading").css("display", "block");
+		$(".nwrapper_list").addClass("one_loading");
 		param["pageIndex"] = 1;
 		param["sort"] = 2;
 		param["sortMode"] = 3;
+		param["sortType"]=2;
 		$("#ajax_goodsList").empty();
 		goodsCategoryList();
 	}
@@ -283,9 +325,11 @@ $("#viewcount").click(function() {
 	if ($(this).hasClass("cur")) {} else {
 		$(".nlist_nomore").css("display", "none");
 		$(".nlist_loading").css("display", "block");
+		$(".nwrapper_list").addClass("one_loading");
 		param["pageIndex"] = 1;
 		param["sort"] = 2;
 		param["sortMode"] = 4;
+		param["sortType"]=2;
 		$("#ajax_goodsList").empty();
 		goodsCategoryList();
 	}
@@ -350,6 +394,8 @@ function search_fun() {
 $(".nlist_top span").click(function() {
 	$(".nlist_top span").removeClass("cur");
 	$(this).addClass("cur");
+	$(".nlist_top").css("position", "static");
+	$(".nlist_list").css("margin-top", "0");
 })
 
 

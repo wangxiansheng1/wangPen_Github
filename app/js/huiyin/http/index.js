@@ -26,6 +26,7 @@ function ajax() {
 			autoplayDisableOnInteraction : false,
 			speed:300,
 			loop: true,
+			longSwipesRatio : 0.1,
 			
 		});
 
@@ -130,9 +131,12 @@ function ajax() {
 				COMMODITY_LIST_html += "<img class='lazyload' data-original=" + URLS.IMAGE_URL + COMMODITY_LIST[k]['GOODS_IMG'] + " >";
 				COMMODITY_LIST_html += "<title>" + COMMODITY_LIST[k]['GOODS_NAME'] + "</title>";
 				COMMODITY_LIST_html += "<span>￥" + q +".<em>"+ h +"</em>" + "</span>";
-				if(COMMODITY_LIST[k]['DISCOUNT_TYPE']==1){
+				/*if(COMMODITY_LIST[k]['DISCOUNT_TYPE']==1&&COMMODITY_LIST[k]['DISCOUNT']!==10){
 				COMMODITY_LIST_html += "<i>" +  COMMODITY_LIST[k]['DISCOUNT'] + "折</i>";
-				}
+				}*/
+				
+				COMMODITY_LIST_html += "<del>￥" +  COMMODITY_LIST[k]['ORIGINAL_PRICE'] + "</del>";
+				
 				COMMODITY_LIST_html += "</a>";
 			}
 
@@ -308,9 +312,9 @@ function ajax() {
 
 
 					if (showList[k]['FACE_IMAGE_PATH']) {
-						html += "<div class='nshow_listmsg'><a class=''><img class='lazyload' data-original=" + URLS.IMAGE_URL + showList[k]['FACE_IMAGE_PATH'] + "><span class='nshow_listmsg_name ell'>" + showList[k]['USER_NAME'] + "</span><span class='nshow_listmsg_time'>" + showList[k]['CREATE_TIME'] + "</span>"
+						html += "<div class='nshow_listmsg'><a class=''><img class='lazyload' data-original=" + URLS.IMAGE_URL + showList[k]['FACE_IMAGE_PATH'] + "><span class='nshow_listmsg_name ell'>" + showList[k]['USER_NAME'] + "</span><span class='nshow_listmsg_time'>" + showList[k]['TIME'] + "发布于："+"<b>"+showList[k]['CIRCLE_NAME']+"</b>"+"</span>"
 					} else {
-						html += "<div class='nshow_listmsg'><a  class=''><img class='lazyload' data-original='images/Shortcut_114_114.png'><span class='nshow_listmsg_name ell'>" + showList[k]['USER_NAME'] + "</span><span class='nshow_listmsg_time'>" + showList[k]['CREATE_TIME'] + "</span>"
+						html += "<div class='nshow_listmsg'><a  class=''><img class='lazyload' data-original='images/Shortcut_114_114.png'><span class='nshow_listmsg_name ell'>" + showList[k]['USER_NAME'] + "</span><span class='nshow_listmsg_time'>" + showList[k]['TIME'] + "发布于："+"<b>"+showList[k]['CIRCLE_NAME']+"</b>"+"</span>"
 					}
 
 
@@ -435,7 +439,9 @@ function ajax() {
 	
 	//失败回调函数
 	var error = function (){
-		//location.href ="404.html";
+		$(".ajax_noload").show();
+		//location.href ="404_index.html";
+		
 	};
 
 	ajaxPost(url,data,success,error);
@@ -454,6 +460,9 @@ function scan_code_fun() {
 	};
 	native.nativeFun(jsonParams);
 };
+
+
+
 
 //消息
 function message_fun() {
@@ -491,6 +500,8 @@ $(".nmiaosha_top a").click(function() {
 
 
 
+
+
 function connectWebViewJavascriptBridge(callback) {
 	if (window.WebViewJavascriptBridge) {
 		callback(WebViewJavascriptBridge)
@@ -514,4 +525,42 @@ connectWebViewJavascriptBridge(function(bridge) {
 
 //返回顶部 
 goBack2Top();
+
+$(document).ready(function(e) {
+    //顶部变色效果	
+	$(window).scroll(function() {
+        var s = $(window).scrollTop();
+        if (s > 100) {
+            $(".nheader_cover").animate({opacity:0.9});
+			$(".nheader_cover").css({ 'border-bottom':'1px solid #d2d2d2'});
+			$(".nindex_sousuo").animate({color:'#707070'});
+			$(".nindex_sousuo").animate({background:'rgba(238,238,238,.9)'});
+			$(".nindex_shaomiao").css({'background-image':'url(images/shaoyishao2.png)'});
+			$(".nindex_sousuo em").css({'background-image':'url(images/soshuo2.png)'});
+			$(".nindex_xiaoxi").css({'background-image':'url(images/xiaoxi2.png)'});
+			
+        } else {
+            $(".nheader_cover").animate({opacity:0});
+			$(".nheader_cover").css({ 'border-bottom':'0px solid #d2d2d2'});
+			$(".nindex_sousuo").animate({color:'#a0a0a0'});
+			$(".nindex_sousuo").animate({background:'rgba(255,255,255,.7)'});
+			$(".nindex_shaomiao").css({'background-image':'url(images/shaoyishao.png)'});
+			$(".nindex_sousuo em").css({'background-image':'url(images/soshuo.png)'});
+			$(".nindex_xiaoxi").css({'background-image':'url(images/xiaoxi.png)'});
+        };
+	});
+    //幻灯片
+	/*var swiper = new Swiper('.nbanner .swiper-container', {
+        pagination: '.nbanner .swiper-pagination',
+        autoplay: 2000,
+    });*/
+	//倒计时
+	/*$(".getting-started")
+    .countdown("2016/07/01", function(event) {
+      $(this).html(
+        event.strftime('<em>%H</em>:<em>%M</em>:<em>%S</em>')
+      );
+    });*/			
+});
+
 
