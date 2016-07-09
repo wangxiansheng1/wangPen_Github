@@ -100,6 +100,8 @@ function ajax() {
 
 		//加载_秒杀时间
 		if(data.seckillList){
+		
+		$(".nmiaosha,.nmiaosha_nhr").css("display", "block");
 		var seckillList = data.seckillList;
 		var ajax_REMARK=seckillList['REMARK'];
 		$(".ajax_REMARK").empty().append(ajax_REMARK);
@@ -123,6 +125,7 @@ function ajax() {
 		var COMMODITY_LIST_html = "";
 		var COMMODITY_LIST = data.seckillList['COMMODITY_LIST'];
 		if (COMMODITY_LIST) {
+			$(".nmiaosha,.nmiaosha_nhr").css("display", "block");
 			for (var k = 0; k < COMMODITY_LIST.length; k++) {
 				var PRICE = String(COMMODITY_LIST[k]['GOODS_PRICE'].toString());
 				var q = Math.floor(PRICE);
@@ -147,41 +150,43 @@ function ajax() {
 		} 
 		
 		}else {
-			$(".nmiaosha").css("display", "none");
+			$(".nmiaosha,.nmiaosha_nhr").css("display", "none");
 		}
 
 		//加载首页广告列表
 		var html = "";
 		var hotRecommendation = data.hotRecommendation;
 		
-		for (var k = 0; k < hotRecommendation.length; k++) {
-			if(hotRecommendation[k]['TEMPLATE']==1){
-				html += "<div class='nindex_ad_one'><a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][0].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][0].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
-				html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL + hotRecommendation[k]['goods'][0].IMG_URL + " >";
-				html += "</a></div>";
-			}
-			if(hotRecommendation[k]['TEMPLATE']==2){
-				html += "<div class='nindex_ad_two'>";
-				for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
-				html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
-				html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
-				html += "</a>";
+		if(hotRecommendation && hotRecommendation.length>0){
+			for (var k = 0; k < hotRecommendation.length; k++) {
+				if(hotRecommendation[k]['TEMPLATE']==1){
+					html += "<div class='nindex_ad_one'><a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][0].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][0].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
+					html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL + hotRecommendation[k]['goods'][0].IMG_URL + " >";
+					html += "</a></div>";
 				}
-				html += "</div>";
-			}
-			if(hotRecommendation[k]['TEMPLATE']==3){
-				html += "<div class='nindex_ad_three'>";
-				for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
-				html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
-				html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
-				html += "</a>";
+				if(hotRecommendation[k]['TEMPLATE']==2){
+					html += "<div class='nindex_ad_two'>";
+					for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
+					html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
+					html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
+					html += "</a>";
+					}
+					html += "</div>";
 				}
-				html += "</div>";
+				if(hotRecommendation[k]['TEMPLATE']==3){
+					html += "<div class='nindex_ad_three'>";
+					for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
+					html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
+					html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
+					html += "</a>";
+					}
+					html += "</div>";
+				}
 			}
+	
+			$("#ajax_hotRecommendation").empty().append(html);
+			lazyload();
 		}
-
-		$("#ajax_hotRecommendation").empty().append(html);
-		lazyload();
 
 
 		$(".nindex_ad a").click(function() {
@@ -285,13 +290,15 @@ function ajax() {
 		//发现
 
 		function() {
+			var html = "";
+			var showList = data.showList;
 			$(".nfaxian_top").empty();
-			$(".nfaxian_top").prepend('<span><em>发现</em></span>');
-
+			if(showList && showList.length > 0 ){
+				$(".ajax_nfaxian_top").prepend('<div class="nfaxian_top"><span><em>发现</em></span></div>');
+			}
 	
 				//console.log(URLS.SERVER_URL + URLS.appNewIndexFirst);
-				var html = "";
-				var showList = data.showList;
+				
 				//console.log(prommotionLayout);
 				for (var k = 0; k < showList.length; k++) {
 					var type = showList[k]['TYPE'];

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v1.2.89
+#v1.3.25
 
 CACHE:
 css/global_m.css
@@ -18,6 +18,22 @@ js/huiyin/common/url.js
 js/native.js
 js/huiyin/http/index.js
 js/huiyin/http/list.js
+images/wifi.png
+images/sx.png
+images/fanhui.png
+images/list01.png
+images/list02.png
+images/loading.gif
+images/j00.png
+images/j02.png
+images/j01.png
+images/shaoyishao.png
+images/soshuo.png
+images/xiaoxi.png
+images/xiaoxi2.png
+images/soshuo2.png
+images/shaoyishao2.png
+images/dingbu.png
 
 
 NETWORK:

@@ -89,8 +89,8 @@ var goBack2Top = function() {
 			},
 			toTopEvt: function() {
 				b.addEventListener("click", function() {
-					//scroll(0, 0);
-					goTop();
+					scroll(0, 0);
+					//goTop();
 					b.style.display = "none"
 				}, false)
 			},

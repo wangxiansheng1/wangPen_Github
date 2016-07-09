@@ -101,3 +101,14 @@ function ajaxPost(url,data,success,error,timeout){
 		dataType: 'json'
 	});
 }
+
+$(".ajax_noload").unbind('click').click(function () {
+	var jsonParams = {
+		'funName': 'reload_web_fun',
+		'params': {}
+	};
+	native.nativeFun(jsonParams);
+})
+
+
+

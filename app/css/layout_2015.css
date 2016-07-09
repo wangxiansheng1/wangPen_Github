@@ -27,7 +27,7 @@
 .nindex_ad .nindex_ad_three a{ width:33.3333333%; height:auto; display:block; float:left; margin:0 0 .1rem;}
 .nindex_ad a img,.ntuijian_ad a img{ width:100%; height:auto; display:block; float:left;}
 .nindex_ad div a{ margin-bottom:0 !important;}
-.nindex_ad div{ width:100%; height:auto; display:block; float:left; margin-bottom:.1rem;}
+.nindex_ad div{ width:100%; height:auto; display:block; float:left; margin-bottom:.03rem;}
 .nindex_ad div:last-child{ margin:0;}
 
 .ntuijian_top,.nfaxian_top{ width:100%; height:.6rem; display:block; float:left;}
@@ -63,9 +63,9 @@
 .nshow_listmsg a{ width:100%; height: auto; display:block; float:left;}
 .nshow_listmsg_tag i{ font-size:.4rem; color:#acacac;}
 .nshow_listmsg_tag em{color: #dd434d; margin:0 .1rem;}
-.nfaxian_main .nshow_listmsg a img{ width:.6rem; height:.6rem; border-radius:.6rem; margin:.1rem .1rem 0 0; display:block; float:left;}
+.nfaxian_main .nshow_listmsg a img{ width:.5rem; height:.5rem; border-radius:.6rem; margin:.14rem .1rem 0 0; display:block; float:left;}
 .nshow_listmsg_name{ width:auto; height:.8rem; line-height:.87rem; display:block; float:left; color:#434343; font-size:.22rem; max-width:2rem;}
-.nshow_listmsg_time{ width:auto; height:.5rem; line-height:.5rem; display:block; float:left; color:#afafaf; font-size:.2rem; margin:.2rem .1rem 0;}
+.nshow_listmsg_time{ width:auto; height:.5rem; line-height:.5rem; display:block; float:left; color:#afafaf; font-size:.2rem; margin:.2rem 0 0 .1rem;}
 .nshow_listmsg_pl,.nshow_listmsg_zh{width:auto; height:.3rem; line-height:.3rem; display:block; float: right; color: #b2b2b2; font-size:.26rem; margin-top:.26rem;}
 .nshow_listmsg_pl{ padding:0 .1rem 0 0;}
 .nshow_listmsg_zh{padding:0 0 0 .1rem;}
@@ -74,7 +74,8 @@
 .nshow_listmsg_pl i,.nshow_listmsg_zh i{ font-size:.3rem; color:#b2b2b2; line-height:.3rem; margin-right:.05rem;}
 .nshow_listmsg_pl i.ok,.nshow_listmsg_zh i.ok{ color:#dd434d;}
 .nshow_listbox_img img{ width:100%; height:auto;}
-.nfaxian_main .nshow_listmsg{     border-bottom: 1px solid #eeeeee;margin:0; padding: 0 3%;}
+.nfaxian_main .nshow_listmsg{     border-bottom: 1px solid #eeeeee;margin:0; padding: 0 2%;}
+.nshow_list_video{ display:block; float:left;    margin: 0 0 .2rem;}
 .nshow_listbox_video video{width: 100%;height: 100%;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover; z-index:1;}
 .nshow_listbox_video img{ width: 100%;height: 100%;position:absolute; z-index:2;}
 .nshow_list_video .nshow_listbox_title {
@@ -282,3 +283,4 @@
 .nshare_main a{width:33.333333333%; height:1.5rem; display:block; float:left; margin:.5rem 0 0;}
 .nshare_main a img {width:1.04rem; height:1.04rem; display:block; margin:0 auto .2rem;}
 .nshare_main a span {width:100%; height:auto; display:block; margin:0 auto .2rem; font-size:.22rem; color:#a0a0a0; text-align:center;}
+.nmiaosha_nhr,.nmiaosha{ display:none;}

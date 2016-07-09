@@ -91,6 +91,7 @@ function goodsCategoryList() {
 	var data = param;
 	//成功回调函数
 	var success = function(data){
+		$("html").attr("data_type", data.type);
 		
 		var html = "";
 		//总页数
@@ -267,6 +268,8 @@ $("#salesvolume").click(function() {
 		param["sortType"]=2;
 		$("#ajax_goodsList").empty();
 		goodsCategoryList();
+		$("#price").removeClass("jiang");
+		$("#price").removeClass("sheng");
 	}
 
 });
@@ -318,6 +321,8 @@ $("#countreview").click(function() {
 		param["sortType"]=2;
 		$("#ajax_goodsList").empty();
 		goodsCategoryList();
+		$("#price").removeClass("jiang");
+		$("#price").removeClass("sheng");
 	}
 });
 //人气
@@ -332,6 +337,8 @@ $("#viewcount").click(function() {
 		param["sortType"]=2;
 		$("#ajax_goodsList").empty();
 		goodsCategoryList();
+		$("#price").removeClass("jiang");
+		$("#price").removeClass("sheng");
 	}
 });
 
@@ -432,3 +439,26 @@ $(".list_style").click(function() {
 
 //返回顶部 
 goBack2Top();
+
+
+
+function connectWebViewJavascriptBridge(callback) {
+	if (window.WebViewJavascriptBridge) {
+		callback(WebViewJavascriptBridge)
+	} else {
+		document.addEventListener('WebViewJavascriptBridgeReady', function() {
+			callback(WebViewJavascriptBridge)
+		}, false)
+	}
+}
+
+connectWebViewJavascriptBridge(function(bridge) { 
+	bridge.init(function(message, responseCallback) {
+		goodsCategoryList();
+		if (responseCallback) {
+			var type = $("html").attr("data_type")
+			responseCallback(type);
+		}
+	})
+
+})
