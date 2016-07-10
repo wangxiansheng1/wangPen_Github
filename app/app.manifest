@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v1.3.25
+#v1.3.62
 
 CACHE:
 css/global_m.css
@@ -34,6 +34,9 @@ images/xiaoxi2.png
 images/soshuo2.png
 images/shaoyishao2.png
 images/dingbu.png
+images/index_28.png
+images/iconfont.woff
+images/iconfont.ttf
 
 
 NETWORK:

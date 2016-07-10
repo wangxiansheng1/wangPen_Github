@@ -37,8 +37,8 @@
 .ntuijian_main .swiper-container{ overflow:visible !important;padding:0 2% 0 0 !important;}
 .ntuijian_main .swiper-slide{ width:2.04rem ; height:3.1rem;/* border:1px solid #e5e5e5;*/ display:block; float:left; /*margin:.05rem 0 0 .2rem !important;*/ overflow:hidden;}
 .ntuijian_main a img{ width:94%;  height:1.9rem; display:block; float:left; margin:.07rem 3%;}
-.ntuijian_main a title{ width:1.9rem; height:.46rem; line-height:.24rem; display:block; float:left; margin:.1rem .07rem 0; font-size:.2rem;color:#434343; overflow:hidden;}
-.ntuijian_main a span{ width:1.9rem; height:auto; display:block; float:left; margin:.1rem .07rem; font-size:.3rem; font-weight:bold; color:#f51449;overflow:hidden;}
+.ntuijian_main a title{ width:98%; height:.46rem; line-height:.24rem; display:block; float:left; margin:.1rem 1% 0; font-size:.2rem;color:#434343; overflow:hidden;}
+.ntuijian_main a span{ width:98%; height:auto; display:block; float:left; margin:.1rem 1%; font-size:.3rem; font-weight:bold; color:#f51449;overflow:hidden;}
 .ntuijian_main a span i{ font-size:.22rem;}
 .ntuijian_main a:last-child img{ width:100%; height:auto; margin:0;}
 .nfaxian_top span{ border-color:#d75cff;}
@@ -284,3 +284,4 @@
 .nshare_main a img {width:1.04rem; height:1.04rem; display:block; margin:0 auto .2rem;}
 .nshare_main a span {width:100%; height:auto; display:block; margin:0 auto .2rem; font-size:.22rem; color:#a0a0a0; text-align:center;}
 .nmiaosha_nhr,.nmiaosha{ display:none;}
+.ajax_REMARK{ display:none;}

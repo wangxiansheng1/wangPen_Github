@@ -10,7 +10,7 @@ if (/iphone|ipad|ipod/.test(ua)) {
 }
 
 
-
+/*http://app.lehumall.com/*/
 if (native.platfrom === "android") {
 URLS.SERVER_URL = JSInterface.getServerUrl();
 URLS.IMAGE_URL = JSInterface.getImageUrl();

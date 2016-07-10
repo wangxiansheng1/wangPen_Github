@@ -1,4 +1,7 @@
 //加载banner列表
+var juli;
+var shengyu;
+
 function ajax() {
 	var url = URLS.SERVER_URL + URLS.appNewIndexFirst;
 	var data = {};
@@ -100,24 +103,57 @@ function ajax() {
 
 		//加载_秒杀时间
 		if(data.seckillList){
-		
+
 		$(".nmiaosha,.nmiaosha_nhr").css("display", "block");
 		var seckillList = data.seckillList;
 		var ajax_REMARK=seckillList['REMARK'];
 		$(".ajax_REMARK").empty().append(ajax_REMARK);
+		
+		
+		
 
 		if (seckillList['END_TIME']) {
-			inputDate = seckillList['END_TIME'].replace("-", "/").replace("-", "/");
-			var endtime = Date.parse(inputDate);
+			
+			
+			var endtime = Date.parse(new Date(seckillList['END_TIME']));
+			endtime = endtime / 1000;
+			var START_TIME = Date.parse(new Date(seckillList['START_TIME']));
+			START_TIME = START_TIME / 1000;
+			var current_Time = Date.parse(new Date(data.currentTime));
+			current_Time = current_Time / 1000;
 
-			$(".getting-started").attr("data-countdown", endtime);
-			$('[data-countdown]').each(function() {
-				var $this = $(this),
+			
+			
+			juli = START_TIME-current_Time; //距离时间
+			shengyu = endtime-current_Time; //距离时间
+			
+
+			
+			/*if(current_Time >= START_TIME){
+				$(".ajax_timetext").empty().append("还剩");
+				$(".getting-started").attr("data-countdown", endtime);
+
+			}else{
+				$(".ajax_timetext").empty().append("距离开始");
+				$(".getting-started").attr("data-countdown", STARTTIME);	
+			}*/
+			
+			
+			
+			/*$('[data-countdown]').each(function() {
+					var $this = $('[data-countdown]'),
 					finalDate = $(this).data('countdown');
-				$this.countdown(finalDate, function(event) {
-					$this.html(event.strftime('<em>%H</em>:<em>%M</em>:<em>%S</em>'));
-				});
-			});
+				 	$this.countdown(finalDate, {elapse: true}).on('update.countdown', function(event) {
+					  	var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+						$this.html(event.strftime('<em>'+totalHours+'</em>:<em>%M</em>:<em>%S</em>'));
+					});
+			});*/
+			
+
+
+			
+			
+
 		}
 
 		//加载_秒杀列表
@@ -569,5 +605,44 @@ $(document).ready(function(e) {
       );
     });*/			
 });
+
+
+			function CountDown(){ 
+				if(juli>=0){
+					console.log("juli:"+juli);
+					hours= Math.floor(juli/3600); 
+					minutes = Math.floor((juli%3600)/60); 
+					seconds = Math.floor(juli%60);
+					
+					if(hours<10) hours = '0' + hours;
+					if(minutes<10) minutes = '0' + minutes;
+					if(seconds<10) seconds = '0' + seconds;
+					
+					$(".ajax_timetext").empty().append("距离开始");
+					$(".getting-started").empty().append("<em>"+hours+"</em>:<em>"+minutes+"</em>:<em>"+seconds+"</em>");
+					--juli; 
+				} 
+				else{
+					hours= Math.floor(shengyu/3600); 
+					minutes = Math.floor((shengyu%3600)/60); 
+					seconds = Math.floor(shengyu%60);
+					
+					if(hours<10) hours = '0' + hours;
+					if(minutes<10) minutes = '0' + minutes;
+					if(seconds<10) seconds = '0' + seconds;
+					
+					$(".ajax_timetext").empty().append("剩余");
+					$(".ajax_REMARK").css("display", "inline-block");
+					$(".getting-started").empty().append("<em>"+hours+"</em>:<em>"+minutes+"</em>:<em>"+seconds+"</em>");
+					--shengyu; 
+				}
+				
+				if(shengyu<0){
+					clearInterval(timer); 
+					$(".nmiaosha,.nmiaosha_nhr").css("display", "none");
+				}
+			}
+			
+            timer = setInterval("CountDown()",1000); 
 
 

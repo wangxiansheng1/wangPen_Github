@@ -112,7 +112,7 @@ function goodsCategoryList() {
 
 
 				html += "<div class='nlist_list_main'  data-STORE_ID='" + goodsList[k]['STORE_ID'] + "' data-GOODS_NO='" + goodsList[k]['GOODS_NO'] + "' data-GOODS_ID='" + goodsList[k]['GOODS_ID'] + "' >";
-				html += "<img class='nlist_list_mainleft lazyload' src='images/list_mr.jpg' data-original=" + URLS.IMAGE_URL + goodsList[k]['GOODS_IMG'] + " >";
+				html += "<img class='nlist_list_mainleft lazyload'  src=" + URLS.IMAGE_URL + goodsList[k]['GOODS_IMG'] + " >";
 				html += "<div class='nlist_list_mainright'>";
 				html += "<div class='nlist_list_title'>";
 				if (zy == 1) {
