@@ -33,12 +33,16 @@ requirejs.config({
 
         'lehu.h5.business.config': 'scripts/lehu.h5.business.config',
         'lehu.h5.framework.comm': 'scripts/framework/lehu.h5.framework.comm',
+        'lehu.h5.framework.global': 'scripts/framework/lehu.h5.framework.global',
         'lehu.h5.api': 'scripts/api/lehu.h5.api',
 
         "lehu.hybrid": "scripts/util/lehu.hybrid",
         "lehu.bridge": "scripts/util/lehu.bridge",
         "lehu.helpers": "scripts/util/lehu.helpers",
         "lehu.util": "scripts/util/lehu.util.fn",
-        "lehu.env.switcher": "scripts/util/lehu.env.switcher"
+        "lehu.env.switcher": "scripts/util/lehu.env.switcher",
+
+        "lehu.h5.widget.message": "scripts/widget/lehu.h5.widget.message",
+        "template_widget_message": "templates/widget/lehu.h5.widget.message.mustache"
     }
 })

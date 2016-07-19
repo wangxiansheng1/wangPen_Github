@@ -510,14 +510,18 @@ module.exports = function(grunt) {
             'moment',
 
             'lehu.h5.framework.comm',
+            'lehu.h5.framework.global',
             'lehu.h5.api',
 
             "lehu.hybrid",
             "lehu.bridge",
             "lehu.helpers",
             "lehu.util",
-            "lehu.env.switcher"
-          ]
+            "lehu.env.switcher",
+
+            'lehu.h5.widget.message'
+          ],
+          insertRequire: ['lehu.h5.framework.global']
         }
       },
 

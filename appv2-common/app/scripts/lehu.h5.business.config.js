@@ -1,4 +1,4 @@
-define('lehu.h5.common.business.config', ['zepto'], function($) {
+define('lehu.h5.business.config', ['zepto'], function($) {
   'use strict';
 
   //链接访问前缀

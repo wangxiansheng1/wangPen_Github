@@ -73,8 +73,6 @@ define([
       checkUserLogin: function() {
         // var csrf = window.localStorage ? window.localStorage.getItem('csrfToken') : $.jStorage.get('csrfToken');
 
-        addParamsToCookies();
-
         var csrf = store.get('csrfToken');
         return !!($.fn.cookie(LHBaseComm._aid + '_ct') && csrf);
       },

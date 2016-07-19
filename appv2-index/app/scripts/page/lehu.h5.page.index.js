@@ -1,4 +1,4 @@
-define('lehu.mall.page.index', [
+define('lehu.h5.page.index', [
         'can',
         'zepto',
         'fastclick',
@@ -11,7 +11,7 @@ define('lehu.mall.page.index', [
         'lehu.h5.component.index'
     ],
 
-    function(can, $, Fastclick, util, LHFrameworkComm, LHHeader, LHConfig, LHSwitcher, LHHybrid,
+    function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHSwitcher, LHHybrid,
         LHIndex) {
         'use strict';
 
@@ -25,10 +25,7 @@ define('lehu.mall.page.index', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
-                if (!LHFrameworkComm.prototype.checkUserLogin.call(this)) {
-                    window.location.href = LHConfig.setting.link.login + '&from=' + escape(window.location.pathname);
-                    return false;
-                }
+                var index = new LHIndex("#index");
             }
         });
 

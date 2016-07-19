@@ -1,5 +1,4 @@
-define(
-    'lehu.mall.page.list', [
+define('lehu.h5.page.list', [
         'can',
         'zepto',
         'fastclick',

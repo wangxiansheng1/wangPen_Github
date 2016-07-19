@@ -6,10 +6,13 @@ define('lehu.h5.component.index', [
     'store',
     'fastclick',
     'lehu.h5.business.config',
-    'lehu.h5.api'
+    'lehu.h5.api',
+
+    'text!template_components_index'
   ],
 
-  function($, cookie, can, md5, store, Fastclick, LHConfig, LHAPI) {
+  function($, cookie, can, md5, store, Fastclick, LHConfig, LHAPI,
+    template_components_index) {
     'use strict';
 
     return can.Control.extend({
@@ -23,8 +26,13 @@ define('lehu.h5.component.index', [
        * @description 初始化方法
        */
       init: function() {
+
+        var renderIndex = can.mustache(template_components_index);
+        var html = renderIndex(this.options);
+        this.element.html(html);
+
         var api = new LHAPI({
-          action: "initIndex.do",
+          url: "initIndex.do",
           data: {}
         });
         api.sendRequest()
