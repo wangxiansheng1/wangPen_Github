@@ -15,10 +15,27 @@ define('lehu.h5.business.config', ['zepto'], function($) {
     'list': URL_HOST + 'list.html?t=' + VER
   };
 
+  //ACTION配置
+  var ACTION = {
+    "appNewIndexFirst": "initIndex.do",
+    "goodsCategoryList": "goodsList.do",
+    "goodsInfo": "goodsInfo.do",
+    "addFocus": "addFocus.do",
+    "cancelFocus": "cancelFocus.do",
+    "queryGoodsReview": "queryGoodsReview.do",
+    "goodsContent": "goodsContent.do",
+    "queryGoodsStock": "queryGoodsStock.do",
+    "queryFilteredRegion": "queryFilteredRegion.do",
+    "addCart": "addCart.do",
+    "cartPromptlyInitLoad": "cartPromptlyInitLoad.do",
+    "getKey": "getKey.do"
+  };
+
   return {
     setting: {
       'ver': VER,
       'REQUEST_HOST': REQUEST_HOST,
+      'action': ACTION,
       'link': LINK
     }
   };

@@ -869,8 +869,7 @@ define('lehu.h5.component.list', [
       }
     });
   });
-define(
-    'lehu.mall.page.list', [
+define('lehu.h5.page.list', [
         'can',
         'zepto',
         'fastclick',
@@ -906,7 +905,5 @@ define(
 
         new List('#list');
     });
-define("lehu.h5.page.list", function(){});
-
 
 require(["lehu.h5.page.list"]);

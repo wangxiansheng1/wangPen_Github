@@ -101,7 +101,7 @@ define([
         var that = this;
 
         var successCallback = function(response) {
-
+          def.resolve(JSON.parse(response));
         }
 
         var failCallback = function(error) {

@@ -840,6 +840,401 @@
 	}
 }());
 
+/**
+ * @license RequireJS text 2.0.14 Copyright (c) 2010-2014, The Dojo Foundation All Rights Reserved.
+ * Available via the MIT or new BSD license.
+ * see: http://github.com/requirejs/text for details
+ */
+/*jslint regexp: true */
+/*global require, XMLHttpRequest, ActiveXObject,
+  define, window, process, Packages,
+  java, location, Components, FileUtils */
+
+define('text',['module'], function (module) {
+    
+
+    var text, fs, Cc, Ci, xpcIsWindows,
+        progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
+        xmlRegExp = /^\s*<\?xml(\s)+version=[\'\"](\d)*.(\d)*[\'\"](\s)*\?>/im,
+        bodyRegExp = /<body[^>]*>\s*([\s\S]+)\s*<\/body>/im,
+        hasLocation = typeof location !== 'undefined' && location.href,
+        defaultProtocol = hasLocation && location.protocol && location.protocol.replace(/\:/, ''),
+        defaultHostName = hasLocation && location.hostname,
+        defaultPort = hasLocation && (location.port || undefined),
+        buildMap = {},
+        masterConfig = (module.config && module.config()) || {};
+
+    text = {
+        version: '2.0.14',
+
+        strip: function (content) {
+            //Strips <?xml ...?> declarations so that external SVG and XML
+            //documents can be added to a document without worry. Also, if the string
+            //is an HTML document, only the part inside the body tag is returned.
+            if (content) {
+                content = content.replace(xmlRegExp, "");
+                var matches = content.match(bodyRegExp);
+                if (matches) {
+                    content = matches[1];
+                }
+            } else {
+                content = "";
+            }
+            return content;
+        },
+
+        jsEscape: function (content) {
+            return content.replace(/(['\\])/g, '\\$1')
+                .replace(/[\f]/g, "\\f")
+                .replace(/[\b]/g, "\\b")
+                .replace(/[\n]/g, "\\n")
+                .replace(/[\t]/g, "\\t")
+                .replace(/[\r]/g, "\\r")
+                .replace(/[\u2028]/g, "\\u2028")
+                .replace(/[\u2029]/g, "\\u2029");
+        },
+
+        createXhr: masterConfig.createXhr || function () {
+            //Would love to dump the ActiveX crap in here. Need IE 6 to die first.
+            var xhr, i, progId;
+            if (typeof XMLHttpRequest !== "undefined") {
+                return new XMLHttpRequest();
+            } else if (typeof ActiveXObject !== "undefined") {
+                for (i = 0; i < 3; i += 1) {
+                    progId = progIds[i];
+                    try {
+                        xhr = new ActiveXObject(progId);
+                    } catch (e) {}
+
+                    if (xhr) {
+                        progIds = [progId];  // so faster next time
+                        break;
+                    }
+                }
+            }
+
+            return xhr;
+        },
+
+        /**
+         * Parses a resource name into its component parts. Resource names
+         * look like: module/name.ext!strip, where the !strip part is
+         * optional.
+         * @param {String} name the resource name
+         * @returns {Object} with properties "moduleName", "ext" and "strip"
+         * where strip is a boolean.
+         */
+        parseName: function (name) {
+            var modName, ext, temp,
+                strip = false,
+                index = name.lastIndexOf("."),
+                isRelative = name.indexOf('./') === 0 ||
+                             name.indexOf('../') === 0;
+
+            if (index !== -1 && (!isRelative || index > 1)) {
+                modName = name.substring(0, index);
+                ext = name.substring(index + 1);
+            } else {
+                modName = name;
+            }
+
+            temp = ext || modName;
+            index = temp.indexOf("!");
+            if (index !== -1) {
+                //Pull off the strip arg.
+                strip = temp.substring(index + 1) === "strip";
+                temp = temp.substring(0, index);
+                if (ext) {
+                    ext = temp;
+                } else {
+                    modName = temp;
+                }
+            }
+
+            return {
+                moduleName: modName,
+                ext: ext,
+                strip: strip
+            };
+        },
+
+        xdRegExp: /^((\w+)\:)?\/\/([^\/\\]+)/,
+
+        /**
+         * Is an URL on another domain. Only works for browser use, returns
+         * false in non-browser environments. Only used to know if an
+         * optimized .js version of a text resource should be loaded
+         * instead.
+         * @param {String} url
+         * @returns Boolean
+         */
+        useXhr: function (url, protocol, hostname, port) {
+            var uProtocol, uHostName, uPort,
+                match = text.xdRegExp.exec(url);
+            if (!match) {
+                return true;
+            }
+            uProtocol = match[2];
+            uHostName = match[3];
+
+            uHostName = uHostName.split(':');
+            uPort = uHostName[1];
+            uHostName = uHostName[0];
+
+            return (!uProtocol || uProtocol === protocol) &&
+                   (!uHostName || uHostName.toLowerCase() === hostname.toLowerCase()) &&
+                   ((!uPort && !uHostName) || uPort === port);
+        },
+
+        finishLoad: function (name, strip, content, onLoad) {
+            content = strip ? text.strip(content) : content;
+            if (masterConfig.isBuild) {
+                buildMap[name] = content;
+            }
+            onLoad(content);
+        },
+
+        load: function (name, req, onLoad, config) {
+            //Name has format: some.module.filext!strip
+            //The strip part is optional.
+            //if strip is present, then that means only get the string contents
+            //inside a body tag in an HTML string. For XML/SVG content it means
+            //removing the <?xml ...?> declarations so the content can be inserted
+            //into the current doc without problems.
+
+            // Do not bother with the work if a build and text will
+            // not be inlined.
+            if (config && config.isBuild && !config.inlineText) {
+                onLoad();
+                return;
+            }
+
+            masterConfig.isBuild = config && config.isBuild;
+
+            var parsed = text.parseName(name),
+                nonStripName = parsed.moduleName +
+                    (parsed.ext ? '.' + parsed.ext : ''),
+                url = req.toUrl(nonStripName),
+                useXhr = (masterConfig.useXhr) ||
+                         text.useXhr;
+
+            // Do not load if it is an empty: url
+            if (url.indexOf('empty:') === 0) {
+                onLoad();
+                return;
+            }
+
+            //Load the text. Use XHR if possible and in a browser.
+            if (!hasLocation || useXhr(url, defaultProtocol, defaultHostName, defaultPort)) {
+                text.get(url, function (content) {
+                    text.finishLoad(name, parsed.strip, content, onLoad);
+                }, function (err) {
+                    if (onLoad.error) {
+                        onLoad.error(err);
+                    }
+                });
+            } else {
+                //Need to fetch the resource across domains. Assume
+                //the resource has been optimized into a JS module. Fetch
+                //by the module name + extension, but do not include the
+                //!strip part to avoid file system issues.
+                req([nonStripName], function (content) {
+                    text.finishLoad(parsed.moduleName + '.' + parsed.ext,
+                                    parsed.strip, content, onLoad);
+                });
+            }
+        },
+
+        write: function (pluginName, moduleName, write, config) {
+            if (buildMap.hasOwnProperty(moduleName)) {
+                var content = text.jsEscape(buildMap[moduleName]);
+                write.asModule(pluginName + "!" + moduleName,
+                               "define(function () { return '" +
+                                   content +
+                               "';});\n");
+            }
+        },
+
+        writeFile: function (pluginName, moduleName, req, write, config) {
+            var parsed = text.parseName(moduleName),
+                extPart = parsed.ext ? '.' + parsed.ext : '',
+                nonStripName = parsed.moduleName + extPart,
+                //Use a '.js' file name so that it indicates it is a
+                //script that can be loaded across domains.
+                fileName = req.toUrl(parsed.moduleName + extPart) + '.js';
+
+            //Leverage own load() method to load plugin value, but only
+            //write out values that do not have the strip argument,
+            //to avoid any potential issues with ! in file names.
+            text.load(nonStripName, req, function (value) {
+                //Use own write() method to construct full module value.
+                //But need to create shell that translates writeFile's
+                //write() to the right interface.
+                var textWrite = function (contents) {
+                    return write(fileName, contents);
+                };
+                textWrite.asModule = function (moduleName, contents) {
+                    return write.asModule(moduleName, fileName, contents);
+                };
+
+                text.write(pluginName, nonStripName, textWrite, config);
+            }, config);
+        }
+    };
+
+    if (masterConfig.env === 'node' || (!masterConfig.env &&
+            typeof process !== "undefined" &&
+            process.versions &&
+            !!process.versions.node &&
+            !process.versions['node-webkit'] &&
+            !process.versions['atom-shell'])) {
+        //Using special require.nodeRequire, something added by r.js.
+        fs = require.nodeRequire('fs');
+
+        text.get = function (url, callback, errback) {
+            try {
+                var file = fs.readFileSync(url, 'utf8');
+                //Remove BOM (Byte Mark Order) from utf8 files if it is there.
+                if (file[0] === '\uFEFF') {
+                    file = file.substring(1);
+                }
+                callback(file);
+            } catch (e) {
+                if (errback) {
+                    errback(e);
+                }
+            }
+        };
+    } else if (masterConfig.env === 'xhr' || (!masterConfig.env &&
+            text.createXhr())) {
+        text.get = function (url, callback, errback, headers) {
+            var xhr = text.createXhr(), header;
+            xhr.open('GET', url, true);
+
+            //Allow plugins direct access to xhr headers
+            if (headers) {
+                for (header in headers) {
+                    if (headers.hasOwnProperty(header)) {
+                        xhr.setRequestHeader(header.toLowerCase(), headers[header]);
+                    }
+                }
+            }
+
+            //Allow overrides specified in config
+            if (masterConfig.onXhr) {
+                masterConfig.onXhr(xhr, url);
+            }
+
+            xhr.onreadystatechange = function (evt) {
+                var status, err;
+                //Do not explicitly handle errors, those should be
+                //visible via console output in the browser.
+                if (xhr.readyState === 4) {
+                    status = xhr.status || 0;
+                    if (status > 399 && status < 600) {
+                        //An http 4xx or 5xx error. Signal an error.
+                        err = new Error(url + ' HTTP status: ' + status);
+                        err.xhr = xhr;
+                        if (errback) {
+                            errback(err);
+                        }
+                    } else {
+                        callback(xhr.responseText);
+                    }
+
+                    if (masterConfig.onXhrComplete) {
+                        masterConfig.onXhrComplete(xhr, url);
+                    }
+                }
+            };
+            xhr.send(null);
+        };
+    } else if (masterConfig.env === 'rhino' || (!masterConfig.env &&
+            typeof Packages !== 'undefined' && typeof java !== 'undefined')) {
+        //Why Java, why is this so awkward?
+        text.get = function (url, callback) {
+            var stringBuffer, line,
+                encoding = "utf-8",
+                file = new java.io.File(url),
+                lineSeparator = java.lang.System.getProperty("line.separator"),
+                input = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(file), encoding)),
+                content = '';
+            try {
+                stringBuffer = new java.lang.StringBuffer();
+                line = input.readLine();
+
+                // Byte Order Mark (BOM) - The Unicode Standard, version 3.0, page 324
+                // http://www.unicode.org/faq/utf_bom.html
+
+                // Note that when we use utf-8, the BOM should appear as "EF BB BF", but it doesn't due to this bug in the JDK:
+                // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4508058
+                if (line && line.length() && line.charAt(0) === 0xfeff) {
+                    // Eat the BOM, since we've already found the encoding on this file,
+                    // and we plan to concatenating this buffer with others; the BOM should
+                    // only appear at the top of a file.
+                    line = line.substring(1);
+                }
+
+                if (line !== null) {
+                    stringBuffer.append(line);
+                }
+
+                while ((line = input.readLine()) !== null) {
+                    stringBuffer.append(lineSeparator);
+                    stringBuffer.append(line);
+                }
+                //Make sure we return a JavaScript string and not a Java string.
+                content = String(stringBuffer.toString()); //String
+            } finally {
+                input.close();
+            }
+            callback(content);
+        };
+    } else if (masterConfig.env === 'xpconnect' || (!masterConfig.env &&
+            typeof Components !== 'undefined' && Components.classes &&
+            Components.interfaces)) {
+        //Avert your gaze!
+        Cc = Components.classes;
+        Ci = Components.interfaces;
+        Components.utils['import']('resource://gre/modules/FileUtils.jsm');
+        xpcIsWindows = ('@mozilla.org/windows-registry-key;1' in Cc);
+
+        text.get = function (url, callback) {
+            var inStream, convertStream, fileObj,
+                readData = {};
+
+            if (xpcIsWindows) {
+                url = url.replace(/\//g, '\\');
+            }
+
+            fileObj = new FileUtils.File(url);
+
+            //XPCOM, you so crazy
+            try {
+                inStream = Cc['@mozilla.org/network/file-input-stream;1']
+                           .createInstance(Ci.nsIFileInputStream);
+                inStream.init(fileObj, 1, 0, false);
+
+                convertStream = Cc['@mozilla.org/intl/converter-input-stream;1']
+                                .createInstance(Ci.nsIConverterInputStream);
+                convertStream.init(inStream, "utf-8", inStream.available(),
+                Ci.nsIConverterInputStream.DEFAULT_REPLACEMENT_CHARACTER);
+
+                convertStream.readString(inStream.available(), readData);
+                convertStream.close();
+                inStream.close();
+                callback(readData.value);
+            } catch (e) {
+                throw new Error((fileObj && fileObj.path || '') + ': ' + e);
+            }
+        };
+    }
+    return text;
+});
+
+
+define('text!template_components_index',[],function () { return '<div>\n<div class="ajax_noload"><img src="images/wifi.png">网络请求失败，请稍候再试<span><img src="images/sx.png"></span></div>\n\n    <!--顶部-->\n    <div class="nheader">\n    <div class="nheader_cover"></div>\n        <div class="nindex_shaomiao" onClick="scan_code_fun()"></div>\n        <div class="nindex_sousuo" onClick="search_fun()" unselectable="on" style="-moz-user-select:none;-webkit-user-select:none;" onselectstart="return false;"><em></em>全球购，找到好口碑</div>\n        <div class="nindex_xiaoxi" onClick="message_fun()"></div>\n    </div>\n    <!--/顶部-->\n    \n    <!--banner-->\n    <div class="nbanner">\n        <div class="swiper-container">\n            <div class="swiper-wrapper" id="ajax_banner">\n <div class="swiper-slide"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091553187203.jpg"></div>\n           \n              \n            </div>\n            <div class="swiper-pagination"></div>\n        </div>\n    </div>\n    <!--/banner-->\n    \n    <!--标签-->\n    <div class="ntag" id="ajax_fastList">\n    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160627/201606271437018396.png"><span>摇一摇</span></a>\n    \n    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160627/201606271441106415.png"><span>免费试用</span></a>\n    \n    <a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160627/201606271447537282.png"><span>每日签到</span></a>\n    \n\n    \n    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com/upload/image/admin/2016/20160709/201607091607357640.png"><span>更多</span></a>\n    \n    </div>\n    <!--/标签-->\n    \n    <div class="nhr nmiaosha_nhr" ></div>\n    \n    <!--秒杀-->\n    <div class="nmiaosha" >     \n        <div class="nmiaosha_top">\n            <img src="images/index_28.png" >&nbsp;<b class="ajax_timetext">距离开始</b><span class="getting-started"><em>00</em>:<em>00</em>:<em>00</em></span>&nbsp;<i class="ajax_REMARK"></i>\n            <a href="javascript:;" data-title="nmiaosha_more" data-url="">更多>></a></div>\n        <div class="nmiaosha_main" id="ajax_seckillList">\n          <!--<a href="">\n                <img class="lazyload" src="images/list_mr.jpg">\n                <title>花印清新净颜卸妆水(滋养型)</title>\n                <span>￥00.00</span>\n          </a>\n            <a href="">\n                <img class="lazyload" src="images/list_mr.jpg">\n                <title>花印清新净颜卸妆水(滋养型)</title>\n                <span>￥00.00</span>\n          </a>\n            <a href="">\n                <img class="lazyload" src="images/list_mr.jpg">\n                <title>花印清新净颜卸妆水(滋养型)</title>\n                <span>￥00.00</span>\n          </a>\n            <a href="">\n                <img class="lazyload" src="images/list_mr.jpg">\n                <title>花印清新净颜卸妆水(滋养型)</title>\n                <span>￥00.00</span>\n          </a>\n            <a href="">\n                <img class="lazyload" src="images/list_mr.jpg">\n                <title>花印清新净颜卸妆水(滋养型)</title>\n                <span>￥00.00</span>\n          </a>\n            <a href="">\n                <img class="lazyload" src="images/list_mr.jpg">\n                <title>花印清新净颜卸妆水(滋养型)</title>\n                <span>￥00.00</span>\n          </a>-->\n        </div>\n    </div>\n    <!--/秒杀-->\n    \n    <div class="nhr"></div>\n    \n    <!--广告位-->\n    <div class="nindex_ad" id="ajax_hotRecommendation">\n    \n      <div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091614136508.jpg"></a></div>\n        <div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091609224298.jpg"></a></div>\n        <div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091616531809.jpg"></a></div>\n        \n    </div>\n    <!--/广告位-->\n    <div class="nhr"></div>\n    \n    <!--分类楼层-->\n    <div id="ajax_prommotionLayout">\n    </div>\n    \n    <!--发现-->\n    <div class="nfaxian">\n     <div class="ajax_nfaxian_top"></div>\n        \n        <div class="nfaxian_main" id="ajax_showList"> \n        </div>\n    </div>\n    <!--/发现-->\n\n</div>\n\n<a href="#" class="fix_go_top" onclick="return false;"></a>';});
+
 define('lehu.h5.component.index', [
     'zepto',
     'zepto.cookie',
@@ -848,10 +1243,14 @@ define('lehu.h5.component.index', [
     'store',
     'fastclick',
     'lehu.h5.business.config',
-    'lehu.h5.api'
+    'lehu.h5.api',
+    'lehu.hybrid',
+
+    'text!template_components_index'
   ],
 
-  function($, cookie, can, md5, store, Fastclick, LHConfig, LHAPI) {
+  function($, cookie, can, md5, store, Fastclick, LHConfig, LHAPI, LHHybrid,
+    template_components_index) {
     
 
     return can.Control.extend({
@@ -865,22 +1264,591 @@ define('lehu.h5.component.index', [
        * @description 初始化方法
        */
       init: function() {
+        var that = this;
+
+        this.initData();
+
+        var renderIndex = can.mustache(template_components_index);
+        var html = renderIndex(this.options);
+        this.element.html(html);
+
         var api = new LHAPI({
-          action: "initIndex.do",
+          url: "initIndex.do",
           data: {}
         });
         api.sendRequest()
           .done(function(data) {
-            console.dir(data);
+
+            // 设置数据类型
+            $("html").attr("data_type", data.type);
+
+            // 渲染幻灯片
+            that.renderBannerList(data);
+
+            // 渲染标签
+            that.renderTagList(data);
+
+            // 渲染秒杀
+            that.renderSecondkillList(data);
+
+            // 渲染首页广告列表
+            that.renderHotRecommendation(data);
+
+            // 绑定滚动事件
+            that.bindScroll();
+
+            // 执行倒计时
+            var timer = setInterval(function() {
+              that.countDown();
+            }, 1000);
           })
           .fail(function(error) {
-            console.dir(error);
+            $(".ajax_noload").show();
           })
 
+      },
+
+      initData: function() {
+        this.URL = LHHybrid.getUrl();
+      },
+
+      //扫描
+      ".nindex_shaomiao click": function(element, event) {
+        var jsonParams = {
+          'funName': 'scan_code_fun',
+          'params': {}
+        };
+        native.nativeFun(jsonParams);
+      },
+
+      //消息
+      ".nindex_xiaoxi click": function(element, event) {
+        var jsonParams = {
+          'funName': 'message_fun',
+          'params': {}
+        };
+        native.nativeFun(jsonParams);
+      },
+
+      //搜索
+      ".nindex_sousuo click": function(element, event) {
+        var jsonParams = {
+          'funName': 'search_fun',
+          'params': {}
+        };
+        native.nativeFun(jsonParams);
+      },
+
+      ".nmiaosha_top a click": function(element, event) {
+        var title = element.attr("data-title");
+        var url = element.attr("data-url");
+        var jsonParams = {
+          'funName': 'seckill_more_fun',
+          'params': {}
+        };
+        native.nativeFun(jsonParams);
+      },
+
+      renderBannerList: function(data) {
+        var html = "";
+        var bannerList = data.bannerList;
+        for (var k = 0; k < bannerList.length; k++) {
+          html += "<div class='swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
+          html += "<img class='lazyload' data-original=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          html += "</div>";
+        }
+
+        $("#ajax_banner").empty().append(html);
+
+        //插件_幻灯片
+        var swiper = new Swiper('.nbanner .swiper-container', {
+          pagination: '.nbanner .swiper-pagination',
+          autoplay: 2000,
+          autoplayDisableOnInteraction: false,
+          speed: 300,
+          loop: true,
+          longSwipesRatio: 0.1,
+
+        });
+
+        //点击_幻灯片
+        $(".nbanner .swiper-slide").click(function() {
+          var SORT = $(this).attr("data-SORT");
+          var BANNER_JUMP_ID = $(this).attr("data-BANNER_JUMP_ID");
+          var BANNER_CONTENT = $(this).attr("data-BANNER_CONTENT");
+          var BANNER_IMG = $(this).attr("data-BANNER_IMG");
+          var ID = $(this).attr("data-ID");
+          var BANNER_LAYOUT = $(this).attr("data-BANNER_LAYOUT");
+          var BANNER_JUMP_FLAG = $(this).attr("data-BANNER_JUMP_FLAG");
+          var STATUS = $(this).attr("data-STATUS");
+          var NUM = $(this).attr("data-NUM");
+          var BANNER_NAME = $(this).attr("data-BANNER_NAME");
+
+          var jsonParams = {
+            'funName': 'banner_item_fun',
+            'params': {
+              'SORT': SORT,
+              'BANNER_JUMP_ID': BANNER_JUMP_ID,
+              'BANNER_CONTENT': BANNER_CONTENT,
+              'BANNER_IMG': BANNER_IMG,
+              'ID': ID,
+              'BANNER_LAYOUT': BANNER_LAYOUT,
+              'BANNER_JUMP_FLAG': BANNER_JUMP_FLAG,
+              'STATUS': STATUS,
+              'NUM': NUM,
+              'BANNER_NAME': BANNER_NAME
+            }
+          };
+          native.nativeFun(jsonParams);
+
+        })
+      },
+
+      renderTagList: function(data) {
+        var fastList_html = "";
+        var fastList = data.fastList;
+
+        for (var k = 0; k < fastList.length; k++) {
+
+          fastList_html += "<a href='javascript:;' data-FAST_NAME='" + fastList[k]['FAST_NAME'] + "' data-ID='" + fastList[k]['ID'] + "' data-LINK_NAME='" + fastList[k]['LINK_NAME'] + "' data-FAST_IMG='" + fastList[k]['FAST_IMG'] + "'>";
+          fastList_html += "<img class='lazyload' data-original=" + this.URL.IMAGE_URL + fastList[k]['FAST_IMG'] + " >";
+          fastList_html += "<span>" + fastList[k]['FAST_NAME'] + "</span>";
+          fastList_html += "</a>";
+        }
+
+        $("#ajax_fastList").empty().append(fastList_html);
+        lazyload();
+
+        //点击_标签
+        $(".ntag a").click(function() {
+          var FAST_NAME = $(this).attr("data-FAST_NAME");
+          var ID = $(this).attr("data-ID");
+          var LINK_NAME = $(this).attr("data-LINK_NAME");
+          var FAST_IMG = $(this).attr("data-FAST_IMG");
+          //console.log(funName,url);
+          var jsonParams = {
+            'funName': 'shortcut_fun',
+            'params': {
+              'FAST_NAME': FAST_NAME,
+              'dID': ID,
+              'LINK_NAME': LINK_NAME,
+              'FAST_IMG': FAST_IMG
+            }
+          };
+          native.nativeFun(jsonParams);
+        })
+      },
+
+      renderSecondkillList: function(data) {
+        if (data.seckillList) {
+
+          $(".nmiaosha,.nmiaosha_nhr").css("display", "block");
+          var seckillList = data.seckillList;
+          var ajax_REMARK = seckillList['REMARK'];
+          $(".ajax_REMARK").empty().append(ajax_REMARK);
+
+          if (seckillList['END_TIME']) {
+            var endtime = Date.parse(new Date(seckillList['END_TIME']));
+            endtime = endtime / 1000;
+            var START_TIME = Date.parse(new Date(seckillList['START_TIME']));
+            START_TIME = START_TIME / 1000;
+            var current_Time = Date.parse(new Date(data.currentTime));
+            current_Time = current_Time / 1000;
+            juli = START_TIME - current_Time; //距离时间
+            shengyu = endtime - current_Time; //距离时间
+          }
+
+          //加载_秒杀列表
+
+          var COMMODITY_LIST_html = "";
+          var COMMODITY_LIST = data.seckillList['COMMODITY_LIST'];
+          if (COMMODITY_LIST) {
+            $(".nmiaosha,.nmiaosha_nhr").css("display", "block");
+            for (var k = 0; k < COMMODITY_LIST.length; k++) {
+              var PRICE = String(COMMODITY_LIST[k]['GOODS_PRICE'].toString());
+              var q = Math.floor(PRICE);
+              var h = (PRICE).slice(-2);
+              COMMODITY_LIST_html += "<a href='javascript:;' data-GOODS_IMG='" + COMMODITY_LIST[k]['GOODS_NAME'] + "'  data-GOODS_PRICE='" + COMMODITY_LIST[k]['GOODS_PRICE'] + "' data-PRICE='" + COMMODITY_LIST[k]['PRICE'] + "' data-GOODS_NAME='" + COMMODITY_LIST[k]['GOODS_NAME'] + "' data-STORE_ID='" + COMMODITY_LIST[k]['STORE_ID'] + "' data-GOODS_NO='" + COMMODITY_LIST[k]['GOODS_NO'] + "' data-GOODS_ID='" + COMMODITY_LIST[k]['GOODS_ID'] + "' data-DISCOUNT_TYPE='" + COMMODITY_LIST[k]['DISCOUNT_TYPE'] + "' data-DISCOUNT='" + COMMODITY_LIST[k]['DISCOUNT'] + "' data-NUM='" + COMMODITY_LIST[k]['NUM'] + "'>";
+              COMMODITY_LIST_html += "<img class='lazyload' data-original=" + this.URL.IMAGE_URL + COMMODITY_LIST[k]['GOODS_IMG'] + " >";
+              COMMODITY_LIST_html += "<title>" + COMMODITY_LIST[k]['GOODS_NAME'] + "</title>";
+              COMMODITY_LIST_html += "<span>￥" + q + ".<em>" + h + "</em>" + "</span>";
+
+              COMMODITY_LIST_html += "<del>￥" + COMMODITY_LIST[k]['ORIGINAL_PRICE'] + "</del>";
+
+              COMMODITY_LIST_html += "</a>";
+            }
+
+            $("#ajax_seckillList").empty().append(COMMODITY_LIST_html);
+            lazyload();
+          }
+
+        } else {
+          $(".nmiaosha,.nmiaosha_nhr").css("display", "none");
+        }
+      },
+
+      renderHotRecommendation: function(data) {
+        var that = this;
+
+        var html = "";
+        var hotRecommendation = data.hotRecommendation;
+
+        if (hotRecommendation && hotRecommendation.length > 0) {
+          for (var k = 0; k < hotRecommendation.length; k++) {
+            if (hotRecommendation[k]['TEMPLATE'] == 1) {
+              html += "<div class='nindex_ad_one'><a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][0].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][0].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
+              html += "<img  class='lazyload' data-original=" + that.URL.IMAGE_URL + hotRecommendation[k]['goods'][0].IMG_URL + " >";
+              html += "</a></div>";
+            }
+            if (hotRecommendation[k]['TEMPLATE'] == 2) {
+              html += "<div class='nindex_ad_two'>";
+              for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
+                html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
+                html += "<img  class='lazyload' data-original=" + that.URL.IMAGE_URL + hotRecommendation[k]['goods'][i].IMG_URL + " >";
+                html += "</a>";
+              }
+              html += "</div>";
+            }
+            if (hotRecommendation[k]['TEMPLATE'] == 3) {
+              html += "<div class='nindex_ad_three'>";
+              for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
+                html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
+                html += "<img  class='lazyload' data-original=" + that.URL.IMAGE_URL + hotRecommendation[k]['goods'][i].IMG_URL + " >";
+                html += "</a>";
+              }
+              html += "</div>";
+            }
+          }
+
+          $("#ajax_hotRecommendation").empty().append(html);
+          lazyload();
+        }
+
+
+        $(".nindex_ad a").click(function() {
+          var IMG_URL = $(this).attr("data-IMG_URL");
+          var GOODS_ID = $(this).attr("data-GOODS_ID");
+          var ID = $(this).attr("data-ID");
+          var TEMPLATE = $(this).attr("data-TEMPLATE");
+          var jsonParams = {
+            'funName': 'hot_recommendation_fun',
+            'params': {
+              'IMG_URL': IMG_URL,
+              'GOODS_ID': GOODS_ID,
+              'ID': ID,
+              'TEMPLATE': TEMPLATE
+            }
+          };
+          native.nativeFun(jsonParams);
+        })
+      },
+
+      renderProductList: function(data) {
+        var that = this;
+        var html = "";
+        var prommotionLayout = data.prommotionLayout;
+
+        for (var k = 0; k < prommotionLayout.length; k++) {
+          html += "<div class='ntuijian'><div class='ntuijian_top'><span><em>" + prommotionLayout[k]['PROMOTION_NAME'] + "</em></span></div>";
+
+          html += "<div class='ntuijian_ad'><a href='javascript:;' data-id='" + prommotionLayout[k]['ID'] + "'   data-promotion_name='" + prommotionLayout[k]['PROMOTION_NAME'] + "'   data-detail_layout='" + prommotionLayout[k]['DETAIL_LAYOUT'] + "' class='prommotionLayout_ad'><img class='lazyload' data-original=" + that.URL.IMAGE_URL + prommotionLayout[k]['PROMOTION_BANNER'] + "></a></div>";
+
+          html += "<div class='ntuijian_main'><div class='swiper-container' style=''><div class='swiper-wrapper'>";
+
+          var prommotionLayout_detail = data.prommotionLayout[k]['goodsList'];
+
+          for (var i = 0; i < prommotionLayout_detail.length; i++) {
+            //var a= i+1;
+            var PRICE = String(prommotionLayout_detail[i]['GOODS_PRICE'].toString());
+            var q = Math.floor(PRICE);
+            var h = (PRICE).slice(-2);
+
+            html += "<a href='javascript:;'  data-GOODS_PRICE='" + prommotionLayout_detail[i]['GOODS_PRICE'] + "' data-GOODS_NAME='" + prommotionLayout_detail[i]['GOODS_NAME'] + "' data-STORE_ID='" + prommotionLayout_detail[i]['STORE_ID'] + "' data-GOODS_NO='" + prommotionLayout_detail[i]['GOODS_NO'] + "' data-GOODS_ID='" + prommotionLayout_detail[i]['ID'] + "' data-NUM='" + prommotionLayout_detail[i]['NUM'] + "' class='swiper-slide prommotionLayout_detail'>";
+            html += "<img class='lazyload' data-original=" + that.URL.IMAGE_URL + prommotionLayout_detail[i]['GOODS_IMG'] + " >";
+            html += "<title>" + prommotionLayout_detail[i]['GOODS_NAME'] + "</title>";
+            html += "<span>￥" + q + ".<i>" + h + "</i>" + "</span>";
+            html += "</a>";
+          }
+          html += "<a href='javascript:;' data-id='" + prommotionLayout[k]['ID'] + "' data-promotion_name='" + prommotionLayout[k]['PROMOTION_NAME'] + "'   data-detail_layout='" + prommotionLayout[k]['DETAIL_LAYOUT'] + "' class='swiper-slide prommotionLayout_detail_more'><img class='lazyload' data-original='images/more.jpg'></a></div></div></div>";
+
+
+          html += "</div><div class='nhr'></div>";
+        }
+
+        $("#ajax_prommotionLayout").empty().append(html);
+
+        lazyload();
+
+        prommotionLayout_swiper();
+
+        $(".prommotionLayout_ad,.prommotionLayout_detail_more").click(function() {
+          var id = $(this).attr("data-id");
+          var promotion_name = $(this).attr("data-promotion_name");
+          var detail_layout = $(this).attr("data-detail_layout");
+          var jsonParams = {
+            'funName': 'promotion_more_fun',
+            'params': {
+              'id': id,
+              'promotion_name': promotion_name,
+              'detail_layout': detail_layout
+            }
+          };
+          native.nativeFun(jsonParams);
+        })
+
+
+
+        //商品
+        $(".nmiaosha_main a,.prommotionLayout_detail").click(function() {
+
+          var STORE_ID = $(this).attr("data-STORE_ID");
+          var GOODS_NO = $(this).attr("data-GOODS_NO");
+          var GOODS_ID = $(this).attr("data-GOODS_ID");
+          var jsonParams = {
+            'funName': 'good_detail_fun',
+            'params': {
+              'STORE_ID': STORE_ID,
+              'GOODS_NO': GOODS_NO,
+              'GOODS_ID': GOODS_ID
+            }
+          };
+          native.nativeFun(jsonParams);
+
+        })
+      },
+
+      renderDiscovery: function(data) {
+        var that = this;
+
+        setTimeout(
+          //发现
+
+          function() {
+            var html = "";
+            var showList = data.showList;
+            $(".nfaxian_top").empty();
+            if (showList && showList.length > 0) {
+              $(".ajax_nfaxian_top").prepend('<div class="nfaxian_top"><span><em>发现</em></span></div>');
+            }
+
+            for (var k = 0; k < showList.length; k++) {
+              var type = showList[k]['TYPE'];
+              if (type == 3) {
+                html += "<div class=' nshow_list_video' data-id='" + showList[k]['ID'] + "' data-SHOW_FILE='" + showList[k]['SHOW_FILE'] + "' data-SHOW_GOODS_IDS='" + showList[k]['SHOW_GOODS_IDS'] + "' data-FACE_IMAGE_PATH='" + showList[k]['FACE_IMAGE_PATH'] + "' data-USER_ID='" + showList[k]['USER_ID'] + "' data-CREATE_TIME='" + showList[k]['CREATE_TIME'] + "' data-SHOW_IMG='" + showList[k]['SHOW_IMG'] + "' data-PHONE='" + showList[k]['PHONE'] + "' data-SPOTLIGHT_CIRCLE_ID='" + showList[k]['SPOTLIGHT_CIRCLE_ID'] + "' data-CIRCLE_NAME='" + showList[k]['CIRCLE_NAME'] + "' data-VIDEO_IMG='" + showList[k]['VIDEO_IMG'] + "' data-LIKENUM='" + showList[k]['LIKENUM'] + "' data-CONTENT='" + showList[k]['CONTENT'] + "' data-USER_NAME='" + showList[k]['USER_NAME'] + "' data-NUM='" + showList[k]['NUM'] + "' data-APPRAISENUM='" + showList[k]['APPRAISENUM'] + "' data-TYPE='" + showList[k]['TYPE'] + "'  data-TITLE='" + showList[k]['TITLE'] + "'>";
+                html += "<div class=' nshow_listbox_video'><video class='myVideo' src=" + that.URL.IMAGE_URL + showList[k]['SHOW_FILE'] + " controls poster=" + that.URL.IMAGE_URL + showList[k]['VIDEO_IMG'] + "></video></div>"
+
+              } else {
+
+
+                html += "<div class='nshow_listbox' data-id='" + showList[k]['ID'] + "' data-SHOW_FILE='" + showList[k]['SHOW_FILE'] + "' data-SHOW_GOODS_IDS='" + showList[k]['SHOW_GOODS_IDS'] + "' data-FACE_IMAGE_PATH='" + showList[k]['FACE_IMAGE_PATH'] + "' data-USER_ID='" + showList[k]['USER_ID'] + "' data-CREATE_TIME='" + showList[k]['CREATE_TIME'] + "' data-SHOW_IMG='" + showList[k]['SHOW_IMG'].split(',')[0] + "' data-PHONE='" + showList[k]['PHONE'] + "' data-SPOTLIGHT_CIRCLE_ID='" + showList[k]['SPOTLIGHT_CIRCLE_ID'] + "' data-CIRCLE_NAME='" + showList[k]['CIRCLE_NAME'] + "' data-VIDEO_IMG='" + showList[k]['VIDEO_IMG'] + "' data-LIKENUM='" + showList[k]['LIKENUM'] + "' data-CONTENT='" + showList[k]['CONTENT'] + "' data-USER_NAME='" + showList[k]['USER_NAME'] + "' data-NUM='" + showList[k]['NUM'] + "' data-APPRAISENUM='" + showList[k]['APPRAISENUM'] + "' data-TYPE='" + showList[k]['TYPE'] + "'  data-TITLE='" + showList[k]['TITLE'] + "'>";
+                html += "<a href='javascript:;' class='nshow_listbox_img'><img class='lazyload' data-original=" + that.URL.IMAGE_URL + showList[k]['SHOW_IMG'].split(',')[0] + "></a>"
+              }
+
+              html += "<div class='nshow_listbox_title ell'>" + showList[k]['TITLE'] + "</div>"
+
+              if (showList[k]['FACE_IMAGE_PATH']) {
+                html += "<div class='nshow_listmsg'><a class=''><img class='lazyload' data-original=" + that.URL.IMAGE_URL + showList[k]['FACE_IMAGE_PATH'] + "><span class='nshow_listmsg_name ell'>" + showList[k]['USER_NAME'] + "</span><span class='nshow_listmsg_time'>" + showList[k]['TIME'] + "发布于：" + "<b>" + showList[k]['CIRCLE_NAME'] + "</b>" + "</span>"
+              } else {
+                html += "<div class='nshow_listmsg'><a  class=''><img class='lazyload' data-original='images/Shortcut_114_114.png'><span class='nshow_listmsg_name ell'>" + showList[k]['USER_NAME'] + "</span><span class='nshow_listmsg_time'>" + showList[k]['TIME'] + "发布于：" + "<b>" + showList[k]['CIRCLE_NAME'] + "</b>" + "</span>"
+              }
+
+              html += "<div class='nshow_listmsg_zh'><i class='nshow_iconfont'>&#xe601;</i><span>" + showList[k]['LIKENUM'] + "</span></div>"
+              html += "<div class='nshow_listmsg_pl'><i class='nshow_iconfont'>&#xe600;</i><span>" + showList[k]['APPRAISENUM'] + "</span></div>"
+              html += "</a></div></div>";
+            }
+
+            $("#ajax_showList").empty().append(html);
+
+            lazyload();
+
+            $(".nshow_listbox").click(function() {
+              var id = $(this).attr("data-id");
+              var SHOW_FILE = $(this).attr("data-SHOW_FILE");
+              var SHOW_GOODS_IDS = $(this).attr("data-SHOW_GOODS_IDS");
+              var FACE_IMAGE_PATH = $(this).attr("data-FACE_IMAGE_PATH");
+              var USER_ID = $(this).attr("data-USER_ID");
+              var CREATE_TIME = $(this).attr("data-CREATE_TIME");
+              var SHOW_IMG = $(this).attr("data-SHOW_IMG");
+              var PHONE = $(this).attr("data-PHONE");
+              var SPOTLIGHT_CIRCLE_ID = $(this).attr("data-SPOTLIGHT_CIRCLE_ID");
+              var CIRCLE_NAME = $(this).attr("data-CIRCLE_NAME");
+              var VIDEO_IMG = $(this).attr("data-VIDEO_IMG");
+              var LIKENUM = $(this).attr("data-LIKENUM");
+              var CONTENT = $(this).attr("data-CONTENT");
+              var USER_NAME = $(this).attr("data-USER_NAME");
+              var NUM = $(this).attr("data-NUM");
+              var APPRAISENUM = $(this).attr("data-APPRAISENUM");
+              var TYPE = $(this).attr("data-TYPE");
+              var TITLE = $(this).attr("data-TITLE");
+              var jsonParams = {
+                'funName': 'show_detail_fun',
+                'params': {
+                  'ID': id,
+                  'SHOW_FILE': SHOW_FILE,
+                  'SHOW_GOODS_IDS': SHOW_GOODS_IDS,
+                  'FACE_IMAGE_PATH': FACE_IMAGE_PATH,
+                  'USER_ID': USER_ID,
+                  'CREATE_TIME': CREATE_TIME,
+                  'SHOW_IMG': SHOW_IMG,
+                  'PHONE': PHONE,
+                  'SPOTLIGHT_CIRCLE_ID': SPOTLIGHT_CIRCLE_ID,
+                  'CIRCLE_NAME': CIRCLE_NAME,
+                  'VIDEO_IMG': VIDEO_IMG,
+                  'LIKENUM': LIKENUM,
+                  'CONTENT': CONTENT,
+                  'USER_NAME': USER_NAME,
+                  'NUM': NUM,
+                  'APPRAISENUM': APPRAISENUM,
+                  'TYPE': TYPE,
+                  'TITLE': TITLE,
+                  'jsonParams': jsonParams
+                }
+              };
+              native.nativeFun(jsonParams);
+            })
+
+
+            $(".nshow_list_video .nshow_listbox_title,.nshow_list_video .nshow_listmsg").click(function() {
+              var id = $(this).parent().attr("data-id");
+              var SHOW_FILE = $(this).parent().attr("data-SHOW_FILE");
+              var SHOW_GOODS_IDS = $(this).parent().attr("data-SHOW_GOODS_IDS");
+              var FACE_IMAGE_PATH = $(this).parent().attr("data-FACE_IMAGE_PATH");
+              var USER_ID = $(this).parent().attr("data-USER_ID");
+              var CREATE_TIME = $(this).parent().attr("data-CREATE_TIME");
+              var SHOW_IMG = $(this).parent().attr("data-SHOW_IMG");
+              var PHONE = $(this).parent().attr("data-PHONE");
+              var SPOTLIGHT_CIRCLE_ID = $(this).parent().attr("data-SPOTLIGHT_CIRCLE_ID");
+              var CIRCLE_NAME = $(this).parent().attr("data-CIRCLE_NAME");
+              var VIDEO_IMG = $(this).parent().attr("data-VIDEO_IMG");
+              var LIKENUM = $(this).parent().attr("data-LIKENUM");
+              var CONTENT = $(this).parent().attr("data-CONTENT");
+              var USER_NAME = $(this).parent().attr("data-USER_NAME");
+              var NUM = $(this).parent().attr("data-NUM");
+              var APPRAISENUM = $(this).parent().attr("data-APPRAISENUM");
+              var TYPE = $(this).parent().attr("data-TYPE");
+              var TITLE = $(this).parent().attr("data-TITLE");
+              var jsonParams = {
+                'funName': 'show_detail_fun',
+                'params': {
+                  'ID': id,
+                  'SHOW_FILE': SHOW_FILE,
+                  'SHOW_GOODS_IDS': SHOW_GOODS_IDS,
+                  'FACE_IMAGE_PATH': FACE_IMAGE_PATH,
+                  'USER_ID': USER_ID,
+                  'CREATE_TIME': CREATE_TIME,
+                  'SHOW_IMG': SHOW_IMG,
+                  'PHONE': PHONE,
+                  'SPOTLIGHT_CIRCLE_ID': SPOTLIGHT_CIRCLE_ID,
+                  'CIRCLE_NAME': CIRCLE_NAME,
+                  'VIDEO_IMG': VIDEO_IMG,
+                  'LIKENUM': LIKENUM,
+                  'CONTENT': CONTENT,
+                  'USER_NAME': USER_NAME,
+                  'NUM': NUM,
+                  'APPRAISENUM': APPRAISENUM,
+                  'TYPE': TYPE,
+                  'TITLE': TITLE,
+                  'jsonParams': jsonParams
+                }
+              };
+              native.nativeFun(jsonParams);
+            })
+
+
+
+          }, 1500);
+
+      },
+
+      bindScroll: function() {
+        $(window).scroll(function() {
+          var s = $(window).scrollTop();
+          if (s > 100) {
+            $(".nheader_cover").animate({
+              opacity: 0.9
+            });
+            $(".nheader_cover").css({
+              'border-bottom': '1px solid #d2d2d2'
+            });
+            $(".nindex_sousuo").animate({
+              color: '#707070'
+            });
+            $(".nindex_sousuo").animate({
+              background: 'rgba(238,238,238,.9)'
+            });
+            $(".nindex_shaomiao").css({
+              'background-image': 'url(images/shaoyishao2.png)'
+            });
+            $(".nindex_sousuo em").css({
+              'background-image': 'url(images/soshuo2.png)'
+            });
+            $(".nindex_xiaoxi").css({
+              'background-image': 'url(images/xiaoxi2.png)'
+            });
+
+          } else {
+            $(".nheader_cover").animate({
+              opacity: 0
+            });
+            $(".nheader_cover").css({
+              'border-bottom': '0px solid #d2d2d2'
+            });
+            $(".nindex_sousuo").animate({
+              color: '#a0a0a0'
+            });
+            $(".nindex_sousuo").animate({
+              background: 'rgba(255,255,255,.7)'
+            });
+            $(".nindex_shaomiao").css({
+              'background-image': 'url(images/shaoyishao.png)'
+            });
+            $(".nindex_sousuo em").css({
+              'background-image': 'url(images/soshuo.png)'
+            });
+            $(".nindex_xiaoxi").css({
+              'background-image': 'url(images/xiaoxi.png)'
+            });
+          };
+        });
+      },
+
+      countDown: function() {
+        if (juli >= 0) {
+          console.log("juli:" + juli);
+          hours = Math.floor(juli / 3600);
+          minutes = Math.floor((juli % 3600) / 60);
+          seconds = Math.floor(juli % 60);
+
+          if (hours < 10) hours = '0' + hours;
+          if (minutes < 10) minutes = '0' + minutes;
+          if (seconds < 10) seconds = '0' + seconds;
+
+          $(".ajax_timetext").empty().append("距离开始");
+          $(".getting-started").empty().append("<em>" + hours + "</em>:<em>" + minutes + "</em>:<em>" + seconds + "</em>");
+          --juli;
+        } else {
+          hours = Math.floor(shengyu / 3600);
+          minutes = Math.floor((shengyu % 3600) / 60);
+          seconds = Math.floor(shengyu % 60);
+
+          if (hours < 10) hours = '0' + hours;
+          if (minutes < 10) minutes = '0' + minutes;
+          if (seconds < 10) seconds = '0' + seconds;
+
+          $(".ajax_timetext").empty().append("剩余");
+          $(".ajax_REMARK").css("display", "inline-block");
+          $(".getting-started").empty().append("<em>" + hours + "</em>:<em>" + minutes + "</em>:<em>" + seconds + "</em>");
+          --shengyu;
+        }
+
+        if (shengyu < 0) {
+          clearInterval(timer);
+          $(".nmiaosha,.nmiaosha_nhr").css("display", "none");
+        }
       }
     });
   });
-define('lehu.mall.page.index', [
+define('lehu.h5.page.index', [
         'can',
         'zepto',
         'fastclick',
@@ -893,7 +1861,7 @@ define('lehu.mall.page.index', [
         'lehu.h5.component.index'
     ],
 
-    function(can, $, Fastclick, util, LHFrameworkComm, LHHeader, LHConfig, LHSwitcher, LHHybrid,
+    function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHSwitcher, LHHybrid,
         LHIndex) {
         
 
@@ -907,16 +1875,11 @@ define('lehu.mall.page.index', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
-                if (!LHFrameworkComm.prototype.checkUserLogin.call(this)) {
-                    window.location.href = LHConfig.setting.link.login + '&from=' + escape(window.location.pathname);
-                    return false;
-                }
+                var index = new LHIndex("#index");
             }
         });
 
         new Index('#index');
     });
-define("lehu.h5.page.index", function(){});
-
 
 require(["lehu.h5.page.index"]);
