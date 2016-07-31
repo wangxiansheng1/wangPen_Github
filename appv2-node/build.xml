@@ -1,0 +1,70 @@
+<project name="ant-project" default="package" basedir=".">
+    <tstamp>
+        <format property="version" pattern="yyyyMMddHHmmss"/>
+    </tstamp>
+    <macrodef name="git">
+        <attribute name="command"/>
+        <attribute name="dir" default=""/>
+        <element name="args" optional="true"/>
+        <sequential>
+            <echo message="git @{command}"/>
+            <exec executable="git" dir="@{dir}">
+                <arg value="@{command}"/>
+                <args/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="update">
+        <delete includeemptydirs="true">
+            <fileset dir="${basedir}" includes="ulifweb.tar, ulifweb.tar.gz"/>
+        </delete>
+        <git command="pull" dir="${basedir}/">
+        </git>
+    </target>
+
+    <target name="package">
+        <delete includeemptydirs="true">
+            <fileset dir="${basedir}" includes="ulifeweb.tar"/>
+        </delete>
+        <replaceregexp byline="true" encoding="utf-8">
+            <regexp pattern='jsversion: \d+'/>
+            <substitution expression='jsversion: ${version}'/>
+            <fileset dir="${basedir}/var/">
+                <include name="config.js"/>
+            </fileset>
+        </replaceregexp>
+        <condition property="isprod"> <!--如果arg1的值与arg2的值相等返回true，否则为false -->
+            <equals arg1="${env}" arg2="prd" />
+        </condition>
+        <antcall target="packageprdpackage"/>
+        <antcall target="packagedevpackage"/>
+        <available file="${basedir}/../ulifepkg/" property="pkgdirexist"/>
+        <antcall target="mkpkgdir"/>
+        <gzip src="${basedir}/ulifeweb.tar" destfile="${basedir}/../ulifepkg/ulifeweb_${env}_${version}.tar.gz"/>
+        <echo message="jisong.tar generated!"/>
+
+        <git command="reset" dir="${basedir}/">
+            <args>
+                <arg value="--hard"/>
+            </args>
+        </git>
+    </target>
+
+    <target name="packageprdpackage" if="isprod">
+        <replace dir="${basedir}/template/common/" includes="header.html" encoding="UTF-8">
+            <replacefilter token='http://gw-dev.ucaiyuan.com' value='http://gw.ucaiyuan.com'/>
+        </replace>
+        <tar destfile="${basedir}/ulifeweb.tar" basedir="${basedir}"
+             excludes="app/**, autogen/**, html/**, node_modules/**, bower.json, apigen.js, build.sh, build.xml, gruntfile.js, gulpfile.js, require_config.js, readme.MD"/>
+    </target>
+
+    <target name="packagedevpackage" unless="isprod">
+        <tar destfile="${basedir}/ulifeweb.tar" basedir="${basedir}"
+             excludes="app/**, autogen/**, html/**, node_modules/**, bower.json, apigen.js, build.sh, build.xml, gruntfile.js, gulpfile.js, require_config.js, readme.MD"/>
+    </target>
+
+    <target name="mkpkgdir" unless="pkgdirexist">
+        <mkdir dir="${basedir}/../ulifepkg"/>
+    </target>
+</project>
