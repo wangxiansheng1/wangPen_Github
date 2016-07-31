@@ -1,0 +1,8 @@
+<div class="ntag" id="ajax_fastList">
+    <% for (var k = 0; k < fastList.length; k++) { %>
+        <a href='javascript:;' data-FAST_NAME='<%= fastList[k]['FAST_NAME'] %>' data-ID='<%= fastList[k]['ID'] %>' data-LINK_NAME='<%= fastList[k]['LINK_NAME'] %>' data-FAST_IMG='<%= fastList[k]['FAST_IMG'] %>'>
+            <img class='lazyload' data-original="<%=fastList[k]['FAST_IMG']%>">
+            <span><%=fastList[k]['FAST_NAME']%></span>
+        </a>
+    <% } %>
+</div>
