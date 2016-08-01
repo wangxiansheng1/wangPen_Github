@@ -136,6 +136,7 @@ define('lehu.h5.component.index', [
         $("#ajax_banner").empty().append(html);
 
         new Swipe($('.nbanner .swiper-container')[0], {
+          pagination: $('.swiper-pagination')[0],
           startSlide: 0,
           speed: 300,
           auto: 2000,
