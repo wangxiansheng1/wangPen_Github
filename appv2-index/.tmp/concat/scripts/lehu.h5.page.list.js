@@ -1,3 +1,769 @@
+/**
+ * Zepto picLazyLoad Plugin
+ * ximan http://ons.me/484.html
+ * 20140517 v1.0
+ */
+;(function($){$.fn.picLazyLoad=function(settings){var $this=$(this),_winScrollTop=0,_winHeight=$(window).height();settings=$.extend({threshold:0,placeholder:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC'},settings||{});lazyLoadPic();$(window).on('scroll',function(){_winScrollTop=$(window).scrollTop();lazyLoadPic();});function lazyLoadPic(){$this.each(function(){var $self=$(this);if($self.is('img')){if($self.attr('data-original')){var _offsetTop=$self.offset().top;if((_offsetTop-settings.threshold)<=(_winHeight+_winScrollTop)){$self.attr('src',$self.attr('data-original'));$self.removeAttr('data-original');}}}else{if($self.attr('data-original')){if($self.css('background-image')=='none'){$self.css('background-image','url('+settings.placeholder+')');}
+var _offsetTop=$self.offset().top;if((_offsetTop-settings.threshold)<=(_winHeight+_winScrollTop)){$self.css('background-image','url('+$self.attr('data-original')+')');$self.removeAttr('data-original');}}}});}}})(Zepto);
+define("imagelazyload", function(){});
+
+/**
+ * @license RequireJS text 2.0.14 Copyright (c) 2010-2014, The Dojo Foundation All Rights Reserved.
+ * Available via the MIT or new BSD license.
+ * see: http://github.com/requirejs/text for details
+ */
+/*jslint regexp: true */
+/*global require, XMLHttpRequest, ActiveXObject,
+  define, window, process, Packages,
+  java, location, Components, FileUtils */
+
+define('text',['module'], function (module) {
+    
+
+    var text, fs, Cc, Ci, xpcIsWindows,
+        progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
+        xmlRegExp = /^\s*<\?xml(\s)+version=[\'\"](\d)*.(\d)*[\'\"](\s)*\?>/im,
+        bodyRegExp = /<body[^>]*>\s*([\s\S]+)\s*<\/body>/im,
+        hasLocation = typeof location !== 'undefined' && location.href,
+        defaultProtocol = hasLocation && location.protocol && location.protocol.replace(/\:/, ''),
+        defaultHostName = hasLocation && location.hostname,
+        defaultPort = hasLocation && (location.port || undefined),
+        buildMap = {},
+        masterConfig = (module.config && module.config()) || {};
+
+    text = {
+        version: '2.0.14',
+
+        strip: function (content) {
+            //Strips <?xml ...?> declarations so that external SVG and XML
+            //documents can be added to a document without worry. Also, if the string
+            //is an HTML document, only the part inside the body tag is returned.
+            if (content) {
+                content = content.replace(xmlRegExp, "");
+                var matches = content.match(bodyRegExp);
+                if (matches) {
+                    content = matches[1];
+                }
+            } else {
+                content = "";
+            }
+            return content;
+        },
+
+        jsEscape: function (content) {
+            return content.replace(/(['\\])/g, '\\$1')
+                .replace(/[\f]/g, "\\f")
+                .replace(/[\b]/g, "\\b")
+                .replace(/[\n]/g, "\\n")
+                .replace(/[\t]/g, "\\t")
+                .replace(/[\r]/g, "\\r")
+                .replace(/[\u2028]/g, "\\u2028")
+                .replace(/[\u2029]/g, "\\u2029");
+        },
+
+        createXhr: masterConfig.createXhr || function () {
+            //Would love to dump the ActiveX crap in here. Need IE 6 to die first.
+            var xhr, i, progId;
+            if (typeof XMLHttpRequest !== "undefined") {
+                return new XMLHttpRequest();
+            } else if (typeof ActiveXObject !== "undefined") {
+                for (i = 0; i < 3; i += 1) {
+                    progId = progIds[i];
+                    try {
+                        xhr = new ActiveXObject(progId);
+                    } catch (e) {}
+
+                    if (xhr) {
+                        progIds = [progId];  // so faster next time
+                        break;
+                    }
+                }
+            }
+
+            return xhr;
+        },
+
+        /**
+         * Parses a resource name into its component parts. Resource names
+         * look like: module/name.ext!strip, where the !strip part is
+         * optional.
+         * @param {String} name the resource name
+         * @returns {Object} with properties "moduleName", "ext" and "strip"
+         * where strip is a boolean.
+         */
+        parseName: function (name) {
+            var modName, ext, temp,
+                strip = false,
+                index = name.lastIndexOf("."),
+                isRelative = name.indexOf('./') === 0 ||
+                             name.indexOf('../') === 0;
+
+            if (index !== -1 && (!isRelative || index > 1)) {
+                modName = name.substring(0, index);
+                ext = name.substring(index + 1);
+            } else {
+                modName = name;
+            }
+
+            temp = ext || modName;
+            index = temp.indexOf("!");
+            if (index !== -1) {
+                //Pull off the strip arg.
+                strip = temp.substring(index + 1) === "strip";
+                temp = temp.substring(0, index);
+                if (ext) {
+                    ext = temp;
+                } else {
+                    modName = temp;
+                }
+            }
+
+            return {
+                moduleName: modName,
+                ext: ext,
+                strip: strip
+            };
+        },
+
+        xdRegExp: /^((\w+)\:)?\/\/([^\/\\]+)/,
+
+        /**
+         * Is an URL on another domain. Only works for browser use, returns
+         * false in non-browser environments. Only used to know if an
+         * optimized .js version of a text resource should be loaded
+         * instead.
+         * @param {String} url
+         * @returns Boolean
+         */
+        useXhr: function (url, protocol, hostname, port) {
+            var uProtocol, uHostName, uPort,
+                match = text.xdRegExp.exec(url);
+            if (!match) {
+                return true;
+            }
+            uProtocol = match[2];
+            uHostName = match[3];
+
+            uHostName = uHostName.split(':');
+            uPort = uHostName[1];
+            uHostName = uHostName[0];
+
+            return (!uProtocol || uProtocol === protocol) &&
+                   (!uHostName || uHostName.toLowerCase() === hostname.toLowerCase()) &&
+                   ((!uPort && !uHostName) || uPort === port);
+        },
+
+        finishLoad: function (name, strip, content, onLoad) {
+            content = strip ? text.strip(content) : content;
+            if (masterConfig.isBuild) {
+                buildMap[name] = content;
+            }
+            onLoad(content);
+        },
+
+        load: function (name, req, onLoad, config) {
+            //Name has format: some.module.filext!strip
+            //The strip part is optional.
+            //if strip is present, then that means only get the string contents
+            //inside a body tag in an HTML string. For XML/SVG content it means
+            //removing the <?xml ...?> declarations so the content can be inserted
+            //into the current doc without problems.
+
+            // Do not bother with the work if a build and text will
+            // not be inlined.
+            if (config && config.isBuild && !config.inlineText) {
+                onLoad();
+                return;
+            }
+
+            masterConfig.isBuild = config && config.isBuild;
+
+            var parsed = text.parseName(name),
+                nonStripName = parsed.moduleName +
+                    (parsed.ext ? '.' + parsed.ext : ''),
+                url = req.toUrl(nonStripName),
+                useXhr = (masterConfig.useXhr) ||
+                         text.useXhr;
+
+            // Do not load if it is an empty: url
+            if (url.indexOf('empty:') === 0) {
+                onLoad();
+                return;
+            }
+
+            //Load the text. Use XHR if possible and in a browser.
+            if (!hasLocation || useXhr(url, defaultProtocol, defaultHostName, defaultPort)) {
+                text.get(url, function (content) {
+                    text.finishLoad(name, parsed.strip, content, onLoad);
+                }, function (err) {
+                    if (onLoad.error) {
+                        onLoad.error(err);
+                    }
+                });
+            } else {
+                //Need to fetch the resource across domains. Assume
+                //the resource has been optimized into a JS module. Fetch
+                //by the module name + extension, but do not include the
+                //!strip part to avoid file system issues.
+                req([nonStripName], function (content) {
+                    text.finishLoad(parsed.moduleName + '.' + parsed.ext,
+                                    parsed.strip, content, onLoad);
+                });
+            }
+        },
+
+        write: function (pluginName, moduleName, write, config) {
+            if (buildMap.hasOwnProperty(moduleName)) {
+                var content = text.jsEscape(buildMap[moduleName]);
+                write.asModule(pluginName + "!" + moduleName,
+                               "define(function () { return '" +
+                                   content +
+                               "';});\n");
+            }
+        },
+
+        writeFile: function (pluginName, moduleName, req, write, config) {
+            var parsed = text.parseName(moduleName),
+                extPart = parsed.ext ? '.' + parsed.ext : '',
+                nonStripName = parsed.moduleName + extPart,
+                //Use a '.js' file name so that it indicates it is a
+                //script that can be loaded across domains.
+                fileName = req.toUrl(parsed.moduleName + extPart) + '.js';
+
+            //Leverage own load() method to load plugin value, but only
+            //write out values that do not have the strip argument,
+            //to avoid any potential issues with ! in file names.
+            text.load(nonStripName, req, function (value) {
+                //Use own write() method to construct full module value.
+                //But need to create shell that translates writeFile's
+                //write() to the right interface.
+                var textWrite = function (contents) {
+                    return write(fileName, contents);
+                };
+                textWrite.asModule = function (moduleName, contents) {
+                    return write.asModule(moduleName, fileName, contents);
+                };
+
+                text.write(pluginName, nonStripName, textWrite, config);
+            }, config);
+        }
+    };
+
+    if (masterConfig.env === 'node' || (!masterConfig.env &&
+            typeof process !== "undefined" &&
+            process.versions &&
+            !!process.versions.node &&
+            !process.versions['node-webkit'] &&
+            !process.versions['atom-shell'])) {
+        //Using special require.nodeRequire, something added by r.js.
+        fs = require.nodeRequire('fs');
+
+        text.get = function (url, callback, errback) {
+            try {
+                var file = fs.readFileSync(url, 'utf8');
+                //Remove BOM (Byte Mark Order) from utf8 files if it is there.
+                if (file[0] === '\uFEFF') {
+                    file = file.substring(1);
+                }
+                callback(file);
+            } catch (e) {
+                if (errback) {
+                    errback(e);
+                }
+            }
+        };
+    } else if (masterConfig.env === 'xhr' || (!masterConfig.env &&
+            text.createXhr())) {
+        text.get = function (url, callback, errback, headers) {
+            var xhr = text.createXhr(), header;
+            xhr.open('GET', url, true);
+
+            //Allow plugins direct access to xhr headers
+            if (headers) {
+                for (header in headers) {
+                    if (headers.hasOwnProperty(header)) {
+                        xhr.setRequestHeader(header.toLowerCase(), headers[header]);
+                    }
+                }
+            }
+
+            //Allow overrides specified in config
+            if (masterConfig.onXhr) {
+                masterConfig.onXhr(xhr, url);
+            }
+
+            xhr.onreadystatechange = function (evt) {
+                var status, err;
+                //Do not explicitly handle errors, those should be
+                //visible via console output in the browser.
+                if (xhr.readyState === 4) {
+                    status = xhr.status || 0;
+                    if (status > 399 && status < 600) {
+                        //An http 4xx or 5xx error. Signal an error.
+                        err = new Error(url + ' HTTP status: ' + status);
+                        err.xhr = xhr;
+                        if (errback) {
+                            errback(err);
+                        }
+                    } else {
+                        callback(xhr.responseText);
+                    }
+
+                    if (masterConfig.onXhrComplete) {
+                        masterConfig.onXhrComplete(xhr, url);
+                    }
+                }
+            };
+            xhr.send(null);
+        };
+    } else if (masterConfig.env === 'rhino' || (!masterConfig.env &&
+            typeof Packages !== 'undefined' && typeof java !== 'undefined')) {
+        //Why Java, why is this so awkward?
+        text.get = function (url, callback) {
+            var stringBuffer, line,
+                encoding = "utf-8",
+                file = new java.io.File(url),
+                lineSeparator = java.lang.System.getProperty("line.separator"),
+                input = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(file), encoding)),
+                content = '';
+            try {
+                stringBuffer = new java.lang.StringBuffer();
+                line = input.readLine();
+
+                // Byte Order Mark (BOM) - The Unicode Standard, version 3.0, page 324
+                // http://www.unicode.org/faq/utf_bom.html
+
+                // Note that when we use utf-8, the BOM should appear as "EF BB BF", but it doesn't due to this bug in the JDK:
+                // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4508058
+                if (line && line.length() && line.charAt(0) === 0xfeff) {
+                    // Eat the BOM, since we've already found the encoding on this file,
+                    // and we plan to concatenating this buffer with others; the BOM should
+                    // only appear at the top of a file.
+                    line = line.substring(1);
+                }
+
+                if (line !== null) {
+                    stringBuffer.append(line);
+                }
+
+                while ((line = input.readLine()) !== null) {
+                    stringBuffer.append(lineSeparator);
+                    stringBuffer.append(line);
+                }
+                //Make sure we return a JavaScript string and not a Java string.
+                content = String(stringBuffer.toString()); //String
+            } finally {
+                input.close();
+            }
+            callback(content);
+        };
+    } else if (masterConfig.env === 'xpconnect' || (!masterConfig.env &&
+            typeof Components !== 'undefined' && Components.classes &&
+            Components.interfaces)) {
+        //Avert your gaze!
+        Cc = Components.classes;
+        Ci = Components.interfaces;
+        Components.utils['import']('resource://gre/modules/FileUtils.jsm');
+        xpcIsWindows = ('@mozilla.org/windows-registry-key;1' in Cc);
+
+        text.get = function (url, callback) {
+            var inStream, convertStream, fileObj,
+                readData = {};
+
+            if (xpcIsWindows) {
+                url = url.replace(/\//g, '\\');
+            }
+
+            fileObj = new FileUtils.File(url);
+
+            //XPCOM, you so crazy
+            try {
+                inStream = Cc['@mozilla.org/network/file-input-stream;1']
+                           .createInstance(Ci.nsIFileInputStream);
+                inStream.init(fileObj, 1, 0, false);
+
+                convertStream = Cc['@mozilla.org/intl/converter-input-stream;1']
+                                .createInstance(Ci.nsIConverterInputStream);
+                convertStream.init(inStream, "utf-8", inStream.available(),
+                Ci.nsIConverterInputStream.DEFAULT_REPLACEMENT_CHARACTER);
+
+                convertStream.readString(inStream.available(), readData);
+                convertStream.close();
+                inStream.close();
+                callback(readData.value);
+            } catch (e) {
+                throw new Error((fileObj && fileObj.path || '') + ': ' + e);
+            }
+        };
+    }
+    return text;
+});
+
+
+define('text!template_components_list',[],function () { return '\n<div >\n<div class="ajax_noload"><img src="images/wifi.png">网络请求失败，请稍候再试<span><img src="images/sx.png"></span></div>\n\n<!--顶部-->\n<div class="nheader_list">\n    <div class="nindex_fanhui"></div>\n    <div class="nindex_sousuo" unselectable="on" style="-moz-user-select:none;-webkit-user-select:none;" onselectstart="return false;"><em></em><b class="nkeyword">全球购，找到好口碑</b></div>\n    <div class="list_style"></div>\n</div>\n<!--/顶部-->\n<!--站内搜索关键词-->\n<input type="hidden" name="#request.keywordCodition" value="" id="keywordCodition">\n<!--搜索关键字-->\n<input type="hidden" name="#request.flagCodition" value="1" id="flagCodition">\n<!--1,升序，2降序-->\n<input type="hidden" name="#request.sortCodition" value="2" id="sortCodition">\n<!--当前页-->\n<input type="hidden" name="#request.pageNumCodition" value="1" id="pageNumCodition">\n<!--品牌-->\n<input type="hidden" name="#request.brandCodition" value="" id="brandCodition">\n<!--搜索关键字-->\n<input type="hidden" name="#request.attributeCodition" value="" id="attributeCodition">\n<!--搜索关键字-->\n<input type="hidden" name="#request.markCodition" value="0" id="markCodition">\n<!--三级类目-->\n<input type="hidden" name="#request.goods_category_id" value="12" id="goods_category_id">\n<!--每页大小-->\n<input type="hidden" name="pageBean.page.size" value="10" id="goodsNum">\n\n\n<!--select-->\n<div class="nlist_top">\n    <span class="cur" id="salesvolume">销量</span>\n    <span id="price" class="sheng0 ">价格</span>\n    <span id="countreview">评价</span>\n    <span id="viewcount">人气</span>\n</div>\n<!--/select-->\n\n<!--list-->\n<div class="nlist_list nlist_list_kuai" id="ajax_goodsList"></div>\n<!--/list-->\n<div class="clear"></div>\n<img src="images/loading.gif" class="nlist_loading">\n<!--没有更多提示-->\n<img src="images/nomore.png" class="nlist_nomore">\n<!--没有商品提示-->\n<img src="images/no.png" class="nlist_no">\n\n<a href="#" class="fix_go_top" onclick="return false;"></a>\n</div>';});
+
+define('lehu.h5.component.list', [
+    'zepto',
+    'can',
+    'lehu.h5.business.config',
+    'lehu.util',
+    'lehu.h5.api',
+    'lehu.hybrid',
+
+    'imagelazyload',
+
+    'text!template_components_list'
+  ],
+
+  function($, can, LHConfig, util, LHAPI, LHHybrid,
+    imagelazyload,
+    template_components_list) {
+    
+
+    return can.Control.extend({
+
+      param: {},
+
+      helpers: {
+
+      },
+
+      /**
+       * @override
+       * @description 初始化方法
+       */
+      init: function() {
+        this.initData();
+
+        var renderList = can.mustache(template_components_list);
+        var html = renderList(this.options);
+        this.element.html(html);
+
+        this.param = this.initParams();
+        this.totalPageNum = "";
+        this.goodsCategoryList();
+
+        this.bindScroll();
+      },
+
+      initData: function() {
+        this.URL = LHHybrid.getUrl();
+      },
+
+      // sortMode 1销量2价格3评价4人气
+      // sortType 1,升序，2降序
+      // areaId (城市）区域ID
+      // mark 4表示，是通过筛选
+      initParams: function() {
+        var param = can.deparam(window.location.search.substr(1));
+
+        //每页显示
+        param["pageSize"] = 10;
+
+        //当前第几页
+        param["pageIndex"] = 1;
+
+        return param;
+      },
+
+      goodsCategoryList: function() {
+        var that = this;
+
+        var api = new LHAPI({
+          url: LHConfig.setting.action.goodsCategoryList,
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+            $("html").attr("data_type", data.type);
+
+            var html = "";
+            //总页数
+            that.totalPageNum = data.totalPageNum;
+            var goodsList = data && data.goodsList;
+
+            if (goodsList && goodsList.length > 0) {
+              $(".nlist_nomore,.nlist_no").css("display", "none");
+              for (var k = 0; k < goodsList.length; k++) {
+                var zy = goodsList[k]['IS_CONSUMPTION_COUPON'];
+
+                var PRICE = String(goodsList[k]['PRICE'].toString());
+                var q = Math.floor(PRICE);
+                var h = (PRICE).slice(-2);
+
+                var DISCOUNT_PRICE = goodsList[k]['DISCOUNT_PRICE'];
+
+                html += "<div class='nlist_list_main'  data-STORE_ID='" + goodsList[k]['STORE_ID'] + "' data-GOODS_NO='" + goodsList[k]['GOODS_NO'] + "' data-GOODS_ID='" + goodsList[k]['GOODS_ID'] + "' >";
+                html += "<img class='nlist_list_mainleft lazyload'  src=" + that.URL.IMAGE_URL + goodsList[k]['GOODS_IMG'] + " >";
+                html += "<div class='nlist_list_mainright'>";
+                html += "<div class='nlist_list_title'>";
+                if (zy == 1) {
+                  html += "<span class='nlist_list_title_zhiyou'>【海外直邮】</span>";
+                }
+                if (zy == 2) {
+                  html += "<span class='nlist_list_title_zhiyou'>【保税区发货】</span>";
+                }
+                html += goodsList[k]['GOODS_NAME'];
+                html += "</div>";
+                if (DISCOUNT_PRICE !== undefined) {
+                  var DISCOUNT_PRICEa = String(DISCOUNT_PRICE);
+                  var z_q = Math.floor(DISCOUNT_PRICEa);
+                  var z_h = (DISCOUNT_PRICEa).slice(-2);
+                  html += "<div class='nlist_list_jiage'><span>￥" + z_q + ".<em>" + z_h + "</em></span><i>￥<del>" + PRICE + "</del></i></div>";
+                } else {
+                  html += "<div class='nlist_list_jiage'><span>￥" + q + ".<em>" + h + "</em></span></div>";
+                }
+                // html += "<div class='nlist_list_pinglun'>好评度：<em>" + Math.floor(goodsList[k]['REVIEW_PERCENT']) + "%</em>（<em>" + goodsList[k]['REVIEW_NUMBER'] + "</em>人）</div>";
+                if (goodsList[k]['STORE_NAME']) {
+                  html += "<div class='nlist_list_pinglun'>" + goodsList[k]['STORE_NAME'] + "</div>";
+                }
+                html += "</div></div>";
+              }
+              $("#ajax_goodsList").append(html);
+              that.lazyload();
+              $(".nwrapper_list").removeClass("one_loading");
+              //商品点击事件
+
+              $(".nlist_list_main").unbind('click').click(function() {
+                var STORE_ID = $(this).attr("data-STORE_ID");
+                var GOODS_NO = $(this).attr("data-GOODS_NO");
+                var GOODS_ID = $(this).attr("data-GOODS_ID");
+                var jsonParams = {
+                  'funName': 'good_detail_fun',
+                  'params': {
+                    'STORE_ID': STORE_ID,
+                    'GOODS_NO': GOODS_NO,
+                    'GOODS_ID': GOODS_ID
+                  }
+                };
+                native.nativeFun(jsonParams);
+                console.log('good_detail_fun');
+                console.log("1");
+              })
+
+              //商品
+              $(".nmiaosha_main a,.prommotionLayout_detail").click(function() {
+
+                var STORE_ID = $(this).attr("data-STORE_ID");
+                var GOODS_NO = $(this).attr("data-GOODS_NO");
+                var GOODS_ID = $(this).attr("data-GOODS_ID");
+                var jsonParams = {
+                  'funName': 'good_detail_fun',
+                  'params': {
+                    'STORE_ID': STORE_ID,
+                    'GOODS_NO': GOODS_NO,
+                    'GOODS_ID': GOODS_ID
+                  }
+                };
+                native.nativeFun(jsonParams);
+
+              })
+
+            } else {
+              that.nlist_no();
+            }
+
+            if (that.param["pageIndex"] == data["totalPageNum"]) {
+              that.nlist_no();
+            }
+          })
+          .fail(function(error) {
+            $(".ajax_noload").show();
+          });
+
+      },
+
+      bindScroll: function() {
+        var that = this;
+
+        //滚动加载
+        var range = 400; //距下边界长度/单位px
+        var huadong = true;
+
+        var totalheight = 0;
+        var main = $("#ajax_goodsList"); //主体元素
+        $(window).scroll(function() {
+
+          if (that.param["pageIndex"] > that.totalPageNum) {
+            that.nlist_no();
+            return;
+          }
+
+          var srollPos = $(window).scrollTop(); //滚动条距顶部距离(页面超出窗口的高度)
+          totalheight = parseFloat($(window).height()) + parseFloat(srollPos); //滚动条当前位置距顶部距离+浏览器的高度
+
+          if (($(document).height() == totalheight)) {
+            that.param["pageIndex"]++;
+
+            that.goodsCategoryList();
+            that.lazyload();
+          } else {
+            if (($(document).height() - totalheight) <= range) { //页面底部与滚动条底部的距离<range
+              if (huadong) {
+                huadong = false;
+                that.param["pageIndex"]++;
+
+                that.goodsCategoryList();
+                that.lazyload();
+              }
+            } else {
+              huadong = true;
+            }
+          }
+
+        });
+      },
+
+      //销量
+      "#salesvolume click": function(element, event) {
+        if (!element.hasClass("cur")) {
+          $(".nlist_nomore").css("display", "none");
+          $(".nlist_loading").css("display", "block");
+          $(".nwrapper_list").addClass("one_loading");
+          this.param["pageIndex"] = 1;
+          this.param["sort"] = 2;
+          this.param["sortMode"] = 1;
+          this.param["sortType"] = 2;
+          $("#ajax_goodsList").empty();
+          this.goodsCategoryList();
+          $("#price").removeClass("jiang");
+          $("#price").removeClass("sheng");
+        }
+      },
+
+      //价格
+      "#price click": function(element, event) {
+        if (element.hasClass("sheng")) {
+          element.removeClass("sheng");
+          element.addClass("jiang");
+          $(".nlist_nomore").css("display", "none");
+          $(".nlist_loading").css("display", "block");
+          $(".nwrapper_list").addClass("one_loading");
+          this.param["pageIndex"] = 1;
+          this.param["sort"] = 2;
+          this.param["sortMode"] = 2;
+          this.param["sortType"] = 2;
+          $("#ajax_goodsList").empty();
+          this.goodsCategoryList();
+
+        } else {
+          element.removeClass("jiang");
+          element.addClass("sheng");
+          $(".nlist_nomore").css("display", "none");
+          $(".nlist_loading").css("display", "block");
+          $(".nwrapper_list").addClass("one_loading");
+          this.param["pageIndex"] = 1;
+          this.param["sort"] = 2;
+          this.param["sortMode"] = 2;
+          this.param["sortType"] = 1;
+          $("#ajax_goodsList").empty();
+          this.goodsCategoryList();
+
+        }
+      },
+
+      //评价
+      "#countreview click": function(element, event) {
+        if (!element.hasClass("cur")) {
+          $(".nlist_nomore").css("display", "none");
+          $(".nlist_loading").css("display", "block");
+          $(".nwrapper_list").addClass("one_loading");
+          this.param["pageIndex"] = 1;
+          this.param["sort"] = 2;
+          this.param["sortMode"] = 3;
+          this.param["sortType"] = 2;
+          $("#ajax_goodsList").empty();
+          this.goodsCategoryList();
+          $("#price").removeClass("jiang");
+          $("#price").removeClass("sheng");
+        }
+      },
+
+      //人气
+      "#viewcount click": function(element, event) {
+        if (!$(this).hasClass("cur")) {
+          $(".nlist_nomore").css("display", "none");
+          $(".nlist_loading").css("display", "block");
+          $(".nwrapper_list").addClass("one_loading");
+          this.param["pageIndex"] = 1;
+          this.param["sort"] = 2;
+          this.param["sortMode"] = 4;
+          this.param["sortType"] = 2;
+          $("#ajax_goodsList").empty();
+          this.goodsCategoryList();
+          $("#price").removeClass("jiang");
+          $("#price").removeClass("sheng");
+        }
+      },
+
+      '.nlist_top span click': function(element, event) {
+        $(".nlist_top span").removeClass("cur");
+        element.addClass("cur");
+        $(".nlist_top").css("position", "static");
+        $(".nlist_list").css("margin-top", "0");
+      },
+
+      '.list_style click': function(element, event) {
+        element.toggleClass('list_style_kuai');
+
+        if (element.hasClass("list_style_kuai")) {
+          $(".nlist_list").removeClass("nlist_list_kuai");
+          $("body").css("background", "#ffffff");
+          this.lazyload();
+        } else {
+          $(".nlist_list").addClass("nlist_list_kuai");
+          $("body").css("background", "#ecebf2");
+        }
+      },
+
+      //判断商品是否存在
+      nlist_no: function() {
+        $(".nlist_loading").css("display", "none");
+
+        var goodsNum = $("#ajax_goodsList").html();
+        if (goodsNum == "") {
+          $(".nlist_no").show();
+        } else {
+          $(".nlist_nomore").css("display", "block");
+        }
+      },
+
+      lazyload: function() {
+        $('.lazyload').picLazyLoad({
+          threshold: 1000
+        });
+      },
+
+      '.nindex_sousuo click': function() {
+        var jsonParams = {
+          'funName': 'search_fun',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
+        console.log(search_fun);
+      },
+
+      '.nindex_fanhui click': function() {
+        var jsonParams = {
+          'funName': 'back_fun',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
+        console.log('back_fun');
+      },
+
+      getQueryString: function(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+          return unescape(decodeURIComponent(r[2]));
+        }
+        return null;
+      }
+    });
+
+  });
 ;(function () {
 	
 
@@ -840,35 +1606,6 @@
 	}
 }());
 
-define('lehu.h5.component.list', [
-    'zepto',
-    'zepto.cookie',
-    'can',
-    'md5',
-    'store',
-    'fastclick',
-    'lehu.h5.business.config'
-  ],
-
-  function($, cookie, can, md5, store, Fastclick, LHConfig) {
-    
-
-    return can.Control.extend({
-
-      helpers: {
-
-      },
-
-      /**
-       * @override
-       * @description 初始化方法
-       */
-      init: function() {
-
-
-      }
-    });
-  });
 define('lehu.h5.page.list', [
         'can',
         'zepto',
@@ -876,13 +1613,12 @@ define('lehu.h5.page.list', [
         'lehu.util',
         'lehu.h5.framework.comm',
         'lehu.h5.business.config',
-        'lehu.env.switcher',
         'lehu.hybrid',
 
         'lehu.h5.component.list'
     ],
 
-    function(can, $, Fastclick, util, LHFrameworkComm, LHHeader, LHConfig, LHSwitcher, LHHybrid,
+    function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
         LHList) {
         
 
@@ -896,10 +1632,7 @@ define('lehu.h5.page.list', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
-                if (!LHFrameworkComm.prototype.checkUserLogin.call(this)) {
-                    window.location.href = LHConfig.setting.link.login + '&from=' + escape(window.location.pathname);
-                    return false;
-                }
+                var list = new LHList("#list");
             }
         });
 

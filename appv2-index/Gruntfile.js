@@ -169,7 +169,7 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            '<%= config.dist %>/index.html'
+            // '<%= config.dist %>/index.html'
           ]
         }]
       }
