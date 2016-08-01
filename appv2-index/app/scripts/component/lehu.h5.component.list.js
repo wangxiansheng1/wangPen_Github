@@ -20,10 +20,6 @@ define('lehu.h5.component.list', [
 
       param: {},
 
-      helpers: {
-
-      },
-
       /**
        * @override
        * @description 初始化方法
@@ -349,13 +345,12 @@ define('lehu.h5.component.list', [
         console.log('back_fun');
       },
 
-      getQueryString: function(name) {
-        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-          return unescape(decodeURIComponent(r[2]));
-        }
-        return null;
+      '.ajax_noload click': function() {
+        var jsonParams = {
+          'funName': 'reload_web_fun',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
       }
     });
 

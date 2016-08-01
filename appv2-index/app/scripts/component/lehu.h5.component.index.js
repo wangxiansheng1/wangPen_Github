@@ -600,6 +600,14 @@ define('lehu.h5.component.index', [
         });
       },
 
+      '.ajax_noload click': function() {
+        var jsonParams = {
+          'funName': 'reload_web_fun',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
       countDown: function() {
         var hours;
         var minutes;
