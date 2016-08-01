@@ -19,10 +19,6 @@ define('lehu.h5.component.index', [
 
     return can.Control.extend({
 
-      helpers: {
-
-      },
-
       /**
        * @override
        * @description 初始化方法
@@ -138,17 +134,6 @@ define('lehu.h5.component.index', [
         }
 
         $("#ajax_banner").empty().append(html);
-
-        //插件_幻灯片
-        // var swiper = new Swipe('.nbanner .swiper-container', {
-        //   pagination: '.nbanner .swiper-pagination',
-        //   autoplay: 2000,
-        //   autoplayDisableOnInteraction: false,
-        //   speed: 300,
-        //   loop: true,
-        //   longSwipesRatio: 0.1,
-
-        // });
 
         new Swipe($('.nbanner .swiper-container')[0], {
           startSlide: 0,
@@ -495,7 +480,6 @@ define('lehu.h5.component.index', [
               LHHybrid.nativeFun(jsonParams);
             })
 
-
             $(".nshow_list_video .nshow_listbox_title,.nshow_list_video .nshow_listmsg").click(function() {
               var id = $(this).parent().attr("data-id");
               var SHOW_FILE = $(this).parent().attr("data-SHOW_FILE");
@@ -541,9 +525,6 @@ define('lehu.h5.component.index', [
               };
               LHHybrid.nativeFun(jsonParams);
             })
-
-
-
           }, 1500);
 
       },
