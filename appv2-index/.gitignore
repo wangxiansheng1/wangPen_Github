@@ -4,3 +4,4 @@ dist/
 h5-common-oss/
 h5-common-static/
 publish/
+.tmp

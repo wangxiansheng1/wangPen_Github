@@ -519,6 +519,17 @@ module.exports = function(grunt) {
         }]
       },
 
+      commonjs: {
+        expand: true,
+        dot: true,
+        timestamp: true,
+        cwd: '<%= config.app %>',
+        dest: '<%= config.dist %>',
+        src: [
+          'scripts/common/{,*/}*.*'
+        ]
+      },
+
       html: {
         expand: true,
         dot: true,
@@ -651,13 +662,16 @@ module.exports = function(grunt) {
     // Run some tasks in parallel to speed up build process
     concurrent: {
       server: [
-        'copy:styles'
+        'copy:styles',
+        'copy:commonjs'
       ],
       test: [
-        'copy:styles'
+        'copy:styles',
+        'copy:commonjs'
       ],
       dist: [
         'copy:styles',
+        'copy:commonjs',
         'imagemin',
         'svgmin'
       ]
