@@ -33,7 +33,7 @@ requirejs.config({
         "lehu.h5.component.list": "scripts/component/lehu.h5.component.list",
 
         "template_components_index": "templates/components/lehu.h5.components.index.mustache",
-        "template_components_list": "templates/components/ehu.h5.components.list.mustache",
+        "template_components_list": "templates/components/lehu.h5.components.list.mustache",
 
         "swipe": "scripts/vendor/swipe",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min"

@@ -1,11 +1,8 @@
 define('lehu.h5.component.index', [
     'zepto',
-    'zepto.cookie',
     'can',
-    'md5',
-    'store',
-    'fastclick',
     'lehu.h5.business.config',
+    'lehu.util',
     'lehu.h5.api',
     'lehu.hybrid',
 
@@ -15,7 +12,7 @@ define('lehu.h5.component.index', [
     'text!template_components_index'
   ],
 
-  function($, cookie, can, md5, store, Fastclick, LHConfig, LHAPI, LHHybrid,
+  function($, can, LHConfig, util, LHAPI, LHHybrid,
     Swipe, imagelazyload,
     template_components_index) {
     'use strict';
@@ -43,7 +40,7 @@ define('lehu.h5.component.index', [
         this.element.html(html);
 
         var api = new LHAPI({
-          url: "initIndex.do",
+          url: LHConfig.setting.action.appNewIndexFirst,
           data: {}
         });
         api.sendRequest()
@@ -374,8 +371,6 @@ define('lehu.h5.component.index', [
 
         this.lazyload();
 
-        prommotionLayout_swiper();
-
         $(".prommotionLayout_ad,.prommotionLayout_detail_more").click(function() {
           var id = $(this).attr("data-id");
           var promotion_name = $(this).attr("data-promotion_name");
@@ -390,8 +385,6 @@ define('lehu.h5.component.index', [
           };
           LHHybrid.nativeFun(jsonParams);
         })
-
-
 
         //商品
         $(".nmiaosha_main a,.prommotionLayout_detail").click(function() {
@@ -454,7 +447,7 @@ define('lehu.h5.component.index', [
 
             $("#ajax_showList").empty().append(html);
 
-            this.lazyload();
+            that.lazyload();
 
             $(".nshow_listbox").click(function() {
               var id = $(this).attr("data-id");
@@ -553,15 +546,6 @@ define('lehu.h5.component.index', [
 
           }, 1500);
 
-      },
-
-      prommotionLayout_swiper: function() {
-        var swiper = new Swiper('.ntuijian_main .swiper-container', {
-          slidesPerView: 3,
-          paginationClickable: true,
-          spaceBetween: 8,
-          freeMode: true
-        });
       },
 
       bindScroll: function() {

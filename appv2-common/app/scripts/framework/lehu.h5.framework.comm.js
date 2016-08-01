@@ -44,6 +44,7 @@ define([
       setData: function(data) {
         this.url = data.url;
         this.data = data.data;
+        this.method = data.method;
       },
 
       /**
@@ -57,12 +58,18 @@ define([
         //step1 构建ajax请求数据，放到baseCommon的全局变量中，可以支持多个请求一起发送
         var requestData = this.buildRequestData();
 
+        var method = this.getMethod();
+
         //step2 发送请求,获得返回数据
-        return this.request(requestData, isForceUserLogin);
+        return this.request(requestData, method, isForceUserLogin);
       },
 
       buildRequestData: function() {
         return this.data;
+      },
+
+      getMethod: function() {
+        return this.method;
       },
 
       /**
@@ -96,7 +103,7 @@ define([
        * @param  {Boolean} isForceUserLogin 是否需要强制登陆
        * @return {can.Deferred}
        */
-      request: function(data, isForceUserLogin) {
+      request: function(data, method, isForceUserLogin) {
         var def = can.Deferred();
         var that = this;
 
@@ -110,8 +117,8 @@ define([
 
         $.ajax({
             url: LHBizConfig.setting.REQUEST_HOST + this.url,
-            type: 'post',
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            type: method || 'get',
+            contentType: method == 'get' ? "text/x-json;charset=UTF-8" : "application/x-www-form-urlencoded; charset=UTF-8",
             data: data,
             success: function(response) {
               successCallback(response);
