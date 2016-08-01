@@ -31,7 +31,7 @@ module.exports = function(grunt) {
     timestamp: Date.now()
   };
 
-  var OSS_HOST = 'http://img0.fengqucdn.com/fqhth5/' + config.oss;
+  var OSS_HOST = 'http://img0.lehucdn.com/lehuh5/' + config.oss;
 
   var cut = function(dest) {
     var map = ['order/', 'main/', 'center/', 'detail/'];
@@ -262,32 +262,6 @@ module.exports = function(grunt) {
         blockReplacements: {
           js: function(block) {
 
-            if (!config.hybrid && (block.dest == '../cordova.js' || block.dest == '/../cordova.js')) {
-              return '';
-            }
-
-            if (config.hybrid && block.dest == '/scripts/sf.h5.base.js') {
-              return ''
-            } else if (!config.hybrid && block.dest == '/scripts/sf.h5.hybrid.base.js') {
-              return '';
-            }
-
-            if (!config.hybrid && block.dest == '../cordova.js') {
-              return '';
-            }
-
-            if (config.hybrid) {
-              if (block.dest[0] == '/') {
-                return '<script src="' + '.' + block.dest + '"></script>';
-              } else if (block.dest[0] != './') {
-                return '<script src="' + './' + block.dest + '"></script>';
-              } else {
-                return '<script src="' + block.dest + '"></script>';
-              }
-
-              block.dest = cut(dest);
-            }
-
             if (config.version) {
               if (block.dest[0] != '/') {
                 return '<script src="' + OSS_HOST + '/' + config.version + '/' + block.dest + '"></script>';
@@ -296,9 +270,9 @@ module.exports = function(grunt) {
               }
             } else {
               if (block.dest[0] != '/') {
-                return '<script src="' + '/' + config.modulename + '/' + block.dest + '"></script>';
+                return '<script src="' + block.dest + '"></script>';
               } else {
-                return '<script src="' + '/' + config.modulename + block.dest + '"></script>';
+                return '<script src="' + '/' + block.dest + '"></script>';
               }
             }
           },
@@ -359,17 +333,6 @@ module.exports = function(grunt) {
             }
           },
           css: function(block) {
-            if (config.hybrid) {
-              if (block.dest[0] == '/') {
-                return '<link rel="stylesheet" href="' + '.' + block.dest + '">';
-              } else if (block.dest[0] != './') {
-                return '<link rel="stylesheet" href="' + './' + block.dest + '">';
-              } else {
-                return '<link rel="stylesheet" href="' + block.dest + '">';
-              }
-
-              block.dest = cut(dest);
-            }
 
             if (config.version) {
               if (block.dest[0] != '/') {
@@ -379,9 +342,9 @@ module.exports = function(grunt) {
               }
             } else {
               if (block.dest[0] != '/') {
-                return '<link rel="stylesheet" href="' + '/' + config.modulename + '/' + block.dest + '">';
+                return '<link rel="stylesheet" href="' + block.dest + '">';
               } else {
-                return '<link rel="stylesheet" href="' + '/' + config.modulename + block.dest + '">';
+                return '<link rel="stylesheet" href="' + '/' + block.dest + '">';
               }
             }
           },
