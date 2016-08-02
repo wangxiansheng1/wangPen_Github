@@ -88,15 +88,16 @@ var swipe = function Swipe(container, options) {
 
     container.style.visibility = 'visible';
 
-    for (var i = 0; i < length; i++) {
-      var page = document.createElement('span');
-      page.className = 'swiper-pagination-bullet';
-      if (i == index) {
-        page.className = 'swiper-pagination-bullet swiper-pagination-bullet-active';
+    if (paginationElement.children.length == 0) {
+      for (var i = 0; i < length; i++) {
+        var page = document.createElement('span');
+        page.className = 'swiper-pagination-bullet';
+        if (i == index) {
+          page.className = 'swiper-pagination-bullet swiper-pagination-bullet-active';
+        }
+        paginationElement.appendChild(page);
       }
-      paginationElement.appendChild(page);
     }
-
   }
 
   function prev() {
