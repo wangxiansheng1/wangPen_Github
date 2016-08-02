@@ -25,16 +25,22 @@ requirejs.config({
         "lehu.env.switcher": "http://www.google.com/scripts/util/lehu.env.switcher",
         "lehu.bridge": "http://www.google.com/scripts/util/lehu.bridge",
 
-        // "lehu.module.imagelazyload": "http://www.google.com/scripts/module/lehu.h5.module.imagelazyload",
-
         "lehu.h5.page.index": "scripts/page/lehu.h5.page.index",
         "lehu.h5.page.list": "scripts/page/lehu.h5.page.list",
+        "lehu.h5.page.detail": "scripts/page/lehu.h5.page.detail",
+        "lehu.h5.page.comment": "scripts/page/lehu.h5.page.comment",
+        "lehu.h5.page.404": "scripts/page/lehu.h5.page.404",
+        "lehu.h5.page.404index": "scripts/page/lehu.h5.page.404index",
 
         "lehu.h5.component.index": "scripts/component/lehu.h5.component.index",
         "lehu.h5.component.list": "scripts/component/lehu.h5.component.list",
+        "lehu.h5.component.detail": "scripts/component/lehu.h5.component.detail",
+        "lehu.h5.component.comment": "scripts/component/lehu.h5.component.comment",
 
         "template_components_index": "templates/components/lehu.h5.components.index.mustache",
         "template_components_list": "templates/components/lehu.h5.components.list.mustache",
+        "template_components_detail": "templates/components/lehu.h5.components.detail.mustache",
+        "template_components_comment": "templates/components/lehu.h5.components.comment.mustache",
 
         "swipe": "scripts/vendor/swipe",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min"

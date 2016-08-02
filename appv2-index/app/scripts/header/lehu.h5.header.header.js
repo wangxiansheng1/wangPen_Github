@@ -1,4 +1,4 @@
-define('lehu.h5.component.list', [
+define('lehu.h5.header.header', [
     'zepto',
     'can',
     'lehu.h5.business.config',
@@ -8,12 +8,12 @@ define('lehu.h5.component.list', [
 
     'imagelazyload',
 
-    'text!template_components_list'
+    'text!template_components_comment'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
     imagelazyload,
-    template_components_list) {
+    template_components_comment) {
     'use strict';
 
     return can.Control.extend({
