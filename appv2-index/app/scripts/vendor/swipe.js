@@ -109,10 +109,10 @@ var swipe = function Swipe(container, options) {
 
   function next() {
 
-    var classVal = paginationElement.children[index].getAttribute("class");
+    var classVal = paginationElement.children[index % length].getAttribute("class");
 
     classVal = classVal.replace("swiper-pagination-bullet-active", " ");
-    paginationElement.children[index].setAttribute("class", classVal);
+    paginationElement.children[index % length].setAttribute("class", classVal);
 
     var classVal = paginationElement.children[(index + 1) % length].getAttribute("class");
     classVal = classVal.concat(" swiper-pagination-bullet-active");
@@ -372,6 +372,17 @@ var swipe = function Swipe(container, options) {
 
     },
     end: function(event) {
+
+      console.log("end index: " + index);
+      var classVal = paginationElement.children[index % length].getAttribute("class");
+
+      // classVal = classVal.replace("swiper-pagination-bullet-active", " ");
+      classVal = classVal.replace(/swiper-pagination-bullet-active/g, " ");
+      paginationElement.children[index % length].setAttribute("class", classVal);
+
+      var classVal = paginationElement.children[(index + 1) % length].getAttribute("class");
+      classVal = classVal.concat(" swiper-pagination-bullet-active");
+      paginationElement.children[(index + 1) % length].setAttribute("class", classVal);
 
       // measure duration
       var duration = +new Date - start.time;
