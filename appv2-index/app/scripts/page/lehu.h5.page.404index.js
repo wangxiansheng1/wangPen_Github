@@ -13,7 +13,7 @@ define('lehu.h5.page.404index', [
 
         Fastclick.attach(document.body);
 
-        var List = can.Control.extend({
+        var Error404 = can.Control.extend({
 
             /**
              * [init 初始化]
@@ -21,9 +21,18 @@ define('lehu.h5.page.404index', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
-                var list = new LHList("#list");
+
+            },
+
+            '.n01 click': function(element, event) {
+                var jsonParams = {
+                    'funName': 'reload_web_fun',
+                    'params': {}
+                };
+                native.nativeFun(jsonParams);
+                console.log(search_fun);
             }
         });
 
-        new List('#list');
+        new Error404('#404');
     });

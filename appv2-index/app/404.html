@@ -10,64 +10,32 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no,email=no">
-<link href="css/global_m.css" rel="stylesheet">
+
 <link href="images/Shortcut_114_114.png" rel="apple-touch-icon-precomposed">
 <link href="images/Shortcut_114_114.png" rel="Shortcut Icon" type="image/x-icon">
+
+<!-- build:css({app, .tmp}) styles/lehu.h5.404.css -->
+<link href="css/global_m.css" rel="stylesheet">
+<!-- endbuild -->
+
 </head>
 
 <body>
-<img src="images/n01.jpg" class="n01"/>
-<img src="images/n02.jpg" class="n02" />
-<!--zepto框架-->
-<script src="js/zepto.min.js"></script>
 
+<div id="404">
+	<img src="images/n01.jpg" class="n01"/>
+	<img src="images/n02.jpg" class="n02"/>
+</div>
 
-<script src="js/base.js"></script>
+<script src="scripts/common/require.min.js"></script>
+<script src="scripts/common/lehu.h5.common.js"></script>
 
-<script type="application/ecmascript">
-var native = function() {}
-
-var ua = navigator.userAgent.toLowerCase();
-if (/iphone|ipad|ipod/.test(ua)) {
-	native.platfrom = "ios";
-} else if (/android/.test(ua)) {
-	native.platfrom = "android";
-}
-
-
-native.nativeFun = function(params) {
-
-	if (native.platfrom === "android") {
-		params = JSON.stringify(params);
-		//android
-		JSInterface.nativeFunction(params);
-	} else if (native.platfrom === "ios") {
-		//ios
-		WebViewJavascriptBridge.send(params)
-	}
-
-
-}
-
-
-$(".n01").click(function() {
-	var jsonParams = {
-		'funName': 'reload_web_fun',
-		'params': {}
-	};
-	native.nativeFun(jsonParams);
-	console.log(search_fun);
-});
-
-$(".n02").click(function() {
-	var jsonParams = {
-		'funName': 'back_fun',
-		'params': {}
-	};
-	native.nativeFun(jsonParams);
-	console.log('back_fun');
-});
+<!-- build:js({app, .tmp}) scripts/lehu.h5.page.404.js -->
+<script src="scripts/lehu.h5.require.config.js"></script>
+<script type="text/javascript">
+require(['lehu.h5.page.404']);
 </script>
+<!-- endbuild -->
 
 </body>
 </html>
