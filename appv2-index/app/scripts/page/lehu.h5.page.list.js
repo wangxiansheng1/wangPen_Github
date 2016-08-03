@@ -7,10 +7,13 @@ define('lehu.h5.page.list', [
         'lehu.h5.business.config',
         'lehu.hybrid',
 
+        'lehu.h5.header.footer',
+
         'lehu.h5.component.list'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
+        LHFooter,
         LHList) {
         'use strict';
 
@@ -25,6 +28,7 @@ define('lehu.h5.page.list', [
              */
             init: function(element, options) {
                 var list = new LHList("#list");
+                new LHFooter();
             }
         });
 

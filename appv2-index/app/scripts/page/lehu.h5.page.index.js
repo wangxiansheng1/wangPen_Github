@@ -8,10 +8,13 @@ define('lehu.h5.page.index', [
         'lehu.env.switcher',
         'lehu.hybrid',
 
+        'lehu.h5.header.footer',
+
         'lehu.h5.component.index'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHSwitcher, LHHybrid,
+        LHFooter,
         LHIndex) {
         'use strict';
 
@@ -26,6 +29,8 @@ define('lehu.h5.page.index', [
              */
             init: function(element, options) {
                 var index = new LHIndex("#index");
+
+                new LHFooter();
             }
         });
 

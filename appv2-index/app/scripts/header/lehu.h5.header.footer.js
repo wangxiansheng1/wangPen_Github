@@ -3,11 +3,11 @@ define('lehu.h5.header.footer', [
     'can',
     'lehu.h5.business.config',
 
-    'text!template_components_footer'
+    'text!template_header_footer'
   ],
 
   function($, can, LHConfig,
-    template_components_footer) {
+    template_header_footer) {
     'use strict';
 
     return can.Control.extend({
@@ -19,6 +19,11 @@ define('lehu.h5.header.footer', [
        * @description 初始化方法
        */
       init: function() {
+
+        var renderFooter = can.mustache(template_header_footer);
+        var html = renderFooter(this.options);
+        $("#footer").html(html);
+
         this.goBack2Top();
       },
 

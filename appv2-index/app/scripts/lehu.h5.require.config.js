@@ -25,6 +25,9 @@ requirejs.config({
         "lehu.env.switcher": "http://www.google.com/scripts/util/lehu.env.switcher",
         "lehu.bridge": "http://www.google.com/scripts/util/lehu.bridge",
 
+        'lehu.h5.header.header': 'scripts/header/lehu.h5.header.header',
+        'lehu.h5.header.footer': 'scripts/header/lehu.h5.header.footer',
+
         "lehu.h5.page.index": "scripts/page/lehu.h5.page.index",
         "lehu.h5.page.list": "scripts/page/lehu.h5.page.list",
         "lehu.h5.page.detail": "scripts/page/lehu.h5.page.detail",
@@ -36,6 +39,8 @@ requirejs.config({
         "lehu.h5.component.list": "scripts/component/lehu.h5.component.list",
         "lehu.h5.component.detail": "scripts/component/lehu.h5.component.detail",
         "lehu.h5.component.comment": "scripts/component/lehu.h5.component.comment",
+
+        "template_header_footer": "templates/header/lehu.h5.header.footer.mustache",
 
         "template_components_index": "templates/components/lehu.h5.components.index.mustache",
         "template_components_list": "templates/components/lehu.h5.components.list.mustache",
