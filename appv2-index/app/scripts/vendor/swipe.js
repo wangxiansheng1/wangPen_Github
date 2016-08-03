@@ -373,7 +373,6 @@ var swipe = function Swipe(container, options) {
     },
     end: function(event) {
 
-      console.log("end index: " + index);
       var classVal = paginationElement.children[index % length].getAttribute("class");
 
       // classVal = classVal.replace("swiper-pagination-bullet-active", " ");
