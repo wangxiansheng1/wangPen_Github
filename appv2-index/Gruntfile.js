@@ -502,7 +502,8 @@ module.exports = function(grunt) {
         src: [
           '*.html',
           'header/*.html',
-          'footer/*.html'
+          'footer/*.html',
+          'app.manifest'
         ],
         options: {
           process: function(content, srcpath) {
@@ -594,7 +595,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%=config.dist%>',
-          src: ['templates/**', '*.html', 'header/*.html', 'footer/*.html', 'json/**', '*.ico'],
+          src: ['templates/**', '*.html', 'app.manifest', 'header/*.html', 'footer/*.html', 'json/**', '*.ico'],
           dest: 'ROOT/<%=config.modulename%>'
         }]
       },
@@ -605,7 +606,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%=config.dist%>',
-          src: ['templates/**', '*.html', 'header/*.html', 'footer/*.html', '*.ico', 'json/**', 'scripts/**', 'styles/**', 'img/**'],
+          src: ['templates/**', '*.html', 'app.manifest', 'header/*.html', 'footer/*.html', '*.ico', 'json/**', 'scripts/**', 'styles/**', 'img/**'],
           dest: 'ROOT/<%=config.modulename%>'
         }]
       },
@@ -616,7 +617,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%=config.dist%>',
-          src: ['templates/**', '*.html', 'img/**', 'json/**', 'scripts/**', '*.ico', 'styles/**', 'header/*.html', 'footer/*.html', 'json/**'],
+          src: ['templates/**', '*.html', 'app.manifest', 'img/**', 'json/**', 'scripts/**', '*.ico', 'styles/**', 'header/*.html', 'footer/*.html', 'json/**'],
           dest: '<%= config.modulename %>'
         }]
       }
