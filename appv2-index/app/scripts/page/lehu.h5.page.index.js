@@ -20,6 +20,13 @@ define('lehu.h5.page.index', [
 
         Fastclick.attach(document.body);
 
+        window.onerror = function(msg, url, l) {
+            var txt = "Error: " + msg + "\n"
+            txt += "URL: " + url + "\n"
+            txt += "Line: " + l + "\n\n";
+            alert(txt);
+        };
+
         var Index = can.Control.extend({
 
             /**

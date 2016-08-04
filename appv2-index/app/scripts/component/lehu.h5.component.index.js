@@ -31,12 +31,12 @@ define('lehu.h5.component.index', [
 
         this.initData();
 
-        var renderIndex = can.mustache(template_components_index);
-        var html = renderIndex(this.options);
-        this.element.html(html);
+        // var renderIndex = can.mustache(template_components_index);
+        // var html = renderIndex(this.options);
+        // this.element.html(html);
 
-        // 从缓存中渲染
-        that.renderFromStorage();
+        // // 从缓存中渲染
+        // that.renderFromStorage();
 
         setTimeout(function() {
           that.sendRequest.apply(that);
