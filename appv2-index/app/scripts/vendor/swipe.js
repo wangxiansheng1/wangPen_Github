@@ -102,6 +102,15 @@ var swipe = function Swipe(container, options) {
 
   function prev() {
 
+    var classVal = paginationElement.children[index % length].getAttribute("class");
+
+    classVal = classVal.replace("swiper-pagination-bullet-active", " ");
+    paginationElement.children[index % length].setAttribute("class", classVal);
+
+    var classVal = paginationElement.children[(index - 1) % length].getAttribute("class");
+    classVal = classVal.concat(" swiper-pagination-bullet-active");
+    paginationElement.children[(index - 1) % length].setAttribute("class", classVal);
+
     if (options.continuous) slide(index - 1);
     else if (index) slide(index - 1);
 
