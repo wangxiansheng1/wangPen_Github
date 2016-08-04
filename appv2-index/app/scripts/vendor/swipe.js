@@ -102,15 +102,6 @@ var swipe = function Swipe(container, options) {
 
   function prev() {
 
-    var classVal = paginationElement.children[index % length].getAttribute("class");
-
-    classVal = classVal.replace("swiper-pagination-bullet-active", " ");
-    paginationElement.children[index % length].setAttribute("class", classVal);
-
-    var classVal = paginationElement.children[(index - 1) % length].getAttribute("class");
-    classVal = classVal.concat(" swiper-pagination-bullet-active");
-    paginationElement.children[(index - 1) % length].setAttribute("class", classVal);
-
     if (options.continuous) slide(index - 1);
     else if (index) slide(index - 1);
 
@@ -382,15 +373,7 @@ var swipe = function Swipe(container, options) {
     },
     end: function(event) {
 
-      var classVal = paginationElement.children[index % length].getAttribute("class");
 
-      // classVal = classVal.replace("swiper-pagination-bullet-active", " ");
-      classVal = classVal.replace(/swiper-pagination-bullet-active/g, " ");
-      paginationElement.children[index % length].setAttribute("class", classVal);
-
-      var classVal = paginationElement.children[(index + 1) % length].getAttribute("class");
-      classVal = classVal.concat(" swiper-pagination-bullet-active");
-      paginationElement.children[(index + 1) % length].setAttribute("class", classVal);
 
       // measure duration
       var duration = +new Date - start.time;
@@ -409,6 +392,28 @@ var swipe = function Swipe(container, options) {
 
       // determine direction of swipe (true:right, false:left)
       var direction = delta.x < 0;
+
+      if (!direction) {
+        var classVal = paginationElement.children[index % length].getAttribute("class");
+
+        // classVal = classVal.replace("swiper-pagination-bullet-active", " ");
+        classVal = classVal.replace(/swiper-pagination-bullet-active/g, " ");
+        paginationElement.children[index % length].setAttribute("class", classVal);
+
+        var classVal = paginationElement.children[(index - 1 + length) % length].getAttribute("class");
+        classVal = classVal.concat(" swiper-pagination-bullet-active");
+        paginationElement.children[(index - 1 + length) % length].setAttribute("class", classVal);
+      } else {
+        var classVal = paginationElement.children[index % length].getAttribute("class");
+
+        // classVal = classVal.replace("swiper-pagination-bullet-active", " ");
+        classVal = classVal.replace(/swiper-pagination-bullet-active/g, " ");
+        paginationElement.children[index % length].setAttribute("class", classVal);
+
+        var classVal = paginationElement.children[(index + 1) % length].getAttribute("class");
+        classVal = classVal.concat(" swiper-pagination-bullet-active");
+        paginationElement.children[(index + 1) % length].setAttribute("class", classVal);
+      }
 
       // if not scrolling vertically
       if (!isScrolling) {
