@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v1.3.62
+#v1.4.21
 
 CACHE:
 styles/lehu.h5.index.css
@@ -31,10 +31,10 @@ images/dingbu.png
 images/index_28.png
 images/iconfont.woff
 images/iconfont.ttf
-
-
+index.html
+ 
 NETWORK:
 *
-
+ 
 FALLBACK:
 404.html
