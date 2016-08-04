@@ -15,10 +15,10 @@ if (native.platfrom === "android") {
 URLS.SERVER_URL = JSInterface.getServerUrl();
 URLS.IMAGE_URL = JSInterface.getImageUrl();
 } else if (native.platfrom == "ios") {
-	URLS.SERVER_URL = "http://218.91.54.162:9006/";
+	URLS.SERVER_URL = "http://app.lehumall.com/";
 	URLS.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
 } else {
-	URLS.SERVER_URL = "http://218.91.54.162:9006/";
+	URLS.SERVER_URL = "http://app.lehumall.com/";
 	URLS.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
 }
 

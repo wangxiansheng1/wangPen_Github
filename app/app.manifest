@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v1.3.62
+#v1.4.20
 
 CACHE:
 css/global_m.css
@@ -37,7 +37,7 @@ images/dingbu.png
 images/index_28.png
 images/iconfont.woff
 images/iconfont.ttf
-
+index.html
 
 NETWORK:
 *

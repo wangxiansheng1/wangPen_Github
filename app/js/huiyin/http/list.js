@@ -71,7 +71,7 @@ if (mark) {
 }
 
 //每页显示
-param["pageSize"] = 10;
+param["pageSize"] = 8;
 
 //当前第几页
 param["pageIndex"] = 1;
@@ -204,7 +204,7 @@ function goodsCategoryList() {
 goodsCategoryList();
 
 //滚动加载
-var range = 400; //距下边界长度/单位px
+var range = 1000; //距下边界长度/单位px
 
 var huadong = true;
 

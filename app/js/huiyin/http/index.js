@@ -15,13 +15,17 @@ function ajax() {
 		var bannerList = data.bannerList;
 		for (var k = 0; k < bannerList.length; k++) {
 			html += "<div class='swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
-			html += "<img class='lazyload' data-original=" + URLS.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+			html += "<img class='lazyload' src=" + URLS.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
 			html += "</div>";
 		}
-
+		
+		localStorage.removeItem("html01");
+		localStorage.html01 = html; 
 		$("#ajax_banner").empty().append(html);
+		
 		lazyload();
 
+		
 		//插件_幻灯片
 		var swiper = new Swiper('.nbanner .swiper-container', {
 			pagination: '.nbanner .swiper-pagination',
@@ -74,11 +78,12 @@ function ajax() {
 		for (var k = 0; k < fastList.length; k++) {
 
 			fastList_html += "<a href='javascript:;' data-FAST_NAME='" + fastList[k]['FAST_NAME'] + "' data-ID='" + fastList[k]['ID'] + "' data-LINK_NAME='" + fastList[k]['LINK_NAME'] + "' data-FAST_IMG='" + fastList[k]['FAST_IMG'] + "'>";
-			fastList_html += "<img class='lazyload' data-original=" + URLS.IMAGE_URL + fastList[k]['FAST_IMG'] + " >";
+			fastList_html += "<img class='lazyload' src=" + URLS.IMAGE_URL + fastList[k]['FAST_IMG'] + " >";
 			fastList_html += "<span>" + fastList[k]['FAST_NAME'] + "</span>";
 			fastList_html += "</a>";
 		}
-
+		localStorage.removeItem("html02");
+		localStorage.html02 = fastList_html; 
 		$("#ajax_fastList").empty().append(fastList_html);
 		lazyload();
 
@@ -113,20 +118,18 @@ function ajax() {
 		
 
 		if (seckillList['END_TIME']) {
-			
-			
-			var endtime = Date.parse(new Date(seckillList['END_TIME']));
+			var endtime = Date.parse(new Date(getDateTime(seckillList['END_TIME'])));
 			endtime = endtime / 1000;
-			var START_TIME = Date.parse(new Date(seckillList['START_TIME']));
+			var START_TIME = Date.parse(new Date(getDateTime(seckillList['START_TIME'])));
 			START_TIME = START_TIME / 1000;
-			var current_Time = Date.parse(new Date(data.currentTime));
+			var current_Time = Date.parse(new Date(getDateTime(data.currentTime)));
 			current_Time = current_Time / 1000;
 
 			
 			
 			juli = START_TIME-current_Time; //距离时间
 			shengyu = endtime-current_Time; //距离时间
-			
+
 
 			
 			/*if(current_Time >= START_TIME){
@@ -197,14 +200,14 @@ function ajax() {
 			for (var k = 0; k < hotRecommendation.length; k++) {
 				if(hotRecommendation[k]['TEMPLATE']==1){
 					html += "<div class='nindex_ad_one'><a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][0].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][0].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
-					html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL + hotRecommendation[k]['goods'][0].IMG_URL + " >";
+					html += "<img  class='lazyload' src=" + URLS.IMAGE_URL + hotRecommendation[k]['goods'][0].IMG_URL + " >";
 					html += "</a></div>";
 				}
 				if(hotRecommendation[k]['TEMPLATE']==2){
 					html += "<div class='nindex_ad_two'>";
 					for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
 					html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
-					html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
+					html += "<img  class='lazyload' src=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
 					html += "</a>";
 					}
 					html += "</div>";
@@ -213,13 +216,14 @@ function ajax() {
 					html += "<div class='nindex_ad_three'>";
 					for (var i = 0; i < hotRecommendation[k]['goods'].length; i++) {
 					html += "<a href='javascript:;'  data-IMG_URL='" + hotRecommendation[k]['goods'][i].IMG_URL + "'  data-GOODS_ID='" + hotRecommendation[k]['goods'][i].GOODS_ID + "' data-ID='" + hotRecommendation[k]['ID'] + "'  data-TEMPLATE='" + hotRecommendation[k]['TEMPLATE'] + "'>";
-					html += "<img  class='lazyload' data-original=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
+					html += "<img  class='lazyload' src=" + URLS.IMAGE_URL +hotRecommendation[k]['goods'][i].IMG_URL + " >";
 					html += "</a>";
 					}
 					html += "</div>";
 				}
 			}
-	
+			localStorage.removeItem("html03");
+			localStorage.html03 = html; 
 			$("#ajax_hotRecommendation").empty().append(html);
 			lazyload();
 		}
@@ -545,7 +549,7 @@ $(".nmiaosha_top a").click(function() {
 
 
 
-function connectWebViewJavascriptBridge(callback) {
+/*function connectWebViewJavascriptBridge(callback) {
 	if (window.WebViewJavascriptBridge) {
 		callback(WebViewJavascriptBridge)
 	} else {
@@ -564,7 +568,7 @@ connectWebViewJavascriptBridge(function(bridge) {
 		}
 	})
 
-})
+})*/
 
 //返回顶部 
 goBack2Top();
@@ -646,3 +650,10 @@ $(document).ready(function(e) {
             timer = setInterval("CountDown()",1000); 
 
 
+function getDateTime(date){
+	if(date){
+		return date.replace("-", "/").replace("-", "/")
+	}
+	
+	return null;
+}

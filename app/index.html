@@ -10,6 +10,28 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no,email=no">
+
+<!--zepto框架-->
+<script src="js/zepto.min.js"></script>
+<script src="js/base.js"></script>
+
+<script>
+$(document).ready(function(e) {
+	
+    if (localStorage.html01) { 
+	$("#ajax_banner").empty().append(localStorage.html01);
+	} 
+
+	if (localStorage.html02) { 
+		$("#ajax_fastList").empty().append(localStorage.html02);
+	} 
+	
+	if (localStorage.html03) { 
+		$("#ajax_hotRecommendation").empty().append(localStorage.html03);
+	} 
+});
+</script>
+
 <link href="css/global_m.css" rel="stylesheet">
 <link href="css/layout_2015.css" rel="stylesheet">
 <link href="images/Shortcut_114_114.png" rel="apple-touch-icon-precomposed">
@@ -35,8 +57,8 @@
     <div class="nbanner">
         <div class="swiper-container">
             <div class="swiper-wrapper" id="ajax_banner">
- <div class="swiper-slide"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091553187203.jpg"></div>
-           
+<!-- <div class="swiper-slide"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160727/201607271418305589.jpg"></div>
+-->           
               
             </div>
             <div class="swiper-pagination"></div>
@@ -46,15 +68,15 @@
     
     <!--标签-->
     <div class="ntag" id="ajax_fastList">
-    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160627/201606271437018396.png"><span>摇一摇</span></a>
+    <!--<a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160715/201607151122557492.png"><span>摇一摇</span></a>
     
-    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160627/201606271441106415.png"><span>免费试用</span></a>
+    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160715/201607151125277.png"><span>免费试用</span></a>
     
-    <a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160627/201606271447537282.png"><span>每日签到</span></a>
+    <a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160715/201607151123534503.png"><span>每日签到</span></a>
     
 
     
-    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com/upload/image/admin/2016/20160709/201607091607357640.png"><span>更多</span></a>
+    <a href="javascript:;"><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160715/201607151124127898.png"><span>更多</span></a>-->
     
     </div>
     <!--/标签-->
@@ -106,10 +128,10 @@
     <!--广告位-->
     <div class="nindex_ad" id="ajax_hotRecommendation">
     
-    	<div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091614136508.jpg"></a></div>
-        <div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091609224298.jpg"></a></div>
-        <div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160709/201607091616531809.jpg"></a></div>
-        
+    	<!--<div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160718/201607181401206306.jpg"></a></div>
+    	<div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160722/201607221103424050.jpg"></a></div>
+        <div class="nindex_ad_one"><a href="javascript:;" ><img class="lazyload" src="http://lehumall.b0.upaiyun.com//upload/image/admin/2016/20160726/201607261829192675.jpg"></a></div>-->
+
     </div>
     <!--/广告位-->
     <div class="nhr"></div>
@@ -131,8 +153,6 @@
 
 <a href="#" class="fix_go_top" onclick="return false;"></a>
 
-<!--zepto框架-->
-<script src="js/zepto.min.js"></script>
 <!--插件-->
 <script src="js/plus/zepto.picLazyLoad.min.js"></script>
 
@@ -141,7 +161,7 @@
 <script src="js/plus/ajax.js"></script>
 
 <!--数据-->
-<script src="js/base.js"></script>
+
 <script src="js/huiyin/common/url.js"></script>
 <script src="js/native.js"></script>
 <script src="js/huiyin/http/index.js"></script>
