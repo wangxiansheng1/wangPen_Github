@@ -1,0 +1,35 @@
+{
+	"hotRecommendation": [{
+		"goods": [{
+			"IMG_URL": "/upload/image/admin/2016/20160718/201607181401206306.jpg",
+			"GOODS_ID": 86373,
+			"RECOMMENDATION_ID": 191
+		}],
+		"TEMPLATE": 1,
+		"ID": 191
+	}, {
+		"goods": [{
+			"IMG_URL": "/upload/image/admin/2016/20160722/201607221103424050.jpg",
+			"GOODS_ID": 87180,
+			"RECOMMENDATION_ID": 346
+		}],
+		"TEMPLATE": 1,
+		"ID": 346
+	}, {
+		"goods": [{
+			"IMG_URL": "/upload/image/admin/2016/20160726/201607261829192675.jpg",
+			"GOODS_ID": 86970,
+			"RECOMMENDATION_ID": 383
+		}],
+		"TEMPLATE": 1,
+		"ID": 383
+	}, {
+		"goods": [{
+			"IMG_URL": "/upload/image/admin/2016/20160711/201607111810321883.jpg",
+			"GOODS_ID": 32147,
+			"RECOMMENDATION_ID": 141
+		}],
+		"TEMPLATE": 1,
+		"ID": 141
+	}]
+}
