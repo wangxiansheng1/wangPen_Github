@@ -90,12 +90,14 @@ define('lehu.h5.component.list', [
                 html += "<img class='nlist_list_mainleft lazyload'  src=" + that.URL.IMAGE_URL + goodsList[k]['GOODS_IMG'] + " >";
                 html += "<div class='nlist_list_mainright'>";
                 html += "<div class='nlist_list_title'>";
-                if (zy == 1) {
-                  html += "<span class='nlist_list_title_zhiyou'>【海外直邮】</span>";
-                }
-                if (zy == 2) {
-                  html += "<span class='nlist_list_title_zhiyou'>【保税区发货】</span>";
-                }
+
+                // 海安需求 去掉 20160804 季严亮
+                // if (zy == 1) {
+                //   html += "<span class='nlist_list_title_zhiyou'>【海外直邮】</span>";
+                // }
+                // if (zy == 2) {
+                //   html += "<span class='nlist_list_title_zhiyou'>【保税区发货】</span>";
+                // }
                 html += goodsList[k]['GOODS_NAME'];
                 html += "</div>";
                 if (DISCOUNT_PRICE !== undefined) {
