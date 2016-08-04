@@ -35,6 +35,16 @@ define('lehu.h5.component.index', [
         var html = renderIndex(this.options);
         this.element.html(html);
 
+        // 从缓存中渲染
+        that.renderFromStorage();
+
+        setTimeout(function() {
+          that.sendRequest.apply(that);
+        }, 0);
+      },
+
+      sendRequest: function() {
+        var that = this;
         var api = new LHAPI({
           url: LHConfig.setting.action.appNewIndexFirst,
           data: {}
@@ -74,7 +84,36 @@ define('lehu.h5.component.index', [
           .fail(function(error) {
             $(".ajax_noload").show();
           })
+      },
 
+      renderFromStorage: function() {
+        if (localStorage.html01) {
+          $("#ajax_banner").html(localStorage.html01);
+
+          new Swipe($('.nbanner .swiper-container')[0], {
+            pagination: $('.swiper-pagination')[0],
+            startSlide: 0,
+            speed: 300,
+            auto: 2000,
+            continuous: true,
+            disableScroll: false,
+            stopPropagation: false,
+            callback: function(index, elem) {
+
+            },
+            transitionEnd: function(index, elem) {}
+          });
+        }
+
+        if (localStorage.html02) {
+          $("#ajax_fastList").html(localStorage.html02);
+        }
+
+        if (localStorage.html03) {
+          $("#ajax_hotRecommendation").html(localStorage.html03);
+        }
+
+        this.lazyload();
       },
 
       initData: function() {
@@ -133,21 +172,26 @@ define('lehu.h5.component.index', [
           html += "</div>";
         }
 
-        $("#ajax_banner").empty().append(html);
+        if (!localStorage.html01) {
+          $("#ajax_banner").empty().append(html);
 
-        new Swipe($('.nbanner .swiper-container')[0], {
-          pagination: $('.swiper-pagination')[0],
-          startSlide: 0,
-          speed: 300,
-          auto: 2000,
-          continuous: true,
-          disableScroll: false,
-          stopPropagation: false,
-          callback: function(index, elem) {
+          new Swipe($('.nbanner .swiper-container')[0], {
+            pagination: $('.swiper-pagination')[0],
+            startSlide: 0,
+            speed: 300,
+            auto: 2000,
+            continuous: true,
+            disableScroll: false,
+            stopPropagation: false,
+            callback: function(index, elem) {
 
-          },
-          transitionEnd: function(index, elem) {}
-        });
+            },
+            transitionEnd: function(index, elem) {}
+          });
+        }
+
+        localStorage.removeItem("html01");
+        localStorage.html01 = html;
 
         //点击_幻灯片
         $(".nbanner .swiper-slide").click(function() {
@@ -193,6 +237,9 @@ define('lehu.h5.component.index', [
           fastList_html += "<span>" + fastList[k]['FAST_NAME'] + "</span>";
           fastList_html += "</a>";
         }
+
+        localStorage.removeItem("html02");
+        localStorage.html02 = fastList_html;
 
         $("#ajax_fastList").empty().append(fastList_html);
         this.lazyload();
@@ -297,6 +344,9 @@ define('lehu.h5.component.index', [
               html += "</div>";
             }
           }
+
+          localStorage.removeItem("html03");
+          localStorage.html03 = html;
 
           $("#ajax_hotRecommendation").empty().append(html);
           this.lazyload();
@@ -580,6 +630,30 @@ define('lehu.h5.component.index', [
             });
           };
         });
+      },
+
+      '.scan_code_fun click': function() {
+        var jsonParams = {
+          'funName': 'scan_code_fun',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      '.nindex_sousuo click': function() {
+        var jsonParams = {
+          'funName': 'search_fun',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      '.nindex_xiaoxi click': function() {
+        var jsonParams = {
+          'funName': 'message_fun',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       '.ajax_noload click': function() {
