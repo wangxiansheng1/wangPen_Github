@@ -121,6 +121,9 @@ define('lehu.h5.component.index', [
       },
 
       lazyload: function() {
+        if ($('.lazyload').length == 0) {
+          return false;
+        }
         $('.lazyload').picLazyLoad({
           threshold: 400
         });
