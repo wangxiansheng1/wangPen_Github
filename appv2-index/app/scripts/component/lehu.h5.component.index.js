@@ -31,12 +31,12 @@ define('lehu.h5.component.index', [
 
         this.initData();
 
-        var renderIndex = can.mustache(template_components_index);
-        var html = renderIndex(this.options);
-        this.element.html(html);
+        // var renderIndex = can.mustache(template_components_index);
+        // var html = renderIndex(this.options);
+        // this.element.html(html);
 
         // 从缓存中渲染
-        that.renderFromStorage();
+        // that.renderFromStorage();
 
         setTimeout(function() {
           that.sendRequest.apply(that);
@@ -175,23 +175,21 @@ define('lehu.h5.component.index', [
           html += "</div>";
         }
 
-        if (!localStorage.html01) {
-          $("#ajax_banner").empty().append(html);
+        $("#ajax_banner").empty().append(html);
 
-          new Swipe($('.nbanner .swiper-container')[0], {
-            pagination: $('.swiper-pagination')[0],
-            startSlide: 0,
-            speed: 300,
-            auto: 2000,
-            continuous: true,
-            disableScroll: false,
-            stopPropagation: false,
-            callback: function(index, elem) {
+        new Swipe($('.nbanner .swiper-container')[0], {
+          pagination: $('.swiper-pagination')[0],
+          startSlide: 0,
+          speed: 300,
+          auto: 2000,
+          continuous: true,
+          disableScroll: false,
+          stopPropagation: false,
+          callback: function(index, elem) {
 
-            },
-            transitionEnd: function(index, elem) {}
-          });
-        }
+          },
+          transitionEnd: function(index, elem) {}
+        });
 
         localStorage.removeItem("html01");
         localStorage.html01 = html;

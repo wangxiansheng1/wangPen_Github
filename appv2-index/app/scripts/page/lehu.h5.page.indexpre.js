@@ -1,35 +1,19 @@
 define('lehu.h5.page.indexpre', [
-        'swipe'
+        'lehu.h5.framework.global'
     ],
 
-    function(Swipe) {
+    function(global) {
         'use strict';
 
         if (localStorage.html01) {
-            $("#ajax_banner").html(localStorage.html01);
-
-            new Swipe($('.nbanner .swiper-container')[0], {
-                pagination: $('.swiper-pagination')[0],
-                startSlide: 0,
-                speed: 300,
-                auto: 2000,
-                continuous: true,
-                disableScroll: false,
-                stopPropagation: false,
-                callback: function(index, elem) {
-
-                },
-                transitionEnd: function(index, elem) {}
-            });
+            document.getElementById('ajax_banner').innerHTML = (localStorage.html01.replace(/data-original/g, "src"));
         }
 
         if (localStorage.html02) {
-            $("#ajax_fastList").html(localStorage.html02);
+            document.getElementById('ajax_fastList').innerHTML = localStorage.html02.replace(/data-original/g, "src");
         }
 
         if (localStorage.html03) {
-            $("#ajax_hotRecommendation").html(localStorage.html03);
+            document.getElementById('ajax_hotRecommendation').innerHTML = localStorage.html03.replace(/data-original/g, "src");
         }
-
-        this.lazyload();
     });

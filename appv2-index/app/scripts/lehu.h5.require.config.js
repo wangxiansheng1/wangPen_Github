@@ -4,6 +4,7 @@ requirejs.config({
     paths: {
         "can": "http://www.google.com/bower_components/canjs/amd/can",
         "zepto": "http://www.google.com/zepto",
+        "zeptoalone": "scripts/common/zepto.min",
         "zepto.cookie": "http://www.google.com/zepto.cookie",
         "underscore": "http://www.google.com/bower_components/underscore/underscore-min",
         "fastclick": "http://www.google.com/fastclick",
@@ -18,6 +19,7 @@ requirejs.config({
         "lehu.h5.framework.comm": "http://www.google.com/app/scripts/framework/lehu.h5.framework.comm",
         "lehu.h5.business.config": "http://www.google.com/app/scripts/config/lehu.h5.business.config",
         "lehu.h5.api": "http://www.google.com/app/scripts/framework/lehu.h5.api",
+        "lehu.h5.framework.global": "scripts/common/lehu.h5.framework.global",
 
         "lehu.hybrid": "http://www.google.com/scripts/util/lehu.hybrid",
         "lehu.helpers": "http://www.google.com/scripts/util/lehu.helpers",
