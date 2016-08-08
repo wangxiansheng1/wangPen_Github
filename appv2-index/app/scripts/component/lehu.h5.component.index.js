@@ -274,11 +274,15 @@ define('lehu.h5.component.index', [
           $(".ajax_REMARK").empty().append(ajax_REMARK);
 
           if (seckillList['END_TIME']) {
-            var endtime = Date.parse(new Date(seckillList['END_TIME']));
+            var endtime = new Date(Date.parse(seckillList['END_TIME'].replace(/-/g, "/"))).getTime();
+            // var endtime = Date.parse(new Date(seckillList['END_TIME']));
             endtime = endtime / 1000;
-            var START_TIME = Date.parse(new Date(seckillList['START_TIME']));
+            var START_TIME = new Date(Date.parse(seckillList['START_TIME'].replace(/-/g, "/"))).getTime();
+            // var START_TIME = Date.parse(new Date(seckillList['START_TIME']));
             START_TIME = START_TIME / 1000;
-            var current_Time = Date.parse(new Date(data.currentTime));
+
+            var current_Time = new Date(Date.parse(data.currentTime.replace(/-/g, "/"))).getTime();
+            // var current_Time = Date.parse(new Date(data.currentTime));
             current_Time = current_Time / 1000;
             this.juli = START_TIME - current_Time; //距离时间
             this.shengyu = endtime - current_Time; //距离时间
