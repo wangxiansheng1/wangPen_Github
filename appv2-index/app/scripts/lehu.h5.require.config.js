@@ -51,6 +51,8 @@ requirejs.config({
         "template_components_comment": "templates/components/lehu.h5.components.comment.mustache",
 
         "swipe": "scripts/vendor/swipe",
+        "iSlider": "scripts/vendor/iSlider",
+        "iSliderAnimate": "scripts/vendor/iSlider.animate",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min"
     }
 });

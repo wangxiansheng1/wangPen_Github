@@ -240,7 +240,7 @@ var swipe = function Swipe(container, options) {
   var interval;
 
   function begin() {
-
+    console.log("begin")
     interval = setTimeout(next, delay);
 
   }
@@ -272,6 +272,7 @@ var swipe = function Swipe(container, options) {
           break;
         case 'touchend':
           offloadFn(this.end(event));
+          console.log("touchend")
           break;
         case 'webkitTransitionEnd':
         case 'msTransitionEnd':
@@ -369,6 +370,7 @@ var swipe = function Swipe(container, options) {
         }
 
       }
+
 
     },
     end: function(event) {
@@ -474,7 +476,11 @@ var swipe = function Swipe(container, options) {
 
       // kill touchmove and touchend event listeners until touchstart called again
       element.removeEventListener('touchmove', events, false)
-      element.removeEventListener('touchend', events, false)
+      element.removeEventListener('touchend', events, false);
+
+      console.log("end");
+      delay = options.auto || 0;
+      if (delay) begin();
 
     },
     transitionEnd: function(event) {

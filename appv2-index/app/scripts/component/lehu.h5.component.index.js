@@ -6,14 +6,15 @@ define('lehu.h5.component.index', [
     'lehu.h5.api',
     'lehu.hybrid',
 
-    'swipe',
+    'iSlider',
+    // 'iSliderAnimate',
     'imagelazyload',
 
     'text!template_components_index'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
-    Swipe, imagelazyload,
+    iSlider, iSliderAnimate, imagelazyload,
     template_components_index) {
     'use strict';
 
@@ -175,21 +176,43 @@ define('lehu.h5.component.index', [
           html += "</div>";
         }
 
-        $("#ajax_banner").empty().append(html);
+        // $("#ajax_banner").empty().append(html);
 
-        new Swipe($('.nbanner .swiper-container')[0], {
-          pagination: $('.swiper-pagination')[0],
-          startSlide: 0,
-          speed: 300,
-          auto: 2000,
-          continuous: true,
-          disableScroll: false,
-          stopPropagation: false,
-          callback: function(index, elem) {
+        var list = [];
+        for (var k = 0; k < bannerList.length; k++) {
+          var tempHTML = "<div class='swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
+          // tempHTML += "<img class='lazyload' data-original=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          tempHTML += "<img src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          tempHTML += "</div>";
+          list.push({
+            content: tempHTML
+          });
+        }
 
-          },
-          transitionEnd: function(index, elem) {}
+        // var list = [{
+        //   content: '<div style="font-size:4em;color:white;text-align: center">HTML String</div>'
+        // }];
+
+        var S = new iSlider($('.nbanner .swiper-container')[0], list, {
+          isAutoplay: 1,
+          isLooping: 1,
+          isOverspread: 1,
+          animateTime: 800
         });
+
+        // new Swipe($('.nbanner .swiper-container')[0], {
+        //   pagination: $('.swiper-pagination')[0],
+        //   startSlide: 0,
+        //   speed: 300,
+        //   auto: 2000,
+        //   continuous: true,
+        //   disableScroll: false,
+        //   stopPropagation: false,
+        //   callback: function(index, elem) {
+
+        //   },
+        //   transitionEnd: function(index, elem) {}
+        // });
 
         localStorage.removeItem("html01");
         localStorage.html01 = html;
