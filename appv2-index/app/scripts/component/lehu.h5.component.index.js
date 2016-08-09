@@ -7,15 +7,11 @@ define('lehu.h5.component.index', [
     'lehu.hybrid',
 
     'iSlider',
-    // 'iSliderAnimate',
-    'imagelazyload',
-
-    'text!template_components_index'
+    'imagelazyload'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
-    iSlider, iSliderAnimate, imagelazyload,
-    template_components_index) {
+    iSlider, imagelazyload) {
     'use strict';
 
     return can.Control.extend({
