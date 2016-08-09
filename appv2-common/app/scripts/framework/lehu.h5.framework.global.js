@@ -1,4 +1,6 @@
-define('lehu.h5.framework.global', ['can'], function(can) {
+define('lehu.h5.framework.global', [
+  'can', 'lehu.util'
+], function(can, LHUtil) {
   'use strict';
 
   var Global = can.Control.extend({
@@ -10,6 +12,19 @@ define('lehu.h5.framework.global', ['can'], function(can) {
 
       //2. 显示文档结构
       this.showDocument();
+
+      //3.设置样式
+      this.doStyles();
+    },
+
+    doStyles: function() {
+      if (LHUtil.isMobile.Android()) {
+        var css = document.createElement("link");
+        css.href = "styles/lehu.h5.android.css";
+        css.rel = "stylesheet";
+        css.type = "text/css";
+        document.getElementsByTagName('head').item(0).appendChild(css);
+      }
     },
 
     // 显示文档结构

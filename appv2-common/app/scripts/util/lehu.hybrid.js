@@ -19,7 +19,7 @@ define(
         url.SERVER_URL = JSInterface.getServerUrl();
         url.IMAGE_URL = JSInterface.getImageUrl();
       } else {
-        url.SERVER_URL = "http://218.91.54.162:9006/";
+        url.SERVER_URL = "http://app.lehumall.com/";
         url.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
       }
 
