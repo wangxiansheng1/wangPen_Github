@@ -64,7 +64,7 @@ define('lehu.h5.component.detail', [
         this.param = can.deparam(window.location.search.substr(1));
 
         var api = new LHAPI({
-          url: LHConfig.setting.action.goodsInfo,
+          url: this.URL.SERVER_URL + LHConfig.setting.action.goodsInfo,
           data: this.param
         });
 
@@ -193,7 +193,7 @@ define('lehu.h5.component.detail', [
           .then(function(goodsDetail) {
 
             var queryGoodsStock = new LHAPI({
-              url: LHConfig.setting.action.queryGoodsStock + "?freightType=" + goodsDetail.FREIGHT_TYPE + "&goodsId=" + goodsDetail.ID + "&is_generation_operation=" + goodsDetail.IS_GENERATION_OPERATION + "&goodsNo=" + goodsDetail.GOODS_NO + "&cityId=" + goodsDetail.cityId + "&freight=" + goodsDetail.FREIGHT,
+              url: that.URL.SERVER_URL + LHConfig.setting.action.queryGoodsStock + "?freightType=" + goodsDetail.FREIGHT_TYPE + "&goodsId=" + goodsDetail.ID + "&is_generation_operation=" + goodsDetail.IS_GENERATION_OPERATION + "&goodsNo=" + goodsDetail.GOODS_NO + "&cityId=" + goodsDetail.cityId + "&freight=" + goodsDetail.FREIGHT,
               data: {}
             });
 
@@ -216,7 +216,7 @@ define('lehu.h5.component.detail', [
           .then(function() {
 
             var queryGoodsReview = new LHAPI({
-              url: LHConfig.setting.action.queryGoodsReview + "?COMMDOITY_ID=" + that.param["goodsId"] + "&pageSize=2&pageIndex=1&flag=0",
+              url: that.URL.SERVER_URL + LHConfig.setting.action.queryGoodsReview + "?COMMDOITY_ID=" + that.param["goodsId"] + "&pageSize=2&pageIndex=1&flag=0",
               data: {}
             });
 
@@ -244,7 +244,7 @@ define('lehu.h5.component.detail', [
           .then(function() {
 
             var goodsContent = new LHAPI({
-              url: LHConfig.setting.action.goodsContent + "?COMMDOITY_ID=" + that.param["goodsId"] + "&pageSize=2&pageIndex=1&flag=0",
+              url: that.URL.SERVER_URL + LHConfig.setting.action.goodsContent + "?COMMDOITY_ID=" + that.param["goodsId"] + "&pageSize=2&pageIndex=1&flag=0",
               data: {}
             });
 

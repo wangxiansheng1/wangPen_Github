@@ -40,7 +40,7 @@ define('lehu.h5.component.index', [
       sendRequest: function() {
         var that = this;
         var api = new LHAPI({
-          url: LHConfig.setting.action.appNewIndexFirst,
+          url: this.URL.SERVER_URL + LHConfig.setting.action.appNewIndexFirst,
           data: {}
         });
         api.sendRequest()
