@@ -226,25 +226,80 @@ define('lehu.h5.component.index', [
 
         $("#ajax_fastList").empty().append(fastList_html);
         this.lazyload();
+      },
 
-        //点击_标签
-        $(".ntag a").click(function() {
-          var FAST_NAME = $(this).attr("data-FAST_NAME");
-          var ID = $(this).attr("data-ID");
-          var LINK_NAME = $(this).attr("data-LINK_NAME");
-          var FAST_IMG = $(this).attr("data-FAST_IMG");
-          //console.log(funName,url);
-          var jsonParams = {
-            'funName': 'shortcut_fun',
-            'params': {
-              'FAST_NAME': FAST_NAME,
-              'dID': ID,
-              'LINK_NAME': LINK_NAME,
-              'FAST_IMG': FAST_IMG
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-        })
+      ".ntag a click": function(element, event) {
+        var FAST_NAME = $(element).attr("data-FAST_NAME");
+        var ID = $(element).attr("data-ID");
+        var LINK_NAME = $(element).attr("data-LINK_NAME");
+        var FAST_IMG = $(element).attr("data-FAST_IMG");
+
+        var clickedTag = this.tagMap[ID];
+        if (clickedTag) {
+          var type = clickedTag.type;
+          if (type == 'h5') {
+            window.location.href = clickedTag.url;
+          } else if (type == 'native') {
+            var jsonParams = {
+              'funName': 'shortcut_fun',
+              'params': {
+                'FAST_NAME': FAST_NAME,
+                'dID': ID,
+                'LINK_NAME': LINK_NAME,
+                'FAST_IMG': FAST_IMG
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+          }
+        }
+      },
+
+      tagMap: {
+        "17": {
+          type: "native",
+          name: "摇一摇"
+        },
+        "22": {
+          type: "native",
+          name: "免费试用"
+        },
+        "25": {
+          type: "native",
+          name: "每日签到"
+        },
+        "-1": {
+          type: "native",
+          name: "红包专区"
+        },
+        "6": {
+          type: "native",
+          name: "播播直播"
+        },
+        "3": {
+          type: "h5",
+          name: "海外购",
+          url: 'list.html?storeId=1031&mark=5'
+        },
+        "5": {
+          type: "h5",
+          name: "韩国馆",
+          url: 'list.html?originIds=42&mark=8'
+        },
+        "15": {
+          type: "h5",
+          name: "澳洲馆",
+          url: 'list.html?originIds=44&mark=8'
+        },
+        "7": {
+          type: "h5",
+          name: "日本馆",
+          url: 'list.html?originIds=42&mark=8'
+        },
+        "8": {
+          type: "h5",
+          name: "欧洲馆",
+          url: 'list.html?originIds=43&mark=8'
+        }
       },
 
       renderSecondkillList: function(data) {
