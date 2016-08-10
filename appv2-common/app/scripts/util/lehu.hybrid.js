@@ -20,7 +20,11 @@ define(
         url.IMAGE_URL = JSInterface.getImageUrl();
       } else {
         // url.SERVER_URL = "http://app.lehumall.com/";
-        url.SERVER_URL = window.location.host + "/"
+        var host = window.location.host;
+        if (host.indexOf("http://") == -1) {
+          host = "http://" + host;
+        }
+        url.SERVER_URL = host + "/";
         url.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
       }
 
