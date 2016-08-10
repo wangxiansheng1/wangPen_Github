@@ -19,7 +19,8 @@ define(
         url.SERVER_URL = JSInterface.getServerUrl();
         url.IMAGE_URL = JSInterface.getImageUrl();
       } else {
-        url.SERVER_URL = "http://app.lehumall.com/";
+        // url.SERVER_URL = "http://app.lehumall.com/";
+        url.SERVER_URL = window.location.host + "/"
         url.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
       }
 
