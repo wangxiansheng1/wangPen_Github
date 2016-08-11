@@ -1122,6 +1122,8 @@
 
         // Fix android device
         global.addEventListener('focus', this, false);
+        global.addEventListener('click', this, false);
+        outer.addEventListener('click', this, false);
         global.addEventListener('blur', this, false);
     };
 

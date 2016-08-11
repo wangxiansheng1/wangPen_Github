@@ -177,36 +177,40 @@ define('lehu.h5.component.index', [
         localStorage.html01 = html;
 
         //点击_幻灯片
-        $(".nbanner .swiper-slide").click(function() {
-          var SORT = $(this).attr("data-SORT");
-          var BANNER_JUMP_ID = $(this).attr("data-BANNER_JUMP_ID");
-          var BANNER_CONTENT = $(this).attr("data-BANNER_CONTENT");
-          var BANNER_IMG = $(this).attr("data-BANNER_IMG");
-          var ID = $(this).attr("data-ID");
-          var BANNER_LAYOUT = $(this).attr("data-BANNER_LAYOUT");
-          var BANNER_JUMP_FLAG = $(this).attr("data-BANNER_JUMP_FLAG");
-          var STATUS = $(this).attr("data-STATUS");
-          var NUM = $(this).attr("data-NUM");
-          var BANNER_NAME = $(this).attr("data-BANNER_NAME");
+        // $(".nbanner .swiper-slide").click(function() {
 
-          var jsonParams = {
-            'funName': 'banner_item_fun',
-            'params': {
-              'SORT': SORT,
-              'BANNER_JUMP_ID': BANNER_JUMP_ID,
-              'BANNER_CONTENT': BANNER_CONTENT,
-              'BANNER_IMG': BANNER_IMG,
-              'ID': ID,
-              'BANNER_LAYOUT': BANNER_LAYOUT,
-              'BANNER_JUMP_FLAG': BANNER_JUMP_FLAG,
-              'STATUS': STATUS,
-              'NUM': NUM,
-              'BANNER_NAME': BANNER_NAME
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
 
-        })
+        // })
+      },
+
+      '.swiper-slide click': function(element, event) {
+        var SORT = $(element).attr("data-SORT");
+        var BANNER_JUMP_ID = $(element).attr("data-BANNER_JUMP_ID");
+        var BANNER_CONTENT = $(element).attr("data-BANNER_CONTENT");
+        var BANNER_IMG = $(element).attr("data-BANNER_IMG");
+        var ID = $(element).attr("data-ID");
+        var BANNER_LAYOUT = $(element).attr("data-BANNER_LAYOUT");
+        var BANNER_JUMP_FLAG = $(element).attr("data-BANNER_JUMP_FLAG");
+        var STATUS = $(element).attr("data-STATUS");
+        var NUM = $(element).attr("data-NUM");
+        var BANNER_NAME = $(element).attr("data-BANNER_NAME");
+
+        var jsonParams = {
+          'funName': 'banner_item_fun',
+          'params': {
+            'SORT': SORT,
+            'BANNER_JUMP_ID': BANNER_JUMP_ID,
+            'BANNER_CONTENT': BANNER_CONTENT,
+            'BANNER_IMG': BANNER_IMG,
+            'ID': ID,
+            'BANNER_LAYOUT': BANNER_LAYOUT,
+            'BANNER_JUMP_FLAG': BANNER_JUMP_FLAG,
+            'STATUS': STATUS,
+            'NUM': NUM,
+            'BANNER_NAME': BANNER_NAME
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       renderTagList: function(data) {
