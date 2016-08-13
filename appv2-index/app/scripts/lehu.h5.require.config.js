@@ -53,6 +53,8 @@ requirejs.config({
         "swipe": "scripts/vendor/swipe",
         "iSlider": "scripts/vendor/iSlider",
         "iSliderAnimate": "scripts/vendor/iSlider.animate",
+        "Slider": "scripts/vendor/Slider",
+        "swiper": "scripts/vendor/swiper",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min"
     }
 });

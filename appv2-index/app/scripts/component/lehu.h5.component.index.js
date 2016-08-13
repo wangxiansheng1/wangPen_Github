@@ -6,12 +6,12 @@ define('lehu.h5.component.index', [
     'lehu.h5.api',
     'lehu.hybrid',
 
-    'iSlider',
+    'swiper',
     'imagelazyload'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
-    iSlider, imagelazyload) {
+    Swiper, imagelazyload) {
     'use strict';
 
     return can.Control.extend({
@@ -127,60 +127,30 @@ define('lehu.h5.component.index', [
       },
 
       renderBannerList: function(data) {
+
+        var width = $(".nwrapper").width();
+        //this.URL.IMAGE_URL
         var html = "";
         var bannerList = data.bannerList;
         for (var k = 0; k < bannerList.length; k++) {
           html += "<div class='swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
-          html += "<img class='lazyload' data-original=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          html += "<img class='lazyload' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
           html += "</div>";
         }
 
-        // $("#ajax_banner").empty().append(html);
+        $("#ajax_banner").empty().append(html);
 
-        var list = [];
-        for (var k = 0; k < bannerList.length; k++) {
-          var tempHTML = "<div class='swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
-          // tempHTML += "<img class='lazyload' data-original=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
-          tempHTML += "<img src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
-          tempHTML += "</div>";
-          list.push({
-            content: tempHTML
-          });
-        }
-
-        // var list = [{
-        //   content: '<div style="font-size:4em;color:white;text-align: center">HTML String</div>'
-        // }];
-
-        var S = new iSlider($('.nbanner .swiper-container')[0], list, {
-          isAutoplay: 1,
-          isLooping: 1,
-          isOverspread: 1,
-          animateTime: 800
+        var swiper = new Swiper('.nbanner .swiper-container', {
+          pagination: '.nbanner .swiper-pagination',
+          autoplay: 2000,
+          autoplayDisableOnInteraction: true,
+          speed: 300,
+          loop: true,
+          longSwipesRatio: 0.1
         });
-
-        // new Swipe($('.nbanner .swiper-container')[0], {
-        //   pagination: $('.swiper-pagination')[0],
-        //   startSlide: 0,
-        //   speed: 300,
-        //   auto: 2000,
-        //   continuous: true,
-        //   disableScroll: false,
-        //   stopPropagation: false,
-        //   callback: function(index, elem) {
-
-        //   },
-        //   transitionEnd: function(index, elem) {}
-        // });
 
         localStorage.removeItem("html01");
         localStorage.html01 = html;
-
-        //点击_幻灯片
-        // $(".nbanner .swiper-slide").click(function() {
-
-
-        // })
       },
 
       '.swiper-slide click': function(element, event) {
@@ -271,38 +241,38 @@ define('lehu.h5.component.index', [
           type: "native",
           name: "每日签到"
         },
-        "-1": {
+        "6": {
           type: "native",
           name: "红包专区"
         },
-        "6": {
+        "-1": {
           type: "native",
           name: "播播直播"
         },
         "3": {
           type: "h5",
           name: "海外购",
-          url: 'list.html?storeId=1031&mark=5'
+          url: 'list.html?storeId=1031&mark=5&from=index'
         },
         "5": {
           type: "h5",
-          name: "韩国馆",
-          url: 'list.html?originIds=42&mark=8'
+          name: "日韩馆",
+          url: 'list.html?originIds=42&mark=8&from=index'
         },
         "15": {
           type: "h5",
           name: "澳洲馆",
-          url: 'list.html?originIds=44&mark=8'
-        },
-        "7": {
-          type: "h5",
-          name: "日本馆",
-          url: 'list.html?originIds=42&mark=8'
+          url: 'list.html?originIds=44&mark=8&from=index'
         },
         "8": {
           type: "h5",
           name: "欧洲馆",
-          url: 'list.html?originIds=43&mark=8'
+          url: 'list.html?originIds=43&mark=8&from=index'
+        },
+        "7": {
+          type: "h5",
+          name: "全部",
+          url: 'list.html?originIds=42&mark=8&from=index'
         }
       },
 

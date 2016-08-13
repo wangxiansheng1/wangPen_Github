@@ -339,12 +339,19 @@ define('lehu.h5.component.list', [
       },
 
       '.nindex_fanhui click': function() {
-        var jsonParams = {
-          'funName': 'back_fun',
-          'params': {}
-        };
-        LHHybrid.nativeFun(jsonParams);
-        console.log('back_fun');
+
+        if (this.param.from) {
+          history.go(-1);
+          return false;
+        } else {
+          var jsonParams = {
+            'funName': 'back_fun',
+            'params': {}
+          };
+          LHHybrid.nativeFun(jsonParams);
+          console.log('back_fun');
+        }
+
       },
 
       '.ajax_noload click': function() {
