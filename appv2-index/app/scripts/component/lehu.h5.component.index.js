@@ -224,6 +224,9 @@ define('lehu.h5.component.index', [
               }
             };
             LHHybrid.nativeFun(jsonParams);
+          } else {
+            //其他类型不支持点击
+            return false;
           }
         }
       },
@@ -270,7 +273,7 @@ define('lehu.h5.component.index', [
           url: 'list.html?originIds=43&mark=8&from=index'
         },
         "7": {
-          type: "h5",
+          type: "h5null",
           name: "全部",
           url: 'list.html?originIds=42&mark=8&from=index'
         }
