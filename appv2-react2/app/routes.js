@@ -9,7 +9,7 @@ module.exports = (token) => {
 
   return [
     <Route name="root" path="/" handler={require('./handlers/Root')}>
-      <DefaultRoute handler={require('./handlers/Home')} />
+      <DefaultRoute handler={require('./handlers/Index/Index')} />
       <Route name="lehu" handler={require('./handlers/Index/Index')} />
     </Route>,
     <NotFoundRoute name="not-found" handler={require('./handlers/NotFound')}/>
