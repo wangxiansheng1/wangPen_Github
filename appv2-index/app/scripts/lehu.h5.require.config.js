@@ -1,5 +1,5 @@
 requirejs.config({
-    urlArgs: "v=1.0",
+    // urlArgs: "v=1.0",
     baseUrl: ' /',
     paths: {
         "can": "http://www.google.com/bower_components/canjs/amd/can",
