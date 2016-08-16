@@ -1,6 +1,7 @@
 var templateMap = {
 	"root": "/templates/index.html",
-	"/lehu": "/templates/index.html"
+	"/index": "/templates/index.html",
+	"/list": "/templates/list.html"
 };
 
 var commonHtml = ['header'];

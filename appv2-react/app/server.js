@@ -60,6 +60,8 @@ var renderApp = (req, token, cb) => {
         data: cache.clean(token)
       };
 
+      console.log(state.routes[0].name);
+
       var html = React.renderToString(<Handler data={data} />);
       var output = tmplcache[state.routes[0].name].replace(htmlRegex, html).replace(dataRegex, JSON.stringify(clientHandoff));
 
