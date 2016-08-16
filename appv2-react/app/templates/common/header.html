@@ -1,3 +1,5 @@
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+
 <style type="text/css">
 	::-webkit-scrollbar{display:none} 
 	::-webkit-scrollbar{width:1px;height:1px} 
@@ -19,6 +21,9 @@
 </style>
 
 <script type="text/javascript">
-	var clientWidth = document.documentElement.clientWidth || window.innerWidth;
-    document.querySelector('html').style.fontSize = 100 * (clientWidth / 640) + 'px';
+	(function() {
+        var clientWidth = document.documentElement.clientWidth || window.innerWidth;
+    	document.querySelector('html').style.fontSize = 100 * (clientWidth / 640) + 'px';
+    }());
+	
 </script>
