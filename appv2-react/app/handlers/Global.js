@@ -42,10 +42,29 @@ var Global = module.exports = {
 
     window.addEventListener('orientationchange' in window ? 'orientationchange' : 'resize', this.recalc, false);
     document.addEventListener('DOMContentLoaded', this.recalc, false);
+    document.addEventListener('resize', this.recalc, false);
   },
 
   recalc: function() {
-    var clientWidth = document.documentElement.clientWidth;
-    document.documentElement.style.fontSize = 100 * (clientWidth / 640) + 'px';
+    // var baseFontSize = 100;
+    // var baseWidth = 320;
+    // var clientWidth = document.documentElement.clientWidth || window.innerWidth;
+    // var innerWidth = Math.max(Math.min(clientWidth, 480), 320);
+
+    // var rem = 100;
+
+    // if (innerWidth > 362 && innerWidth <= 375) {
+    //   rem = Math.floor(innerWidth / baseWidth * baseFontSize * 0.9);
+    // }
+
+    // if (innerWidth > 375) {
+    //   rem = Math.floor(innerWidth / baseWidth * baseFontSize * 0.84);
+    // }
+
+    // window.__baseREM = rem;
+    // document.querySelector('html').style.fontSize = rem + 'px';
+
+    // var clientWidth = document.documentElement.clientWidth || window.innerWidth;
+    // document.querySelector('html').style.fontSize = 100 * (clientWidth / 640) + 'px';
   }
 }

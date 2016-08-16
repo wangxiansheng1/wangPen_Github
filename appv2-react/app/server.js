@@ -4,6 +4,7 @@ var app = express();
 //相对于启动目录
 app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/js', express.static(__dirname + '/../public/js/'));
+app.use('/images', express.static(__dirname + '/../public/images/'));
 
 // 引入系统库
 var fs = require('fs');
@@ -17,7 +18,10 @@ var Cookies = require('cookies');
 var cache = require('./utils/cache');
 var getRoutes = require('./routes.js');
 var fetchData = require('./utils/fetchData');
-var templatesconfig = require('./templateconfig');
+var {
+  templateMap,
+  commonHtml
+} = require('./config');
 
 // app router
 var renderApp = (req, token, cb) => {
@@ -48,6 +52,9 @@ var renderApp = (req, token, cb) => {
       return;
     }
     fetchData(token, state).then((data) => {
+
+      data.query = req.query;
+
       var clientHandoff = {
         token,
         data: cache.clean(token)
@@ -55,6 +62,13 @@ var renderApp = (req, token, cb) => {
 
       var html = React.renderToString(<Handler data={data} />);
       var output = tmplcache[state.routes[0].name].replace(htmlRegex, html).replace(dataRegex, JSON.stringify(clientHandoff));
+
+      _.each(commonHtml, function(name) {
+        if (output.indexOf('<!--#' + name + '.html-->') > -1) {
+          output = output.replace('<!--#' + name + '.html-->', commontmpls[name]);
+        }
+      });
+
       cb(null, output, token);
 
     });
@@ -88,6 +102,12 @@ function response(req, res, count) {
   });
 }
 
+// 读取公共文件
+var commontmpls = {};
+_.each(commonHtml, function(name) {
+  commontmpls[name] = fs.readFileSync(__dirname + '/templates/common/' + name + '.html', 'utf-8');
+});
+
 // 缓存模板
 var tmplcache = {};
 
@@ -102,7 +122,7 @@ function cachePagetmpl(path, schema) {
     }
   });
 }
-_.each(templatesconfig, function(path, schema) {
+_.each(templateMap, function(path, schema) {
   cachePagetmpl(path, schema);
 });
 

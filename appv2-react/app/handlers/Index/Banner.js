@@ -41,7 +41,7 @@ var Banner = module.exports = React.createClass({
           <div className="swiper-container">
               <div className="swiper-wrapper" id="ajax_banner" ref="banner">
                   {
-                    this.props.data.lehu.bannerList.map((banner, index) => {
+                    this.props.data.index.bannerList.map((banner, index) => {
                         if (index < PIC_LIMIT) {
                           return <div className="swiper-slide" key={banner.ID} data-banner={JSON.stringify(banner)}>
                           <img src={this.helpers.bannerImg(banner.BANNER_IMG)} data-original={banner.BANNER_IMG}/>

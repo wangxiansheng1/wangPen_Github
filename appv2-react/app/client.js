@@ -24,13 +24,17 @@ var render = () => {
     routerState
   } = renderState;
   loadingEvents.emit('start');
-  fetchData(token, routerState).then((data) => {
-    loadingEvents.emit('end');
-    React.render(<Handler data={data} loadingEvents={loadingEvents} />, element);
-  });
+
+  fetchData(token, routerState)
+    .then((data) => {
+      loadingEvents.emit('end');
+      data.query = routerState.query;
+      React.render(<Handler data={data} loadingEvents={loadingEvents} />, element);
+    });
 };
 
 Router.run(getRoutes(token), Router.HistoryLocation, function(Handler, routerState) {
+
   renderState.Handler = Handler;
   renderState.routerState = routerState;
   render();

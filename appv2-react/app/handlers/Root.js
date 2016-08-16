@@ -6,8 +6,6 @@ var {
 var TransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 var api = require('../utils/api');
 
-var Global = require('./Global');
-
 var Root = module.exports = React.createClass({
 
   getInitialState() {
@@ -32,11 +30,10 @@ var Root = module.exports = React.createClass({
         longLoad: false
       });
     });
-
-    Global.init();
   },
 
   render: function() {
+
     var className = 'App';
     if (this.state.longLoad)
       className += ' App--loading';
