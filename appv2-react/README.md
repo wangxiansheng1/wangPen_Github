@@ -1,16 +1,27 @@
-React Router Mega Demo
+# react-isomorphic
 ======================
 
-Eventually this will be a mega demo, but right now its just a playground
-for server-side rendering with react-router.
+基于react的同构项目
 
-After cloning the repo, do this so check it out:
+##运行：
+1. 安装依赖 `npm install`
+2. 执行启动 
+	1. 开发模式 `script/dev`
+	2. 生产模式 `script/run`
 
-```sh
-$ npm install
-$ ./script/dev
-# open http://localhost:5000
-```
+##Isomorphic Javascript Benefits:
+1. Better overall user experience
+2. Search engine indexable
+3. Easier code maintenance
+4. Free progressive enhancements
+
+##同构内容：
+1. Isomorphic view
+2. Isomorphic styles
+3. Isomorphic routing
+4. Isomorphic data fetching
+5. Isomorphic configuration
+6. Isomorphic localization
 
 ##数据吐出中文计算问题
 
@@ -24,4 +35,3 @@ $ ./script/dev
 	};
 
 	中Content-Length不能为string.length
-

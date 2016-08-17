@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
 var api = require('../../utils/api');
+var safeElement = require('../safe/safeElement');
 
 var Index = module.exports = React.createClass({
 
@@ -12,22 +13,6 @@ var Index = module.exports = React.createClass({
 
   componentDidMount: function() {
     console.log(this.props.data.query);
-  },
-
-  deparam: function() {
-    var params = {};
-
-    var query = window.location.search.substring(1);
-    var pairs = query.split("&");
-
-    for (var i = 0; i < pairs.length; i++) {
-      var pair = pairs[i].split("=");
-      if (pair.length == 2) {
-        params[pair[0]] = pair[1];
-      }
-    }
-
-    return params;
   },
 
   salesvolumeClick: function(element) {
