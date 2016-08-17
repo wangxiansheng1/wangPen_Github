@@ -230,20 +230,13 @@ define('lehu.h5.component.index', [
               }
             };
             LHHybrid.nativeFun(jsonParams);
-          } else if (type == 'nativebanner') {
+          } else if (type == 'nativehongbao') {
             var jsonParams = {
-              'funName': 'banner_item_fun',
+              'funName': 'promotion_more_fun',
               'params': {
-                'SORT': 3,
-                'BANNER_JUMP_ID': 1795,
-                'BANNER_CONTENT': '<a href="http://wap.lehumall.com/20160624/index.jsp" target="_blank"></a><a href="http://wap.lehumall.com/20160624/index.jsp" target="_blank"><img src="http://lehumall.b0.upaiyun.com/upload/image/editor/2016/20160701/201607011801495673.jpg" alt="" /></a><br />',
-                'BANNER_IMG': '/upload/image/admin/2016/20160722/201607220935044448.jpg',
-                'ID': 1795,
-                'BANNER_LAYOUT': 1,
-                'BANNER_JUMP_FLAG': 1,
-                'STATUS': 2,
-                'NUM': 6,
-                'BANNER_NAME': '红包专区'
+                'id': '642',
+                'promotion_name': '红包商品专区',
+                'detail_layout': '2'
               }
             };
             LHHybrid.nativeFun(jsonParams);
@@ -268,7 +261,7 @@ define('lehu.h5.component.index', [
           name: "每日签到"
         },
         "6": {
-          type: "nativebanner",
+          type: "nativehongbao",
           name: "红包专区"
         },
         "-1": {
