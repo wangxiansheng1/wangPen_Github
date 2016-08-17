@@ -211,8 +211,14 @@ define('lehu.h5.component.index', [
         var clickedTag = this.tagMap[ID];
         if (clickedTag) {
           var type = clickedTag.type;
-          if (type == 'h5') {
-            window.location.href = clickedTag.url;
+          if (type == 'nativegoodslist') {
+            var jsonParams = {
+              'funName': 'get_goods_list',
+              'params': {
+                'parmsFromJs': clickedTag.query
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
           } else if (type == 'native') {
             var jsonParams = {
               'funName': 'shortcut_fun',
@@ -270,24 +276,28 @@ define('lehu.h5.component.index', [
           name: "播播直播"
         },
         "3": {
-          type: "h5",
+          type: "nativegoodslist",
           name: "海外购",
-          url: 'list.html?storeId=1031&mark=5&from=index'
+          url: 'list.html?storeId=1031&mark=5&from=index',
+          query: 'storeId=1031&mark=5'
         },
         "5": {
-          type: "h5",
+          type: "nativegoodslist",
           name: "日韩馆",
-          url: 'list.html?originIds=42&mark=8&from=index'
+          url: 'list.html?originIds=42&mark=8&from=index',
+          query: 'originIds=42&mark=8'
         },
         "15": {
-          type: "h5",
+          type: "nativegoodslist",
           name: "澳洲馆",
-          url: 'list.html?originIds=44&mark=8&from=index'
+          url: 'list.html?originIds=44&mark=8&from=index',
+          query: 'originIds=44&mark=8'
         },
         "8": {
-          type: "h5",
+          type: "nativegoodslist",
           name: "欧洲馆",
-          url: 'list.html?originIds=43&mark=8&from=index'
+          url: 'list.html?originIds=43&mark=8&from=index',
+          query: 'originIds=43&mark=8'
         },
         "7": {
           type: "h5null",
