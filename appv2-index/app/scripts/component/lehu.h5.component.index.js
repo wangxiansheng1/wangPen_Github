@@ -153,7 +153,7 @@ define('lehu.h5.component.index', [
         localStorage.html01 = html;
       },
 
-      '.swiper-slide click': function(element, event) {
+      '.nbanner .swiper-slide click': function(element, event) {
         var SORT = $(element).attr("data-SORT");
         var BANNER_JUMP_ID = $(element).attr("data-BANNER_JUMP_ID");
         var BANNER_CONTENT = $(element).attr("data-BANNER_CONTENT");
@@ -211,14 +211,8 @@ define('lehu.h5.component.index', [
         var clickedTag = this.tagMap[ID];
         if (clickedTag) {
           var type = clickedTag.type;
-          if (type == 'nativegoodslist') {
-            var jsonParams = {
-              'funName': 'get_goods_list',
-              'params': {
-                'parmsFromJs': clickedTag.query
-              }
-            };
-            LHHybrid.nativeFun(jsonParams);
+          if (type == 'h5') {
+            window.location.href = clickedTag.url;
           } else if (type == 'native') {
             var jsonParams = {
               'funName': 'shortcut_fun',
@@ -269,33 +263,33 @@ define('lehu.h5.component.index', [
           name: "播播直播"
         },
         "3": {
-          type: "nativegoodslist",
+          type: "h5",
           name: "海外购",
-          url: 'list.html?storeId=1031&mark=5&from=index',
+          url: 'list.html?storeId=1031&mark=5',
           query: 'storeId=1031&mark=5'
         },
         "5": {
-          type: "nativegoodslist",
+          type: "h5",
           name: "日韩馆",
-          url: 'list.html?originIds=42&mark=8&from=index',
+          url: 'list.html?originIds=42&mark=8',
           query: 'originIds=42&mark=8'
         },
         "15": {
-          type: "nativegoodslist",
+          type: "h5",
           name: "澳洲馆",
-          url: 'list.html?originIds=44&mark=8&from=index',
+          url: 'list.html?originIds=44&mark=8',
           query: 'originIds=44&mark=8'
         },
         "8": {
-          type: "nativegoodslist",
+          type: "h5",
           name: "欧洲馆",
-          url: 'list.html?originIds=43&mark=8&from=index',
+          url: 'list.html?originIds=43&mark=8',
           query: 'originIds=43&mark=8'
         },
         "7": {
           type: "h5null",
           name: "全部",
-          url: 'list.html?originIds=42&mark=8&from=index'
+          url: 'list.html?originIds=42&mark=8'
         }
       },
 
@@ -445,39 +439,38 @@ define('lehu.h5.component.index', [
         $("#ajax_prommotionLayout").empty().append(html);
 
         this.lazyload();
+      },
 
-        $(".prommotionLayout_ad,.prommotionLayout_detail_more").click(function() {
-          var id = $(this).attr("data-id");
-          var promotion_name = $(this).attr("data-promotion_name");
-          var detail_layout = $(this).attr("data-detail_layout");
-          var jsonParams = {
-            'funName': 'promotion_more_fun',
-            'params': {
-              'id': id,
-              'promotion_name': promotion_name,
-              'detail_layout': detail_layout
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-        })
+      ".prommotionLayout_ad,.prommotionLayout_detail_more click": function(element, event) {
+        var id = $(element).attr("data-id");
+        var promotion_name = $(element).attr("data-promotion_name");
+        var detail_layout = $(element).attr("data-detail_layout");
+        var jsonParams = {
+          'funName': 'promotion_more_fun',
+          'params': {
+            'id': id,
+            'promotion_name': promotion_name,
+            'detail_layout': detail_layout
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
 
-        //商品
-        $(".nmiaosha_main a,.prommotionLayout_detail").click(function() {
-
-          var STORE_ID = $(this).attr("data-STORE_ID");
-          var GOODS_NO = $(this).attr("data-GOODS_NO");
-          var GOODS_ID = $(this).attr("data-GOODS_ID");
-          var jsonParams = {
-            'funName': 'good_detail_fun',
-            'params': {
-              'STORE_ID': STORE_ID,
-              'GOODS_NO': GOODS_NO,
-              'GOODS_ID': GOODS_ID
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-
-        })
+      //商品
+      ".nmiaosha_main a,.prommotionLayout_detail click": function(element, event) {
+        event && event.preventDefault();
+        var STORE_ID = $(element).attr("data-STORE_ID");
+        var GOODS_NO = $(element).attr("data-GOODS_NO");
+        var GOODS_ID = $(element).attr("data-GOODS_ID");
+        var jsonParams = {
+          'funName': 'good_detail_fun',
+          'params': {
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       renderDiscovery: function(data) {
