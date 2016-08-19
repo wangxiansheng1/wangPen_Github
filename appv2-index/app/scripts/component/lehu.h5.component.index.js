@@ -613,9 +613,15 @@ define('lehu.h5.component.index', [
       },
 
       bindScroll: function() {
+        var that = this;
         $(window).scroll(function() {
           var s = $(window).scrollTop();
           if (s > 100) {
+
+            if (that.exceed) {
+              return false;
+            }
+
             $(".nheader_cover").animate({
               opacity: 0.9
             });
@@ -637,6 +643,8 @@ define('lehu.h5.component.index', [
             $(".nindex_xiaoxi").css({
               'background-image': 'url(images/xiaoxi2.png)'
             });
+
+            that.exceed = true;
 
           } else {
             $(".nheader_cover").animate({
