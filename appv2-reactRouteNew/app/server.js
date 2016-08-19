@@ -55,7 +55,9 @@ function renderApp(token, props, res) {
       data: cache.clean(token)
     };
 
-    var currentRouteData = data[props.routes[0].path];
+    var currentRouteData = {
+      "data": data[props.routes[0].path]
+    };
 
     var html = renderToString(<RouterContext {...props} createElement={createElementFn(currentRouteData)} />);
     // var html = renderToString(<DataWrapper data={data}><RouterContext {...props} /></DataWrapper>);

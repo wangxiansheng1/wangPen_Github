@@ -14,7 +14,7 @@ var Tags = module.exports = React.createClass({
     return (
       <div className="ntag" id="ajax_fastList">
           {
-            this.props.fastList.map((tag) => {
+            this.props.data.fastList.map((tag) => {
                 return <a href='javascript:;' key={tag.ID} data-tag={JSON.stringify(tag)}>
                   <img className='lazyload' data-src={this.bannerImg(tag.FAST_IMG)}/>
                   <span>{tag.FAST_NAME}</span>
