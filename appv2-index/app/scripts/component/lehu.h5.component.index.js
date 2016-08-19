@@ -143,7 +143,7 @@ define('lehu.h5.component.index', [
         var swiper = new Swiper('.nbanner .swiper-container', {
           pagination: '.nbanner .swiper-pagination',
           autoplay: 2000,
-          autoplayDisableOnInteraction: true,
+          autoplayDisableOnInteraction: false,
           speed: 300,
           loop: true,
           longSwipesRatio: 0.1
