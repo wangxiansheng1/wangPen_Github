@@ -16,7 +16,7 @@ var {
 
 var fetchData = require('./utils/fetchData');
 var rehydrate = require('./utils/rehydrate');
-var routes = require('./handlers/routes/RootRoute');
+var routes = require('./routes.js');
 
 var loadingEvents = new EventEmitter();
 var token = rehydrate();
@@ -27,10 +27,6 @@ const {
   hash
 } = window.location
 const location = `${pathname}${search}${hash}`
-
-var extraProps = {
-  title: 'some title'
-};
 
 function createElementFn(data) {
   return function(Component, props) {

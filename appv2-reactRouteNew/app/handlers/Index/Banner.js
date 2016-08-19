@@ -36,8 +36,6 @@ var Banner = module.exports = React.createClass({
   },
 
   render: function() {
-    console.log("banner");
-    console.log(this.props);
     return (
       <div className="nbanner">
           <div className="swiper-container">

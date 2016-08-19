@@ -1,5 +1,7 @@
 var React = require('react');
 
+var ErrorResult = require("ErrorResult");
+
 module.exports = function(target) {
     var p = target.prototype;
     var list = [
@@ -11,18 +13,14 @@ module.exports = function(target) {
             var func = p[name];
             p[name] = function(...args) {
                 try {
-                    console.log("safe");
                     return func.apply(this, args);
                 } catch (e) {
-                    // 这里捕捉到React渲染报错，你可以啥都不做
-                    // 也可以将错误信息直接渲染在页面 
-                    // ErrorResult是你自定义的错误展示组件 msg是你自定义的错误信息
-                    // const error = {
-                    //     msg
-                    // };
-                    // return (
-                    //     <ErrorResult {error} {...this.props} />
-                    // )
+                    const error = {
+                        msg
+                    };
+                    return (
+                        <ErrorResult {error} {...this.props} />
+                    )
                 }
             }
         }

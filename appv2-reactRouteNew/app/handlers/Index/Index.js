@@ -35,8 +35,6 @@ var Index = module.exports = React.createClass({
   },
 
   render: function() {
-    console.log("index")
-    console.log(this.props);
     return (
       <div>
         <Banner {...this.props} ></Banner> 

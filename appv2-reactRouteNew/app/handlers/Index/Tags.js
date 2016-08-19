@@ -4,8 +4,6 @@ var api = require('../../utils/api');
 
 var Tags = module.exports = React.createClass({
 
-
-
   bannerImg: function(img) {
     return "http://lehumall.b0.upaiyun.com" + img;
   },

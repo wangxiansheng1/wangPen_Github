@@ -1,8 +1,6 @@
 var express = require('express');
 var app = express();
 
-var React = require('react');
-
 //相对于启动目录
 app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/js', express.static(__dirname + '/../public/js/'));
@@ -11,7 +9,9 @@ app.use('/images', express.static(__dirname + '/../public/images/'));
 // 引入系统库
 var fs = require('fs');
 var _ = require('underscore');
-
+var uuid = require('uuid');
+var Cookies = require('cookies');
+var React = require('react');
 var {
   renderToString
 } = require('react-dom/server');
@@ -20,18 +20,14 @@ var {
   RouterContext
 } = require('react-router');
 
-var uuid = require('uuid');
-var Cookies = require('cookies');
-
 // 引入自定义库
-var cache = require('./utils/cache');
-var getRoutes = require('./routes.js');
 var fetchData = require('./utils/fetchData');
+var cache = require('./utils/cache');
+var routes = require('./routes.js');
 var {
   templateMap,
   commonHtml
 } = require('./config');
-var routes = require('./handlers/routes/RootRoute');
 
 // pass parameter to routerContext
 function createElementFn(data) {
@@ -48,20 +44,19 @@ function renderApp(token, props, res) {
 
   fetchData(token, props).then((data) => {
 
-    // data.query = req.query;
-
     var clientHandoff = {
       token,
       data: cache.clean(token)
     };
 
+    var pathname = props.routes[0].path;
     var currentRouteData = {
-      "data": data[props.routes[0].path]
+      "data": data[pathname],
+      "query": pathname
     };
 
     var html = renderToString(<RouterContext {...props} createElement={createElementFn(currentRouteData)} />);
-    // var html = renderToString(<DataWrapper data={data}><RouterContext {...props} /></DataWrapper>);
-    var output = tmplcache[props.routes[0].path].replace(htmlRegex, html).replace(dataRegex, JSON.stringify(clientHandoff));
+    var output = tmplcache[pathname].replace(htmlRegex, html).replace(dataRegex, JSON.stringify(clientHandoff));
 
     _.each(commonHtml, function(name) {
       if (output.indexOf('<!--#' + name + '.html-->') > -1) {
