@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: "./app/client",
@@ -18,5 +19,13 @@ module.exports = {
       test: require.resolve('react'),
       loader: 'expose?React'
     }]
-  }
+  },
+
+  plugins: [
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   }
+    // })
+  ]
 };
