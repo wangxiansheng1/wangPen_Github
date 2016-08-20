@@ -42,11 +42,13 @@ match({
   loadingEvents.emit('start');
 
   fetchData(token, props).then((data) => {
+
     loadingEvents.emit('end');
 
+    var path = props.routes[0].path;
     var currentRouteData = {
-      "data": data[window.location.pathname],
-      "query": window.location.pathname,
+      "data": data[path],
+      "query": path,
       "loadingEvents": loadingEvents
     };
 

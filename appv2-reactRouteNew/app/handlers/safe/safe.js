@@ -1,6 +1,6 @@
 var React = require('react');
 
-var ErrorResult = require("ErrorResult");
+var ErrorResult = require("../ErrorResult");
 
 module.exports = function(target) {
     var p = target.prototype;
@@ -16,10 +16,10 @@ module.exports = function(target) {
                     return func.apply(this, args);
                 } catch (e) {
                     const error = {
-                        msg
+                        "msg": "系统错误"
                     };
                     return (
-                        <ErrorResult {error} {...this.props} />
+                        <ErrorResult error={error} />
                     )
                 }
             }
