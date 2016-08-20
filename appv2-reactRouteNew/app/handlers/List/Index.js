@@ -113,7 +113,7 @@ var Index = module.exports = React.createClass({
         if (goodsList && goodsList.length > 0) {
           $(".nlist_nomore,.nlist_no").css("display", "none");
           for (var k = 0; k < goodsList.length; k++) {
-            var zy = goodsList[k]['IS_CONSUMPTION_COUPON'];
+            // var zy = goodsList[k]['IS_CONSUMPTION_COUPON'];
 
             var PRICE = String(goodsList[k]['PRICE'].toString());
             var q = Math.floor(PRICE);
@@ -205,7 +205,7 @@ var Index = module.exports = React.createClass({
 
         <div className="nheader_list">
             <div className="nindex_fanhui"></div>
-            <div className="nindex_sousuo" unselectable="on" style={{"MozUserSelect": "none", "WebkitUserSelect": "none"}} onselectstart="return false;"><em></em><b className="nkeyword">全球购，找到好口碑</b></div>
+            <div className="nindex_sousuo" unselectable="on" style={{"MozUserSelect": "none", "WebkitUserSelect": "none"}} ><em></em><b className="nkeyword">全球购，找到好口碑</b></div>
             <div className="list_style"></div>
         </div>
 
@@ -222,7 +222,7 @@ var Index = module.exports = React.createClass({
         <img src="images/loading.gif" className="nlist_loading"/>
         <img src="images/nomore.png" className="nlist_nomore"/>
         <img src="images/no.png" className="nlist_no"/>
-        <a href="#" className="fix_go_top" onclick="return false;"></a>
+        <a href="#" className="fix_go_top" onClick="return false;"></a>
       </div>
     );
   }
