@@ -122,4 +122,4 @@ _.each(templateMap, function(path, schema) {
 
 // 启动应用
 app.listen(process.env.PORT || 5000);
-console.log('app started on port ' + (process.env.PORT || 5000));
+console.log('✅app started on port ' + (process.env.PORT || 5000));
