@@ -55,7 +55,10 @@ function renderApp(token, props, res) {
       "query": pathname
     };
 
+    // var start = Date.now();
     var html = renderToString(<RouterContext {...props} createElement={createElementFn(currentRouteData)} />);
+    // console.log(Date.now() - start);
+
     var output = tmplcache[pathname].replace(htmlRegex, html).replace(dataRegex, JSON.stringify(clientHandoff));
 
     _.each(commonHtml, function(name) {
