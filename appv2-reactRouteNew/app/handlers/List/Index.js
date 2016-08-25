@@ -7,7 +7,7 @@ var Index = module.exports = React.createClass({
 
   statics: {
     fetchData: (token, params, query) => {
-      return api.get('/goodsList.do', token, 'http://app.lehumall.com');
+      return api.get('/goodsList.do', token);
     }
   },
 

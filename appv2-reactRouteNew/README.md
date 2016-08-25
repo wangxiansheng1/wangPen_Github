@@ -23,6 +23,24 @@
 5. Isomorphic configuration
 6. Isomorphic localization
 
+##ab性能测试
+
+    ab -n1000 -c1000 http://localhost:5000/index
+
+ab数据分析： [Apache Benchmark 的使用的个人浅薄经验](https://ruby-china.org/topics/13870)
+
+##性能数据查看
+	
+	听云（15天免费） https://report.tingyun.com/server/application/132824/overview
+
+##异常处理
+
+[Node 出现 uncaughtException 之后的优雅退出方案](http://www.infoq.com/cn/articles/quit-scheme-of-node-uncaughtexception-emergence) 
+
+[NodeJS服务总是崩溃的解决办法](http://www.lai18.com/content/2165774.html)
+
+[Express 框架中对错误的统一处理](http://itbilu.com/nodejs/npm/41ctyLryW.html)
+
 ##数据吐出中文计算问题
 
 	var write = module.exports = (string, type, res) => {
