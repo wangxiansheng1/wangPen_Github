@@ -8,6 +8,7 @@
 2. 执行启动 
 	1. 开发模式 `script/dev`
 	2. 生产模式 `script/run`
+	3. 编译打包 `script/build`
 
 ##数据吐出中文计算问题
 

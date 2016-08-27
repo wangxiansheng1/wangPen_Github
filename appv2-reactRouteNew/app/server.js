@@ -36,39 +36,55 @@ function createElementFn(data) {
   }
 }
 
+// 替换公共模板
+function replaceCommonTemplate(output) {
+  _.each(commonHtml, function(name) {
+    if (output.indexOf('<!--#' + name + '.html-->') > -1) {
+      output = output.replace('<!--#' + name + '.html-->', commontmpls[name]);
+    }
+  });
+
+  return output;
+}
+
 // app router
 function renderApp(token, props, res) {
 
   var htmlRegex = /¡HTML!/;
   var dataRegex = /¡DATA!/;
 
-  fetchData(token, props).then((data) => {
+  if (props.components[1].clientRender) {
+    var pathname = props.routes[1].path;
 
-    var clientHandoff = {
-      token,
-      data: cache.clean(token)
-    };
+    var output = tmplcache[pathname];
 
-    var pathname = props.routes[0].path;
-    var currentRouteData = {
-      "data": data[pathname],
-      "query": pathname
-    };
-
-    // var start = Date.now();
-    var html = renderToString(<RouterContext {...props} createElement={createElementFn(currentRouteData)} />);
-    // console.log(Date.now() - start);
-
-    var output = tmplcache[pathname].replace(htmlRegex, html).replace(dataRegex, JSON.stringify(clientHandoff));
-
-    _.each(commonHtml, function(name) {
-      if (output.indexOf('<!--#' + name + '.html-->') > -1) {
-        output = output.replace('<!--#' + name + '.html-->', commontmpls[name]);
-      }
-    });
+    output = replaceCommonTemplate(output);
 
     res.status(200).send(output);
-  })
+  } else {
+
+    fetchData(token, props).then((data) => {
+
+      var clientHandoff = {
+        token,
+        data: cache.clean(token)
+      };
+
+      var pathname = props.routes[0].path;
+      var currentRouteData = {
+        "data": data[pathname],
+        "query": pathname
+      };
+
+      var html = renderToString(<RouterContext {...props} createElement={createElementFn(currentRouteData)} />);
+
+      var output = tmplcache[pathname].replace(htmlRegex, html).replace(dataRegex, JSON.stringify(clientHandoff));
+
+      output = replaceCommonTemplate(output);
+
+      res.status(200).send(output);
+    })
+  }
 }
 
 // 接受请求

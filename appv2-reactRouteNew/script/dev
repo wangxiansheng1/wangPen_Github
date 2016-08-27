@@ -4,4 +4,3 @@
 supervisor app.js
 kill %2
 kill %1
-

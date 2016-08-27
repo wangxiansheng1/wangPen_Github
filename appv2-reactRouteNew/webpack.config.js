@@ -2,7 +2,9 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: "./app/client",
+  entry: {
+    "main": "./app/client"
+  },
 
   output: {
     filename: '[name].js',
@@ -22,10 +24,14 @@ module.exports = {
   },
 
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false
-    //   }
-    // })
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common',
+      minChunks: 2
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
   ]
 };

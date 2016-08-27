@@ -2,6 +2,8 @@
 var React = require('react');
 var api = require('../../utils/api');
 
+var hybrid = require('./../common/hybrid');
+
 var PIC_LIMIT = 2;
 
 var Banner = module.exports = React.createClass({
@@ -12,8 +14,8 @@ var Banner = module.exports = React.createClass({
     var swiper = require('./../vendor/swiper');
     var swiper = new Swiper('.nbanner .swiper-container', {
       pagination: '.nbanner .swiper-pagination',
-      autoplay: 2000,
-      autoplayDisableOnInteraction: true,
+      autoplay: 4000,
+      autoplayDisableOnInteraction: false,
       speed: 300,
       loop: true,
       longSwipesRatio: 1

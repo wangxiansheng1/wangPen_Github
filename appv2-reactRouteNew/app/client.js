@@ -19,7 +19,6 @@ var rehydrate = require('./utils/rehydrate');
 var routes = require('./routes.js');
 
 var loadingEvents = new EventEmitter();
-var token = rehydrate();
 
 const {
   pathname,
@@ -41,19 +40,37 @@ match({
 
   loadingEvents.emit('start');
 
-  fetchData(token, props).then((data) => {
-
-    loadingEvents.emit('end');
+  if (props.components[1].clientRender) {
 
     var path = props.routes[0].path;
     var currentRouteData = {
-      "data": data[path],
+      "data": null,
       "query": path,
       "loadingEvents": loadingEvents
     };
 
-    render(<RouterContext {...props} createElement={createElementFn(currentRouteData)} />,
+    render(<RouterContext {...props} createElement={createElementFn(currentRouteData)}/>,
       document.getElementById('app')
     );
-  });
+  } else {
+    var token = rehydrate();
+
+    fetchData(token, props).then((data) => {
+
+      loadingEvents.emit('end');
+
+      var path = props.routes[0].path;
+      var currentRouteData = {
+        "data": data[path],
+        "query": path,
+        "loadingEvents": loadingEvents
+      };
+
+      render(<RouterContext {...props} createElement={createElementFn(currentRouteData)} />,
+        document.getElementById('app')
+      );
+    });
+  }
+
+
 })
