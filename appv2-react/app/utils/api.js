@@ -4,12 +4,12 @@ var cache = require('./cache');
 
 var HOST = 'http://app.lehumall.com';
 
-exports.get = (url, token) => {
+exports.get = (url, token, HOSTParam) => {
   var cached = cache.get(token, url);
   return (cached) ?
     Promise.resolve(cached) :
     axios({
-      url: HOST + url,
+      url: (HOSTParam || HOST) + url,
       headers: {
         'Authorization': token
       }

@@ -6,15 +6,12 @@ define('lehu.h5.component.index', [
     'lehu.h5.api',
     'lehu.hybrid',
 
-    'swipe',
-    'imagelazyload',
-
-    'text!template_components_index'
+    'swiper',
+    'imagelazyload'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
-    Swipe, imagelazyload,
-    template_components_index) {
+    Swiper, imagelazyload) {
     'use strict';
 
     return can.Control.extend({
@@ -31,13 +28,6 @@ define('lehu.h5.component.index', [
 
         this.initData();
 
-        // var renderIndex = can.mustache(template_components_index);
-        // var html = renderIndex(this.options);
-        // this.element.html(html);
-
-        // 从缓存中渲染
-        // that.renderFromStorage();
-
         setTimeout(function() {
           that.sendRequest.apply(that);
         }, 0);
@@ -46,7 +36,7 @@ define('lehu.h5.component.index', [
       sendRequest: function() {
         var that = this;
         var api = new LHAPI({
-          url: LHConfig.setting.action.appNewIndexFirst,
+          url: this.URL.SERVER_URL + LHConfig.setting.action.appNewIndexFirst,
           data: {}
         });
         api.sendRequest()
@@ -84,36 +74,6 @@ define('lehu.h5.component.index', [
           .fail(function(error) {
             $(".ajax_noload").show();
           })
-      },
-
-      renderFromStorage: function() {
-        if (localStorage.html01) {
-          $("#ajax_banner").html(localStorage.html01);
-
-          new Swipe($('.nbanner .swiper-container')[0], {
-            pagination: $('.swiper-pagination')[0],
-            startSlide: 0,
-            speed: 300,
-            auto: 2000,
-            continuous: true,
-            disableScroll: false,
-            stopPropagation: false,
-            callback: function(index, elem) {
-
-            },
-            transitionEnd: function(index, elem) {}
-          });
-        }
-
-        if (localStorage.html02) {
-          $("#ajax_fastList").html(localStorage.html02);
-        }
-
-        if (localStorage.html03) {
-          $("#ajax_hotRecommendation").html(localStorage.html03);
-        }
-
-        this.lazyload();
       },
 
       initData: function() {
@@ -167,64 +127,60 @@ define('lehu.h5.component.index', [
       },
 
       renderBannerList: function(data) {
+
+        var width = $(".nwrapper").width();
+        //this.URL.IMAGE_URL
         var html = "";
         var bannerList = data.bannerList;
         for (var k = 0; k < bannerList.length; k++) {
           html += "<div class='swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
-          html += "<img class='lazyload' data-original=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          html += "<img class='lazyload' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
           html += "</div>";
         }
 
         $("#ajax_banner").empty().append(html);
 
-        new Swipe($('.nbanner .swiper-container')[0], {
-          pagination: $('.swiper-pagination')[0],
-          startSlide: 0,
+        var swiper = new Swiper('.nbanner .swiper-container', {
+          pagination: '.nbanner .swiper-pagination',
+          autoplay: 4000,
+          autoplayDisableOnInteraction: false,
           speed: 300,
-          auto: 2000,
-          continuous: true,
-          disableScroll: false,
-          stopPropagation: false,
-          callback: function(index, elem) {
-
-          },
-          transitionEnd: function(index, elem) {}
+          loop: true,
+          longSwipesRatio: 0.1
         });
 
         localStorage.removeItem("html01");
         localStorage.html01 = html;
+      },
 
-        //点击_幻灯片
-        $(".nbanner .swiper-slide").click(function() {
-          var SORT = $(this).attr("data-SORT");
-          var BANNER_JUMP_ID = $(this).attr("data-BANNER_JUMP_ID");
-          var BANNER_CONTENT = $(this).attr("data-BANNER_CONTENT");
-          var BANNER_IMG = $(this).attr("data-BANNER_IMG");
-          var ID = $(this).attr("data-ID");
-          var BANNER_LAYOUT = $(this).attr("data-BANNER_LAYOUT");
-          var BANNER_JUMP_FLAG = $(this).attr("data-BANNER_JUMP_FLAG");
-          var STATUS = $(this).attr("data-STATUS");
-          var NUM = $(this).attr("data-NUM");
-          var BANNER_NAME = $(this).attr("data-BANNER_NAME");
+      '.nbanner .swiper-slide click': function(element, event) {
+        var SORT = $(element).attr("data-SORT");
+        var BANNER_JUMP_ID = $(element).attr("data-BANNER_JUMP_ID");
+        var BANNER_CONTENT = $(element).attr("data-BANNER_CONTENT");
+        var BANNER_IMG = $(element).attr("data-BANNER_IMG");
+        var ID = $(element).attr("data-ID");
+        var BANNER_LAYOUT = $(element).attr("data-BANNER_LAYOUT");
+        var BANNER_JUMP_FLAG = $(element).attr("data-BANNER_JUMP_FLAG");
+        var STATUS = $(element).attr("data-STATUS");
+        var NUM = $(element).attr("data-NUM");
+        var BANNER_NAME = $(element).attr("data-BANNER_NAME");
 
-          var jsonParams = {
-            'funName': 'banner_item_fun',
-            'params': {
-              'SORT': SORT,
-              'BANNER_JUMP_ID': BANNER_JUMP_ID,
-              'BANNER_CONTENT': BANNER_CONTENT,
-              'BANNER_IMG': BANNER_IMG,
-              'ID': ID,
-              'BANNER_LAYOUT': BANNER_LAYOUT,
-              'BANNER_JUMP_FLAG': BANNER_JUMP_FLAG,
-              'STATUS': STATUS,
-              'NUM': NUM,
-              'BANNER_NAME': BANNER_NAME
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-
-        })
+        var jsonParams = {
+          'funName': 'banner_item_fun',
+          'params': {
+            'SORT': SORT,
+            'BANNER_JUMP_ID': BANNER_JUMP_ID,
+            'BANNER_CONTENT': BANNER_CONTENT,
+            'BANNER_IMG': BANNER_IMG,
+            'ID': ID,
+            'BANNER_LAYOUT': BANNER_LAYOUT,
+            'BANNER_JUMP_FLAG': BANNER_JUMP_FLAG,
+            'STATUS': STATUS,
+            'NUM': NUM,
+            'BANNER_NAME': BANNER_NAME
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       renderTagList: function(data) {
@@ -244,25 +200,97 @@ define('lehu.h5.component.index', [
 
         $("#ajax_fastList").empty().append(fastList_html);
         this.lazyload();
+      },
 
-        //点击_标签
-        $(".ntag a").click(function() {
-          var FAST_NAME = $(this).attr("data-FAST_NAME");
-          var ID = $(this).attr("data-ID");
-          var LINK_NAME = $(this).attr("data-LINK_NAME");
-          var FAST_IMG = $(this).attr("data-FAST_IMG");
-          //console.log(funName,url);
-          var jsonParams = {
-            'funName': 'shortcut_fun',
-            'params': {
-              'FAST_NAME': FAST_NAME,
-              'dID': ID,
-              'LINK_NAME': LINK_NAME,
-              'FAST_IMG': FAST_IMG
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-        })
+      ".ntag a click": function(element, event) {
+        var FAST_NAME = $(element).attr("data-FAST_NAME");
+        var ID = $(element).attr("data-ID");
+        var LINK_NAME = $(element).attr("data-LINK_NAME");
+        var FAST_IMG = $(element).attr("data-FAST_IMG");
+
+        var clickedTag = this.tagMap[ID];
+        if (clickedTag) {
+          var type = clickedTag.type;
+          if (type == 'h5') {
+            window.location.href = clickedTag.url;
+          } else if (type == 'native') {
+            var jsonParams = {
+              'funName': 'shortcut_fun',
+              'params': {
+                'FAST_NAME': FAST_NAME,
+                'dID': ID,
+                'LINK_NAME': LINK_NAME,
+                'FAST_IMG': FAST_IMG
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+          } else if (type == 'nativehongbao') {
+            var jsonParams = {
+              'funName': 'promotion_more_fun',
+              'params': {
+                'id': '642',
+                'promotion_name': '红包商品专区',
+                'detail_layout': '2'
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+          } else {
+            //其他类型不支持点击
+            return false;
+          }
+        }
+      },
+
+      tagMap: {
+        "17": {
+          type: "native",
+          name: "摇一摇"
+        },
+        "22": {
+          type: "native",
+          name: "免费试用"
+        },
+        "25": {
+          type: "native",
+          name: "每日签到"
+        },
+        "6": {
+          type: "nativehongbao",
+          name: "红包专区"
+        },
+        "-1": {
+          type: "native",
+          name: "播播直播"
+        },
+        "3": {
+          type: "h5",
+          name: "海外购",
+          url: 'list.html?storeId=1031&mark=5',
+          query: 'storeId=1031&mark=5'
+        },
+        "5": {
+          type: "h5",
+          name: "日韩馆",
+          url: 'list.html?originIds=42&mark=8',
+          query: 'originIds=42&mark=8'
+        },
+        "15": {
+          type: "h5",
+          name: "澳洲馆",
+          url: 'list.html?originIds=44&mark=8',
+          query: 'originIds=44&mark=8'
+        },
+        "8": {
+          type: "h5",
+          name: "欧洲馆",
+          url: 'list.html?originIds=43&mark=8',
+          query: 'originIds=43&mark=8'
+        },
+        "7": {
+          type: "h5null",
+          name: "全部",
+          url: 'list.html?originIds=42&mark=8'
+        }
       },
 
       renderSecondkillList: function(data) {
@@ -411,39 +439,38 @@ define('lehu.h5.component.index', [
         $("#ajax_prommotionLayout").empty().append(html);
 
         this.lazyload();
+      },
 
-        $(".prommotionLayout_ad,.prommotionLayout_detail_more").click(function() {
-          var id = $(this).attr("data-id");
-          var promotion_name = $(this).attr("data-promotion_name");
-          var detail_layout = $(this).attr("data-detail_layout");
-          var jsonParams = {
-            'funName': 'promotion_more_fun',
-            'params': {
-              'id': id,
-              'promotion_name': promotion_name,
-              'detail_layout': detail_layout
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-        })
+      ".prommotionLayout_ad,.prommotionLayout_detail_more click": function(element, event) {
+        var id = $(element).attr("data-id");
+        var promotion_name = $(element).attr("data-promotion_name");
+        var detail_layout = $(element).attr("data-detail_layout");
+        var jsonParams = {
+          'funName': 'promotion_more_fun',
+          'params': {
+            'id': id,
+            'promotion_name': promotion_name,
+            'detail_layout': detail_layout
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
 
-        //商品
-        $(".nmiaosha_main a,.prommotionLayout_detail").click(function() {
-
-          var STORE_ID = $(this).attr("data-STORE_ID");
-          var GOODS_NO = $(this).attr("data-GOODS_NO");
-          var GOODS_ID = $(this).attr("data-GOODS_ID");
-          var jsonParams = {
-            'funName': 'good_detail_fun',
-            'params': {
-              'STORE_ID': STORE_ID,
-              'GOODS_NO': GOODS_NO,
-              'GOODS_ID': GOODS_ID
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-
-        })
+      //商品
+      ".nmiaosha_main a,.prommotionLayout_detail click": function(element, event) {
+        event && event.preventDefault();
+        var STORE_ID = $(element).attr("data-STORE_ID");
+        var GOODS_NO = $(element).attr("data-GOODS_NO");
+        var GOODS_ID = $(element).attr("data-GOODS_ID");
+        var jsonParams = {
+          'funName': 'good_detail_fun',
+          'params': {
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       renderDiscovery: function(data) {
@@ -586,9 +613,15 @@ define('lehu.h5.component.index', [
       },
 
       bindScroll: function() {
+        var that = this;
         $(window).scroll(function() {
           var s = $(window).scrollTop();
           if (s > 100) {
+
+            if (that.exceed) {
+              return false;
+            }
+
             $(".nheader_cover").animate({
               opacity: 0.9
             });
@@ -610,6 +643,8 @@ define('lehu.h5.component.index', [
             $(".nindex_xiaoxi").css({
               'background-image': 'url(images/xiaoxi2.png)'
             });
+
+            that.exceed = true;
 
           } else {
             $(".nheader_cover").animate({

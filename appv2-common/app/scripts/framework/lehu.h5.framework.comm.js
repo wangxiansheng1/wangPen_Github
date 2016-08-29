@@ -116,7 +116,7 @@ define([
         }
 
         $.ajax({
-            url: LHBizConfig.setting.REQUEST_HOST + this.url,
+            url: this.url,
             type: method || 'get',
             contentType: method == 'get' ? "text/x-json;charset=UTF-8" : "application/x-www-form-urlencoded; charset=UTF-8",
             data: data,

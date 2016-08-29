@@ -7,15 +7,11 @@ var {
 
 module.exports = (token) => {
 
-  var CreateContact = require('./handlers/CreateContact');
-  CreateContact.token = token;
-
   return [
-    <Route name="root" path="/" handler={require('./handlers/Index/Index')}>
+    <Route name="root" path="/" handler={require('./handlers/Root')}>
       <DefaultRoute handler={require('./handlers/Index/Index')} />
-      <Route name="contact" path="contact/:id" handler={require('./handlers/Contact')} />
-      <Route name="newContact" handler={require('./handlers/NewContact')} />
-      <Route name="createContact" handler={CreateContact} />
+      <Route name="index" path="/index.html" handler={require('./handlers/Index/Index')} />
+      <Route name="list" path="/list.html" handler={require('./handlers/List/Index')} />
     </Route>,
     <NotFoundRoute name="not-found" handler={require('./handlers/NotFound')}/>
   ];

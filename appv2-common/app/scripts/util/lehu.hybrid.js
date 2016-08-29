@@ -19,7 +19,12 @@ define(
         url.SERVER_URL = JSInterface.getServerUrl();
         url.IMAGE_URL = JSInterface.getImageUrl();
       } else {
-        url.SERVER_URL = "http://218.91.54.162:9006/";
+        // url.SERVER_URL = "http://app.lehumall.com/";
+        var host = window.location.host;
+        if (host.indexOf("http://") == -1) {
+          host = "http://" + host;
+        }
+        url.SERVER_URL = host + "/";
         url.IMAGE_URL = "http://lehumall.b0.upaiyun.com/";
       }
 

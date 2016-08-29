@@ -62,7 +62,7 @@ define('lehu.h5.component.list', [
         var that = this;
 
         var api = new LHAPI({
-          url: LHConfig.setting.action.goodsCategoryList,
+          url: this.URL.SERVER_URL + LHConfig.setting.action.goodsCategoryList,
           data: this.param,
           method: 'post'
         });
@@ -339,12 +339,14 @@ define('lehu.h5.component.list', [
       },
 
       '.nindex_fanhui click': function() {
+
         var jsonParams = {
           'funName': 'back_fun',
           'params': {}
         };
         LHHybrid.nativeFun(jsonParams);
         console.log('back_fun');
+
       },
 
       '.ajax_noload click': function() {

@@ -1,5 +1,5 @@
 requirejs.config({
-    urlArgs: "v=1.0",
+    // urlArgs: "v=1.0",
     baseUrl: ' /',
     paths: {
         "can": "http://www.google.com/bower_components/canjs/amd/can",
@@ -51,6 +51,10 @@ requirejs.config({
         "template_components_comment": "templates/components/lehu.h5.components.comment.mustache",
 
         "swipe": "scripts/vendor/swipe",
+        "iSlider": "scripts/vendor/iSlider",
+        "iSliderAnimate": "scripts/vendor/iSlider.animate",
+        "Slider": "scripts/vendor/Slider",
+        "swiper": "scripts/vendor/swiper",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min"
     }
 });

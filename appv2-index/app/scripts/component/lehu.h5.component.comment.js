@@ -62,7 +62,7 @@ define('lehu.h5.component.comment', [
         var that = this;
 
         var api = new LHAPI({
-          url: LHConfig.setting.action.goodsCategoryList,
+          url: this.URL.SERVER_URL + LHConfig.setting.action.goodsCategoryList,
           data: this.param,
           method: 'post'
         });
