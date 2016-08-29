@@ -22,3 +22,8 @@
 	};
 
 	中Content-Length不能为string.length
+
+##axios返回数据中文乱码问题
+	responseText += chunk;会导致中文乱码 要使用 bufferHelper.concat(chunk);
+
+参见http://www.infoq.com/cn/articles/nodejs-about-buffer
