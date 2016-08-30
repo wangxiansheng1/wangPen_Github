@@ -4,6 +4,7 @@ var api = require('../../utils/api');
 
 var Banner = require('./Banner');
 var Tags = require('./Tags');
+var Secondkill = require('./Secondkill');
 
 var Index = module.exports = React.createClass({
 
@@ -37,8 +38,9 @@ var Index = module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <Banner {...this.props} ></Banner> 
+        <Banner {...this.props} ></Banner>
         <Tags {...this.props} ></Tags>
+        <Secondkill {...this.props} ></Secondkill>
       </div>
     );
   }

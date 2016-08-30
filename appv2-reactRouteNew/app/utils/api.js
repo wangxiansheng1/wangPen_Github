@@ -2,8 +2,8 @@ var Promise = require('when').Promise;
 var axios = require('axios');
 var cache = require('./cache');
 
-// var HOST = 'http://app.lehumall.com';
-var HOST = "http://192.168.19.22:8082";
+var HOST = 'http://app.lehumall.com';
+// var HOST = "http://192.168.19.22:8082";
 
 exports.get = (url, token, HOSTParam) => {
   var cached = cache.get(token, url);
