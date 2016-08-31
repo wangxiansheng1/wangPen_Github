@@ -5,6 +5,9 @@ var api = require('../../utils/api');
 var Banner = require('./Banner');
 var Tags = require('./Tags');
 var Secondkill = require('./Secondkill');
+var HotRecommendation = require('./HotRecommendation');
+var ProductList = require('./ProductList');
+var Discovery = require('./Discovery');
 
 var Index = module.exports = React.createClass({
 
@@ -41,6 +44,7 @@ var Index = module.exports = React.createClass({
         <Banner {...this.props} ></Banner>
         <Tags {...this.props} ></Tags>
         <Secondkill {...this.props} ></Secondkill>
+        <HotRecommendation {...this.props} ></HotRecommendation>
       </div>
     );
   }
