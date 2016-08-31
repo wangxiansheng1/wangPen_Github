@@ -105,7 +105,7 @@ define('lehu.h5.component.activity', [
         var renderData = this.options.data;
         //节流阀
         var loadingDatas = function() {
-          if (NODATA) {
+          if (NODATA || that.options.data.attr("supplement.onLoadingData")) {
             return false;
           }
           var srollPos = $(window).scrollTop(); //滚动条距离顶部的高度
