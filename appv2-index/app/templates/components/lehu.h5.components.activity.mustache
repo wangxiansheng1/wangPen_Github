@@ -1,0 +1,40 @@
+<div class="" id="page">
+    <header class="header" id="header">
+        <a href="wapindex.do" class="return-pege2"><i class="iconfont"></i>返回</a>
+        <div class="title">{{list.TITLE}}</div>
+        <a href="javascript:;" class="reg-b"></a>
+    </header>
+    <!--布局2-->
+    <!--布局1-->
+    <div class="prefecture">
+        <div class="p-ad">
+            <a href="##">
+                <img src="{{imgprefix}}{{bannerImg}}" alt="" style="width:100%">
+            </a>
+        </div>
+        <div class="p-list" id="p-list">
+            <ul>
+                {{#each list.pageBean}}
+                <li>
+                    <a href="wapGoods.do?goods_id=642&amp;store_id=0&amp;goods_no=100427">
+                        <span class="img">
+                                <em><img src="{{imgprefix}}{{COMMODITY_IMAGE_PATH}}"></em>
+                            </span>
+                        <p>
+                            <span class="t">{{COMMODITY_NAME}}</span>
+                            <span class="s">
+                                    <em class="price"><i class="price-icon">￥</i><i class="font-num">{{PRICE}}</i></em>
+                                </span>
+                            <span class="i">好评度：{{REVIEW_PERCENT}}%({{REVIEW_NUMBER}}人)</span>
+                        </p>
+                    </a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    {{#if supplement.onLoadingData}}
+        <div style="text-align: center;padding: 10px 0;"><span class="loading"></span>正在加载，请稍等...</div>
+    {{/if}}
+    <div class="mask" id="mask"></div>
+</div>

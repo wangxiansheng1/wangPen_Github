@@ -647,6 +647,7 @@ define('lehu.h5.component.index', [
             that.exceed = true;
 
           } else {
+            that.exceed = false;
             $(".nheader_cover").animate({
               opacity: 0
             });
