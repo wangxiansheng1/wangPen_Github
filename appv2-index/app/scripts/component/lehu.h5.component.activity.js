@@ -18,6 +18,7 @@ define('lehu.h5.component.activity', [
     'use strict';
 
     var DEFAULT_PAGE_INDEX = 0;
+    var NODATA = false;
 
     can.route.ready();
 
@@ -104,6 +105,9 @@ define('lehu.h5.component.activity', [
         var renderData = this.options.data;
         //节流阀
         var loadingDatas = function() {
+          if (NODATA) {
+            return false;
+          }
           var srollPos = $(window).scrollTop(); //滚动条距离顶部的高度
           var windowHeight = $(window).height(); //窗口的高度
           var dbHiht = $("#activity").height(); //整个页面文件的高度
@@ -148,6 +152,8 @@ define('lehu.h5.component.activity', [
 
               that.options.data.attr("pageIndex", parseInt(that.options.data.pageIndex) + 1);
               that.options.data.attr("supplement.onLoadingData", false);
+            } else {
+              NODATA = true
             }
 
           })
