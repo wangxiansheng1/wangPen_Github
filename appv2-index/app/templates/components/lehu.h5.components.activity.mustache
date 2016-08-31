@@ -33,7 +33,10 @@
         </div>
     </div>
     {{#if supplement.onLoadingData}}
-        <div style="text-align: center;padding: 10px 0;"><span class="loading"></span>正在加载，请稍等...</div>
+        <div style="text-align: center;padding: 10px 0;"><span class="loading"></span>客官，正在加载，请稍等...</div>
+    {{/if}}
+    {{#if supplement.noData}}
+        <div style="text-align: center;padding: 10px 0;"><span class="loading"></span>客官，没有更多了/(ㄒoㄒ)/~~</div>
     {{/if}}
     <div class="mask" id="mask"></div>
 </div>

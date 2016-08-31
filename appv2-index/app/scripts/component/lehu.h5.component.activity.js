@@ -90,6 +90,7 @@ define('lehu.h5.component.activity', [
         this.options.data.attr("imgprefix", this.URL.IMAGE_URL);
         this.options.data.attr("bannerImg", data.list.prefecture[0].BIG_IMG);
         this.options.data.attr("pageIndex", this.pageIndex);
+        this.options.data.attr("supplement.noData", false);
         var html = renderFn(this.options.data, this.helpers);
         this.element.html(html);
 
@@ -105,7 +106,7 @@ define('lehu.h5.component.activity', [
         var renderData = this.options.data;
         //节流阀
         var loadingDatas = function() {
-          if (NODATA || that.options.data.attr("supplement.onLoadingData")) {
+          if (that.options.data.attr("supplement.noData") || that.options.data.attr("supplement.onLoadingData")) {
             return false;
           }
           var srollPos = $(window).scrollTop(); //滚动条距离顶部的高度
@@ -153,7 +154,7 @@ define('lehu.h5.component.activity', [
               that.options.data.attr("pageIndex", parseInt(that.options.data.pageIndex) + 1);
               that.options.data.attr("supplement.onLoadingData", false);
             } else {
-              NODATA = true
+              that.options.data.attr("supplement.noData", true);
             }
 
           })
