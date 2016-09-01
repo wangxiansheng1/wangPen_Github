@@ -38,12 +38,14 @@ requirejs.config({
         "lehu.h5.page.404": "scripts/page/lehu.h5.page.404",
         "lehu.h5.page.404index": "scripts/page/lehu.h5.page.404index",
         "lehu.h5.page.activity": "scripts/page/lehu.h5.page.activity",
+        "lehu.h5.page.activities": "scripts/page/lehu.h5.page.activities",
 
         "lehu.h5.component.index": "scripts/component/lehu.h5.component.index",
         "lehu.h5.component.list": "scripts/component/lehu.h5.component.list",
         "lehu.h5.component.detail": "scripts/component/lehu.h5.component.detail",
         "lehu.h5.component.comment": "scripts/component/lehu.h5.component.comment",
         "lehu.h5.component.activity": "scripts/component/lehu.h5.component.activity",
+        "lehu.h5.component.activities": "scripts/component/lehu.h5.component.activities",
 
         "template_header_footer": "templates/header/lehu.h5.header.footer.mustache",
 
@@ -52,6 +54,7 @@ requirejs.config({
         "template_components_detail": "templates/components/lehu.h5.components.detail.mustache",
         "template_components_comment": "templates/components/lehu.h5.components.comment.mustache",
         "template_components_activity": "templates/components/lehu.h5.components.activity.mustache",
+        "template_components_activities": "templates/components/lehu.h5.components.activities.mustache",
 
         "swipe": "scripts/vendor/swipe",
         "iSlider": "scripts/vendor/iSlider",
