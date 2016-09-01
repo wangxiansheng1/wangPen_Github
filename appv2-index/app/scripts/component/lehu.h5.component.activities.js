@@ -136,6 +136,9 @@ define('lehu.h5.component.activities', [
 
         var floorPosition = $("#" + floorId).offset().top - $(".cms-src-elevatorbar").height();
         $(window).scrollTop(floorPosition > 0 ? floorPosition : 0);
+        // $('html,body').animate({
+        //   scrollTop: floorPosition > 0 ? floorPosition : 0
+        // }, 800);
       },
 
       '.nindex_fanhui click': function() {
