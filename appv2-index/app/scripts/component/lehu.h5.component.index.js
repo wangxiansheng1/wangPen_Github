@@ -202,6 +202,20 @@ define('lehu.h5.component.index', [
         this.lazyload();
       },
 
+      getCoupon: function(userId) {
+        var param = {};
+
+        if (userId) {
+          alert("领券");
+        } else {
+          var no_login_fun = {
+            'funName': 'no_login_fun',
+            'params': {}
+          };
+          LHHybrid.nativeFun(no_login_fun);
+        }
+      },
+
       ".ntag a click": function(element, event) {
         var FAST_NAME = $(element).attr("data-FAST_NAME");
         var ID = $(element).attr("data-ID");
@@ -212,7 +226,23 @@ define('lehu.h5.component.index', [
         if (clickedTag) {
           var type = clickedTag.type;
           if (type == 'h5') {
-            window.location.href = clickedTag.url;
+
+            try {
+              window.WebViewJavascriptBridge.callHandler('takePhoto', '', '');
+            } catch (e) {
+              console.log(e);
+            }
+
+            var that = this;
+            LHHybrid.getUserId()
+              .done(function(id) {
+                that.getCoupon(id);
+              })
+              .fail(function(error) {
+                console.log(error);
+              });
+
+            // window.location.href = clickedTag.url;
           } else if (type == 'native') {
             var jsonParams = {
               'funName': 'shortcut_fun',
@@ -287,9 +317,9 @@ define('lehu.h5.component.index', [
           query: 'originIds=43&mark=8'
         },
         "7": {
-          type: "h5null",
+          type: "h5",
           name: "全部",
-          url: 'list.html?originIds=42&mark=8'
+          url: 'http://192.168.19.22:8082/html5/app/zhongqiu/activityzhongqiu.html'
         }
       },
 

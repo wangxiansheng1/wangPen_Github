@@ -4,7 +4,7 @@ var api = require('../../utils/api');
 
 var hybrid = require('./../common/hybrid');
 
-var Banner = module.exports = React.createclassName({
+var Banner = module.exports = React.createClass({
 
   componentDidMount() {
 
@@ -18,28 +18,28 @@ var Banner = module.exports = React.createclassName({
 
   getTemplateByType: function(item) {
     var map = {
-      1: function() {
+      1: (goods) => {
         return <div className='nindex_ad_one'><a href='javascript:;'>
-              <img  className='lazyload' data-original=" + that.URL.IMAGE_URL + hotRecommendation[k]['goods'][0].IMG_URL + " />
+              <img  className='lazyload' data-src={this.helpers.bannerImg(goods[0].IMG_URL)} />
               </a></div>;
       },
-      2: function(goods) {
+      2: (goods) => {
         return <div className='nindex_ad_two'>
               {
-                goods.map((item) => {
+                goods.map((good) => {
                   return <a href='javascript:;'>
-                         <img  className='lazyload' data-original=" + that.URL.IMAGE_URL + hotRecommendation[k]['goods'][i].IMG_URL + " />
+                         <img  className='lazyload' data-src={this.helpers.bannerImg(good.IMG_URL)} />
                          </a>
                 })
               }
               </div>
       },
-      3: function(goods) {
+      3: (goods) => {
         return <div className='nindex_ad_three'>
               {
-                goods.map((item) => {
+                goods.map((good) => {
                   return <a href='javascript:;'>
-                         <img  className='lazyload' data-original=" + that.URL.IMAGE_URL + hotRecommendation[k]['goods'][i].IMG_URL + " />
+                         <img  className='lazyload' data-src={this.helpers.bannerImg(good.IMG_URL)} />
                          </a>
                 })
               }
@@ -47,7 +47,7 @@ var Banner = module.exports = React.createclassName({
       }
     }
 
-    var result = map[item.TEMPLATE].apply(this, [item.goods]);
+    return map[item.TEMPLATE].apply(this, [item.goods]);
   },
 
   render: function() {

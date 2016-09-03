@@ -39,26 +39,52 @@ var Banner = module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="nbanner">
-          <div className="swiper-container">
-              <div className="swiper-wrapper" id="ajax_banner" ref="banner">
-                  {
-                    this.props.data.bannerList.map((banner, index) => {
-                        if (index < PIC_LIMIT) {
-                          return <div className="swiper-slide" key={banner.ID} data-banner={JSON.stringify(banner)}>
-                          <img src={this.helpers.bannerImg(banner.BANNER_IMG)} data-original={banner.BANNER_IMG}/>
+      <div id="ajax_prommotionLayout">
+          {
+            this.props.data.prommotionLayout.map((prommotion) => {
+              return <div>
+                      <div className='ntuijian'>
+                        <div className='ntuijian_top'>
+                          <span><em>{prommotion['PROMOTION_NAME']}</em></span>
+                        </div>
+
+                        <div className='ntuijian_ad'>
+                          <a href='javascript:;'></a>
+                        </div>
+
+                        <div className='ntuijian_main'>
+                          <div className='swiper-container' style=''>
+                            <div className='swiper-wrapper'>
+
+                            {
+                              prommotion.goodsList.map((good) => {
+                                var PRICE = String(good['GOODS_PRICE'].toString());
+                                var q = Math.floor(PRICE);
+                                var h = (PRICE).slice(-2);
+
+                                return <a href='javascript:;'>
+                                      <img className='lazyload' data-original={this.good['GOODS_IMG']} />
+                                      <title>{good['GOODS_NAME']}</title>
+                                      <span>￥ {q} .<i> {h} </i></span>
+                                      </a>
+                              })
+                            }
+
+                            <a href='javascript:;' className='swiper-slide prommotionLayout_detail_more'>
+                            <img className='lazyload' data-original='images/more.jpg'/>
+                            </a>
+                            </div>
                           </div>
-                        } else {
-                          return <div className="swiper-slide" key={banner.ID} data-banner={JSON.stringify(banner)}>
-                          <img className='lazyload' data-src={this.helpers.bannerImg(banner.BANNER_IMG)} data-original={banner.BANNER_IMG}/>
-                          </div>
-                        }
-                        
-                    })
-                  }
-              </div>
-              <div className="swiper-pagination"></div>
-          </div>
+                        </div>
+
+                      </div>
+                      <div className='nhr'></div>
+                    </div>
+            })
+
+          }
+
+          
       </div>
     );
   }

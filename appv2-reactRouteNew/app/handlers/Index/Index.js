@@ -36,6 +36,10 @@ var Index = module.exports = React.createClass({
 
       }
     });
+
+    window.addEventListener('scroll', (event) => {
+      lazyloadImg.start();
+    });
   },
 
   render: function() {
@@ -45,6 +49,7 @@ var Index = module.exports = React.createClass({
         <Tags {...this.props} ></Tags>
         <Secondkill {...this.props} ></Secondkill>
         <HotRecommendation {...this.props} ></HotRecommendation>
+        <ProductList {...this.props} ></ProductList>
       </div>
     );
   }

@@ -100,12 +100,13 @@
             var list = document.querySelectorAll(this.el);
             var trueList = [];
             for (var i = 0; i < list.length; i++) {
+                console.log(this.testMeet(list[i]));
                 if (this.testMeet(list[i]) === true) {
                     trueList.push(list[i]);
                 }
 
             }
-
+            console.dir(trueList);
             for (var i = 0; i < trueList.length; i++) {
                 this.loadImg(trueList[i]);
             }
