@@ -202,20 +202,6 @@ define('lehu.h5.component.index', [
         this.lazyload();
       },
 
-      getCoupon: function(userId) {
-        var param = {};
-
-        if (userId) {
-          alert("领券");
-        } else {
-          var no_login_fun = {
-            'funName': 'no_login_fun',
-            'params': {}
-          };
-          LHHybrid.nativeFun(no_login_fun);
-        }
-      },
-
       ".ntag a click": function(element, event) {
         var FAST_NAME = $(element).attr("data-FAST_NAME");
         var ID = $(element).attr("data-ID");
@@ -226,23 +212,7 @@ define('lehu.h5.component.index', [
         if (clickedTag) {
           var type = clickedTag.type;
           if (type == 'h5') {
-
-            try {
-              window.WebViewJavascriptBridge.callHandler('takePhoto', '', '');
-            } catch (e) {
-              console.log(e);
-            }
-
-            var that = this;
-            LHHybrid.getUserId()
-              .done(function(id) {
-                that.getCoupon(id);
-              })
-              .fail(function(error) {
-                console.log(error);
-              });
-
-            // window.location.href = clickedTag.url;
+            window.location.href = clickedTag.url;
           } else if (type == 'native') {
             var jsonParams = {
               'funName': 'shortcut_fun',
