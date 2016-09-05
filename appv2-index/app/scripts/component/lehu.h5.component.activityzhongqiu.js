@@ -8,12 +8,16 @@ define('lehu.h5.component.activityzhongqiu', [
     'underscore',
 
     'imagelazyload',
+    'cryptojs.core',
+    'tripledes',
+    'cipher-md5',
+    'enc-base64',
 
     'text!template_components_activityzhongqiu'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid, _,
-    imagelazyload,
+    imagelazyload, cryptojs, tripledes, ciphermd5, cipherbase64,
     template_components_activityzhongqiu) {
     'use strict';
 
@@ -144,7 +148,7 @@ define('lehu.h5.component.activityzhongqiu', [
 
       '.nindex_fanhui click': function(element, event) {
         // var acitveId = $(element).attr("data-acitveId");
-        var activeId = '2063';
+        var activeId = '2074';
         var param = can.deparam(window.location.search.substr(1));
         var userid = param.userid;
         if (!userid) {
