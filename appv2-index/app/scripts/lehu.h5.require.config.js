@@ -1,6 +1,27 @@
 requirejs.config({
     // urlArgs: "v=1.0",
     baseUrl: ' /',
+    shim: {
+        'cryptojs.core': {
+            exports: "CryptoJS"
+        },
+        'tripledes': {
+            deps: ['cryptojs.core', 'cipher-core'],
+            exports: "CryptoJS" //You can also use "CryptoJS.MD5"
+        },
+        'cipher-core': {
+            deps: ['cryptojs.core'],
+            exports: "CryptoJS" //You can also use "CryptoJS.MD5"
+        },
+        'cipher-md5': {
+            deps: ['cryptojs.core'],
+            exports: "CryptoJS"
+        },
+        'enc-base64': {
+            deps: ['cryptojs.core'],
+            exports: "CryptoJS"
+        }
+    },
     paths: {
         "can": "http://www.google.com/bower_components/canjs/amd/can",
         "zepto": "http://www.google.com/zepto",
