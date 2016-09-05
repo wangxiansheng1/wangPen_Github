@@ -64,6 +64,12 @@ requirejs.config({
         "iSliderAnimate": "scripts/vendor/iSlider.animate",
         "Slider": "scripts/vendor/Slider",
         "swiper": "scripts/vendor/swiper",
-        "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min"
+        "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min",
+
+        'cryptojs.core': "bower_components/cryptojslib/components/core",
+        'cipher-core': 'bower_components/cryptojslib/components/cipher-core',
+        "tripledes": "bower_components/cryptojslib/components/tripledes",
+        'cipher-md5': "bower_components/cryptojslib/components/md5",
+        'enc-base64': "bower_components/cryptojslib/components/enc-base64"
     }
 });
