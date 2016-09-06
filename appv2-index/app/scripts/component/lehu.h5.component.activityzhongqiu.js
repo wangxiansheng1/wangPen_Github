@@ -226,12 +226,10 @@ define('lehu.h5.component.activityzhongqiu', [
         });
         api.sendRequest()
           .done(function(data) {
-            alert(data.msg);
             util.tip(data.msg);
           })
           .fail(function(error) {
             console.log(error);
-            alert("领取失败");
             util.tip("领取失败");
           });
       },
