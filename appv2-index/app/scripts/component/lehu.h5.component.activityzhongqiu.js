@@ -129,7 +129,6 @@ define('lehu.h5.component.activityzhongqiu', [
           };
           LHHybrid.nativeFun(jsonParams);
         } else {
-          alert("userid:" + userid + ";activeId:" + activeId);
           this.getCoupon(userid, activeId);
         }
       }
