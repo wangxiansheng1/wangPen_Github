@@ -52,6 +52,124 @@ define('lehu.h5.component.activityzhongqiu', [
         this.element.html(html);
       },
 
+      toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
+        var jsonParams = {
+          'funName': 'good_detail_fun',
+          'params': {
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      //美容彩妆
+      '#meirongactivity click': function(element, event) {
+        location.href = "";
+      },
+
+      '#meirongproduct1 click': function(element, event) {
+        //TODO
+        // var GOODS_ID = "86356";
+        // var GOODS_NO = "666666666";
+        // var STORE_ID = "-1";
+
+        // this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      '#meirongproduct2 click': function(element, event) {
+        var GOODS_ID = "86356";
+        var GOODS_NO = "666666666";
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      //母婴专区
+      '#moyingactivity click': function(element, event) {
+        location.href = "";
+      },
+
+      '#moyingproduct1 click': function(element, event) {
+        var GOODS_ID = "86078";
+        var GOODS_NO = "10020005";
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      '#moyingproduct2 click': function(element, event) {
+        var GOODS_ID = "86250";
+        var GOODS_NO = "10020124";
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      //营养保健
+      '#yingyangactivity click': function(element, event) {
+        location.href = "";
+      },
+
+      '#yingyangproduct1 click': function(element, event) {
+        var GOODS_ID = "86260";
+        var GOODS_NO = "10020085";
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      '#yingyangproduct2 click': function(element, event) {
+        var GOODS_ID = "86259";
+        var GOODS_NO = "10020084";
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      //进口美食
+      '#jinkouactivity click': function(element, event) {
+        location.href = "";
+      },
+
+      '#jinkouproduct1 click': function(element, event) {
+        var GOODS_ID = "90100";
+        var GOODS_NO = "20000021";
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      '#jinkouproduct2 click': function(element, event) {
+        var GOODS_ID = "95360";
+        var GOODS_NO = "20000024";
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      //家居日化
+      '#jiajuactivity click': function(element, event) {
+        location.href = "";
+      },
+
+      '#jiajuproduct1 click': function(element, event) {
+        var GOODS_ID = "81880";
+        var GOODS_NO = "102235/8009354"; //TODO
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      '#jiajuproduct2 click': function(element, event) {
+        var GOODS_ID = "82840";
+        var GOODS_NO = "107796/8012712"; //TODO
+        var STORE_ID = "-1";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
       encription: function(params) {
         var paramStr = this.getSignDataString(params);
         params["mKey"] = paramStr;
