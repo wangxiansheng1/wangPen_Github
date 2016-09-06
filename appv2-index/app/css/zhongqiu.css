@@ -46,14 +46,14 @@ body { visibility: hidden; /* display:none;*/ background-color:#1a0945;}
 .coupon{ width:100%; height:auto; display:block; float:left; padding-bottom:.5rem;background: -webkit-linear-gradient(#160243, #1a0945);background: -o-linear-gradient(#160243, #1a0945); background: -moz-linear-gradient(#160243, #1a0945); background: linear-gradient(#160243, #1a0945);}
 .coupon .main{ width:96%; height:auto; background:#f2e6d9; margin:0 2% 0; border-radius:.2rem; display:block; float:left;}
 .coupon .main h1{ width:100%;height:.6rem; font-size:.4rem;color:#fa1a28;font-weight:bold; text-align:center; line-height:.7rem;display:block;float:left;}
-.coupon .main span{ width:100%; height:.4rem; font-size:.25rem; color:#531128; text-align:center; line-height:.4rem;display:block; float:left;}
-.coupon .main a{ width:2.82rem; height:1.44rem; display:block; float:left; margin:.1rem 0 .3rem .63rem;}
+.coupon .main span{ width:100%; height:auto; font-size:.25rem; color:#531128; text-align:center; line-height:.4rem;display:block; float:left;}
+.coupon .main a{ width:2.82rem; height:1.44rem; display:block; float:left; margin:.1rem 0 .3rem .5rem;}
 .coupon .main a img{ width:100%; height:auto; display:block; float:left;}
 .floor{ width:100%; height:auto; display:block; float:left;}
-.floor_top{ width:100%; height:1.65rem; display:block; float:left; background:url(../images/zhongqiu/title.jpg) no-repeat; background-size:100%; text-align:center; color:#ffffff; font-size:.4rem; font-weight:bold; line-height:2.1rem;}
-.floor a{ width:41%; height:2rem; display:block; float:right;}
-.floor a:nth-child(2){ width:59%; height:4rem; display:block; float:left; }
+.floor_top{ width:100%; height:1.65rem; display:block; float:left; background:url(../images/zhongqiu/title.jpg) no-repeat; background-size:100%; text-align:center; color:#ffffff; font-size:.4rem; font-weight:bold; line-height:2rem;}
+.floor a{ width:40.933334%; height:auto; display:block; float:right;}
+.floor a:nth-child(2){ width:59.066666%; height:auto; display:block; float:left; }
 .foot{margin:.5rem 5% .3rem;border-top: 1px solid #ffffff;position: relative;padding-top: .21rem; float:left; width:90%;}
 .foot span{position: absolute;top: -.19rem;left: 50%;background-color: #1a0945;padding: .05rem .15rem;color: #ffffff; font-size:.25rem;-webkit-transform: translateX(-50%);transform: translateX(-50%);}
-.floor a img{ width:100%; height:100%; display:block; float:left;}
+.floor a img{ width:100%; height:auto; display:block; float:left;}
 

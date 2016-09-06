@@ -116,21 +116,19 @@ define('lehu.h5.component.activityzhongqiu', [
         });
         api.sendRequest()
           .done(function(data) {
-            alert("领取成功");
+            alert(data.msg);
           })
           .fail(function(error) {
-            alert(JSON.stringify(error));
+            console.log(error);
             alert("领取失败");
           });
       },
 
-      '.nindex_fanhui click': function(element, event) {
-        // var acitveId = $(element).attr("data-acitveId");
-        var activeId = '2074';
+      '.getCoupon click': function(element, event) {
+        var activeId = $(element).attr("data-acitveId");
         var param = can.deparam(window.location.search.substr(1));
         var userid = param.userid;
         if (!userid) {
-          alert("userid不存在，去登录");
           var jsonParams = {
             'funName': 'login',
             'params': {}
