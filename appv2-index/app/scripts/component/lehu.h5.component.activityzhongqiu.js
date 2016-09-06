@@ -20,8 +20,6 @@ define('lehu.h5.component.activityzhongqiu', [
     template_components_activityzhongqiu) {
     'use strict';
 
-    var userId = null;
-
     /**
      * 接口加密key
      */
