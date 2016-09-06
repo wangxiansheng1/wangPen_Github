@@ -2,29 +2,29 @@ requirejs.config({
     // urlArgs: "v=1.0",
     baseUrl: ' /',
     shim: {
-        'mode-ecb': {
+        'modeecb': {
             deps: ['tripledes'],
-            exports: "mode-ecb"
-        },
-        'cryptojs.core': {
-            exports: "CryptoJS"
-        },
-        'tripledes': {
-            deps: ['cryptojs.core', 'cipher-core'],
-            exports: "CryptoJS" //You can also use "CryptoJS.MD5"
-        },
-        'cipher-core': {
-            deps: ['cryptojs.core'],
-            exports: "CryptoJS" //You can also use "CryptoJS.MD5"
-        },
-        'cipher-md5': {
-            deps: ['cryptojs.core'],
-            exports: "CryptoJS"
-        },
-        'enc-base64': {
-            deps: ['cryptojs.core'],
-            exports: "CryptoJS"
+            exports: "modeecb"
         }
+        // 'cryptojs.core': {
+        //     exports: "CryptoJS"
+        // },
+        // 'tripledes': {
+        //     deps: ['cryptojs.core', 'cipher-core'],
+        //     exports: "CryptoJS" //You can also use "CryptoJS.MD5"
+        // },
+        // 'cipher-core': {
+        //     deps: ['cryptojs.core'],
+        //     exports: "CryptoJS" //You can also use "CryptoJS.MD5"
+        // },
+        // 'cipher-md5': {
+        //     deps: ['cryptojs.core'],
+        //     exports: "CryptoJS"
+        // },
+        // 'enc-base64': {
+        //     deps: ['cryptojs.core'],
+        //     exports: "CryptoJS"
+        // }
     },
     paths: {
         "can": "http://www.google.com/bower_components/canjs/amd/can",
@@ -91,14 +91,13 @@ requirejs.config({
         "swiper": "scripts/vendor/swiper",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min",
 
-        'tripledes': 'scripts/vendor/tripledes',
-        'mode-ecb': 'scripts/vendor/mode-ecb',
+        'tripledes': '../bower_components/cryptojslib/rollups/tripledes',
+        'modeecb': '../bower_components/cryptojslib/components/mode-ecb'
 
-
-        'cryptojs.core': "../bower_components/cryptojslib/components/core",
-        'cipher-core': '../bower_components/cryptojslib/components/cipher-core',
-        "tripledes": "../bower_components/cryptojslib/components/tripledes",
-        'cipher-md5': "../bower_components/cryptojslib/components/md5",
-        'enc-base64': "../bower_components/cryptojslib/components/enc-base64"
+        // 'cryptojs.core': "../bower_components/cryptojslib/components/core",
+        // 'cipher-core': '../bower_components/cryptojslib/components/cipher-core',
+        // "tripledes": "../bower_components/cryptojslib/components/tripledes",
+        // 'cipher-md5': "../bower_components/cryptojslib/components/md5",
+        // 'enc-base64': "../bower_components/cryptojslib/components/enc-base64"
     }
 });

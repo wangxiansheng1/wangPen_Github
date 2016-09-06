@@ -9,16 +9,14 @@ define('lehu.h5.component.activityzhongqiu', [
     'md5',
 
     'imagelazyload',
-    'cryptojs.core',
     'tripledes',
-    'cipher-md5',
-    'enc-base64',
+    'modeecb',
 
     'text!template_components_activityzhongqiu'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid, _, md5,
-    imagelazyload, cryptojs, tripledes, ciphermd5, cipherbase64,
+    imagelazyload, tripledes, modeecb,
     template_components_activityzhongqiu) {
     'use strict';
 
@@ -55,9 +53,6 @@ define('lehu.h5.component.activityzhongqiu', [
       },
 
       encription: function(params) {
-        // var currentTime = moment(new Date()).format("YYYYMMDDHHmmss");
-
-        // params["time"] = currentTime;
         var paramStr = this.getSignDataString(params);
         params["mKey"] = paramStr;
       },
@@ -95,7 +90,6 @@ define('lehu.h5.component.activityzhongqiu', [
           mode: CryptoJS.mode.CBC,
           padding: CryptoJS.pad.Pkcs7
         });
-        console.log(encrypted.toString());
         return encrypted.toString();
       },
 
