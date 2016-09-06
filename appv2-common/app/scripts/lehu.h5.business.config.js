@@ -20,6 +20,7 @@ define('lehu.h5.business.config', ['zepto'], function($) {
     "appNewIndexFirst": "initIndex.do",
     "goodsCategoryList": "goodsList.do",
     "goodsInfo": "goodsInfo.do",
+    'getLHTicket': "getLHTicket.do",
     "addFocus": "addFocus.do",
     "cancelFocus": "cancelFocus.do",
     "queryGoodsReview": "queryGoodsReview.do",

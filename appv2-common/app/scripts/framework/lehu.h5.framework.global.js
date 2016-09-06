@@ -62,7 +62,13 @@ define('lehu.h5.framework.global', [
       // ?为啥两个一样的变量 这不被覆盖了么
       var clientWidth = document.documentElement.clientWidth;
       var clientWidth = $(".nwrapper").width();
-      document.documentElement.style.fontSize = 100 * (clientWidth / 640) + 'px';
+
+      var maxWidth = 640;
+      if (location.href.indexOf("activityzhongqiu.html") > -1 || location.href.indexOf("activities.html") > -1 || location.href.indexOf("activity.html") > -1) {
+        maxWidth = 750;
+      }
+
+      document.documentElement.style.fontSize = 100 * (clientWidth / maxWidth) + 'px';
     }
   });
 
