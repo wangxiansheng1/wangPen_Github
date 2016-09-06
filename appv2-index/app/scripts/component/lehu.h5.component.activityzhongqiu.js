@@ -64,7 +64,7 @@ define('lehu.h5.component.activityzhongqiu', [
 
       //美容彩妆
       '#meirongactivity click': function(element, event) {
-        location.href = "";
+        location.href = "activities.html?ids=642|642|642&pageIndex=1&flag=2##";
       },
 
       '#meirongproduct1 click': function(element, event) {
@@ -86,7 +86,7 @@ define('lehu.h5.component.activityzhongqiu', [
 
       //母婴专区
       '#moyingactivity click': function(element, event) {
-        location.href = "";
+        location.href = "activities.html?ids=642|642|642&pageIndex=1&flag=2##";
       },
 
       '#moyingproduct1 click': function(element, event) {
@@ -107,7 +107,7 @@ define('lehu.h5.component.activityzhongqiu', [
 
       //营养保健
       '#yingyangactivity click': function(element, event) {
-        location.href = "";
+        location.href = "activities.html?ids=642|642|642&pageIndex=1&flag=2##";
       },
 
       '#yingyangproduct1 click': function(element, event) {
@@ -128,7 +128,7 @@ define('lehu.h5.component.activityzhongqiu', [
 
       //进口美食
       '#jinkouactivity click': function(element, event) {
-        location.href = "";
+        location.href = "activities.html?ids=642|642|642&pageIndex=1&flag=2##";
       },
 
       '#jinkouproduct1 click': function(element, event) {
@@ -149,7 +149,7 @@ define('lehu.h5.component.activityzhongqiu', [
 
       //家居日化
       '#jiajuactivity click': function(element, event) {
-        location.href = "";
+        location.href = "activities.html?ids=642|642|642&pageIndex=1&flag=2##";
       },
 
       '#jiajuproduct1 click': function(element, event) {
