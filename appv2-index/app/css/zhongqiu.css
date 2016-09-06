@@ -64,7 +64,7 @@ body { visibility: hidden; /* display:none;*/ background-color:#1a0945;}
 .list_main_nav li span{height:.8rem; display:table; width:auto; margin:-2px auto 0; border-bottom:2px solid #ffffff; color:#323232;}
 .list_main_nav li.active span{ color:#f7144b;border-bottom:2px solid #f7144b;}
 .list_box,.list_box_cont{ width:100%; height:auto; display:block; float:left;}
-.list_box_title{ width:100%; height:.8rem; line-height:.8rem; display:block; float:left; background:url(../img/list_title.jpg) no-repeat; background-size:100%; font-size:.3rem; text-align:center; color:#ffffff; margin-bottom:.1rem;}
+.list_box_title{ width:100%; height:.8rem; line-height:.8rem; display:block; float:left; background:url(../images/zhongqiu/list_title.jpg) no-repeat; background-size:100%; font-size:.3rem; text-align:center; color:#ffffff; margin-bottom:.1rem;}
 .list_box_cont a{ width:3.7rem; height:5.1rem; display:block; float:left; margin:0 0 .1rem .1rem; background:#ffffff;}
 .list_box_cont a:nth-child(odd){ margin-left:0;}
 .list_box_cont a img{ width:3.5rem; height:3.5rem; display:block; float:left; margin:.1rem;}
