@@ -75,6 +75,7 @@ requirejs.config({
         "lehu.h5.component.activityzhongqiu": "scripts/component/lehu.h5.component.activityzhongqiu",
 
         "template_header_footer": "templates/header/lehu.h5.header.footer.mustache",
+        "template_header_header": "templates/header/lehu.h5.header.header.mustache",
 
         "template_components_index": "templates/components/lehu.h5.components.index.mustache",
         "template_components_list": "templates/components/lehu.h5.components.list.mustache",

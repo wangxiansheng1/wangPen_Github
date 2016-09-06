@@ -8,12 +8,13 @@ define('lehu.h5.page.activities', [
         'lehu.hybrid',
 
         'lehu.h5.header.footer',
+        'lehu.h5.header.header',
 
         'lehu.h5.component.activities'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
-        LHFooter,
+        LHFooter, LHHeader,
         LHActivities) {
         'use strict';
 
@@ -27,6 +28,7 @@ define('lehu.h5.page.activities', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
+                // new LHHeader();
                 var activities = new LHActivities("#activities");
                 new LHFooter();
             }

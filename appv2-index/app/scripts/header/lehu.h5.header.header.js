@@ -8,12 +8,12 @@ define('lehu.h5.header.header', [
 
     'imagelazyload',
 
-    'text!template_components_comment'
+    'text!template_header_header'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
     imagelazyload,
-    template_components_comment) {
+    template_header_header) {
     'use strict';
 
     return can.Control.extend({
@@ -25,7 +25,9 @@ define('lehu.h5.header.header', [
        * @description 初始化方法
        */
       init: function() {
-
+        var renderFooter = can.mustache(template_header_header);
+        var html = renderFooter(this.options);
+        $("#header").html(html);
       }
     });
 
