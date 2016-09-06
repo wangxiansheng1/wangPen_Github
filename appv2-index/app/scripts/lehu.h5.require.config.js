@@ -2,6 +2,10 @@ requirejs.config({
     // urlArgs: "v=1.0",
     baseUrl: ' /',
     shim: {
+        'mode-ecb': {
+            deps: ['tripledes'],
+            exports: "mode-ecb"
+        },
         'cryptojs.core': {
             exports: "CryptoJS"
         },
@@ -87,10 +91,14 @@ requirejs.config({
         "swiper": "scripts/vendor/swiper",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min",
 
-        'cryptojs.core': "bower_components/cryptojslib/components/core",
-        'cipher-core': 'bower_components/cryptojslib/components/cipher-core',
-        "tripledes": "bower_components/cryptojslib/components/tripledes",
-        'cipher-md5': "bower_components/cryptojslib/components/md5",
-        'enc-base64': "bower_components/cryptojslib/components/enc-base64"
+        'tripledes': 'scripts/vendor/tripledes',
+        'mode-ecb': 'scripts/vendor/mode-ecb',
+
+
+        'cryptojs.core': "../bower_components/cryptojslib/components/core",
+        'cipher-core': '../bower_components/cryptojslib/components/cipher-core',
+        "tripledes": "../bower_components/cryptojslib/components/tripledes",
+        'cipher-md5': "../bower_components/cryptojslib/components/md5",
+        'enc-base64': "../bower_components/cryptojslib/components/enc-base64"
     }
 });

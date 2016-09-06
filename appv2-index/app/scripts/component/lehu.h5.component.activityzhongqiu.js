@@ -6,6 +6,7 @@ define('lehu.h5.component.activityzhongqiu', [
     'lehu.h5.api',
     'lehu.hybrid',
     'underscore',
+    'md5',
 
     'imagelazyload',
     'cryptojs.core',
@@ -16,7 +17,7 @@ define('lehu.h5.component.activityzhongqiu', [
     'text!template_components_activityzhongqiu'
   ],
 
-  function($, can, LHConfig, util, LHAPI, LHHybrid, _,
+  function($, can, LHConfig, util, LHAPI, LHHybrid, _, md5,
     imagelazyload, cryptojs, tripledes, ciphermd5, cipherbase64,
     template_components_activityzhongqiu) {
     'use strict';
@@ -54,9 +55,9 @@ define('lehu.h5.component.activityzhongqiu', [
       },
 
       encription: function(params) {
-        var currentTime = moment(new Date()).format('yyyyMMddHHmmss');
+        // var currentTime = moment(new Date()).format("YYYYMMDDHHmmss");
 
-        params["time"] = currentTime;
+        // params["time"] = currentTime;
         var paramStr = this.getSignDataString(params);
         params["mKey"] = paramStr;
       },
@@ -88,37 +89,14 @@ define('lehu.h5.component.activityzhongqiu', [
 
       des3: function(str) {
 
-        var keyHex = CryptoJS.enc.Utf8.parse();
+        var keyHex = CryptoJS.enc.Utf8.parse(DES3_KEY);
         var encrypted = CryptoJS.TripleDES.encrypt(str, keyHex, {
           iv: CryptoJS.enc.Utf8.parse(DES3_IV),
           mode: CryptoJS.mode.CBC,
           padding: CryptoJS.pad.Pkcs7
         });
-
-        var key = CryptoJS.MD5(KEY);
-
-        // copy 3DES subkey 1 to the last 64 bit to make a full 192-bit key
-        key.words[4] = key.words[0];
-        key.words[5] = key.words[1];
-
-        // create a 64-bit zero filled
-        var iv = CryptoJS.lib.WordArray.create(64 / 8);
-        var encrypted = CryptoJS.TripleDES.encrypt(str, key, {
-          iv: iv
-        });
-        var encryptedBase64 = encrypted.toString();
-
-        // 解密
-        // var ct = {
-        //   ciphertext: CryptoJS.enc.Base64.parse(encryptedBase64)
-        // };
-        // var decrypted = CryptoJS.TripleDES.decrypt(ct, key, {
-        //   iv: iv
-        // });
-
-        // var decoded = decrypted.toString(CryptoJS.enc.Utf8);
-
-        return encryptedBase64;
+        console.log(encrypted.toString());
+        return encrypted.toString();
       },
 
       getCoupon: function(userId, acitveId) {
