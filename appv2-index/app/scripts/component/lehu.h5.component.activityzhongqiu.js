@@ -234,6 +234,20 @@ define('lehu.h5.component.activityzhongqiu', [
           });
       },
 
+      '.nindex_fanhui click': function() {
+
+        if (util.isMobile.Android() || util.isMobile.Android()) {
+          var jsonParams = {
+            'funName': 'back_fun',
+            'params': {}
+          };
+          LHHybrid.nativeFun(jsonParams);
+          console.log('back_fun');
+        } else {
+          history.go(-1);
+        }
+      },
+
       '.getCoupon click': function(element, event) {
         var activeId = $(element).attr("data-acitveId");
         var param = can.deparam(window.location.search.substr(1));
