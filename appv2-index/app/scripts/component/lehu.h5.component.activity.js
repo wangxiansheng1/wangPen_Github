@@ -163,7 +163,7 @@ define('lehu.h5.component.activity', [
 
       '.nindex_fanhui click': function() {
 
-        if (util.isMobile.Android() || util.isMobile.Android()) {
+        if (util.isMobile.Android() || util.isMobile.iOS()) {
           var jsonParams = {
             'funName': 'back_fun',
             'params': {}
