@@ -161,6 +161,22 @@ define('lehu.h5.component.activity', [
           })
       },
 
+      '.list_box_cont a click': function(element, event) {
+        var goodsId = element.attr('data-goods-id');
+        var goodsNo = element.attr('data-goods-no');
+        var storeId = element.attr('data-store-id');
+
+        var jsonParams = {
+          'funName': 'good_detail_fun',
+          'params': {
+            'STORE_ID': storeId,
+            'GOODS_NO': goodsNo,
+            'GOODS_ID': goodsId
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
       '.nindex_fanhui click': function() {
 
         if (util.isMobile.Android() || util.isMobile.iOS()) {

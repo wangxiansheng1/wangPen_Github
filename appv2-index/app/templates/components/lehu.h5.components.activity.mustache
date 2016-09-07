@@ -21,7 +21,7 @@
 
     <div class="list_box_cont">
         {{#each list.pageBean}}
-        <a href=""><img src="{{imgprefix}}{{COMMODITY_IMAGE_PATH}}"><span>{{COMMODITY_NAME}}</span><i>¥ {{PRICE}}</i></a>
+        <a href="javascript:;" data-goods-id={{ID}} data-goods-no={{GOODS_NO}} data-store-id={{STORE_ID}}><img src="{{imgprefix}}{{COMMODITY_IMAGE_PATH}}"><span>{{COMMODITY_NAME}}</span><i>¥ {{PRICE}}</i></a>
         {{/each}}
     </div>
 

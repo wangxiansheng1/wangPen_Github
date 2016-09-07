@@ -107,6 +107,7 @@ define('lehu.h5.component.activities', [
 
             _.each(arguments, function(argument, index) {
               argument.list.bannerImg = argument.list.prefecture[0].BIG_IMG
+              argument.activityId = idArr[index];
               result.push(argument);
             })
 
@@ -171,6 +172,31 @@ define('lehu.h5.component.activities', [
           }
         }
         return false;
+      },
+
+      ".list_box_title click": function(element, event) {
+        var activityId = element.attr('data-activityid');
+
+        var params = can.deparam(window.location.search.substr(1));
+        params = _.extend(params, can.route.attr());
+
+        window.location.href = "activity.html?id=" + activityId + "&pageIndex=1&flag=" + params.flag;
+      },
+
+      '.list_box_cont a click': function(element, event) {
+        var goodsId = element.attr('data-goods-id');
+        var goodsNo = element.attr('data-goods-no');
+        var storeId = element.attr('data-store-id');
+
+        var jsonParams = {
+          'funName': 'good_detail_fun',
+          'params': {
+            'STORE_ID': storeId,
+            'GOODS_NO': goodsNo,
+            'GOODS_ID': goodsId
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       ".list_main_nav li click": function(element, event) {
