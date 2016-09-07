@@ -289,7 +289,7 @@ define('lehu.h5.component.index', [
         "7": {
           type: "h5",
           name: "全部",
-          url: 'http://192.168.19.22:8082/html5/app/zhongqiu/activityzhongqiu.html'
+          url: 'activityzhongqiu.html'
         }
       },
 
