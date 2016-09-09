@@ -178,28 +178,29 @@ define('lehu.h5.component.index', [
         var NUM = $(element).attr("data-NUM");
         var BANNER_NAME = $(element).attr("data-BANNER_NAME");
 
-        if (BANNER_CONTENT && BANNER_CONTENT.startsWith("http://") && BANNER_CONTENT.endsWith(".html")) {
+        // if (BANNER_CONTENT && BANNER_CONTENT.startsWith("http://") && BANNER_CONTENT.endsWith(".html")) {
+        if (BANNER_CONTENT && BANNER_CONTENT.indexOf("http://") > -1 && BANNER_CONTENT.indexOf(".html") > -1) {
           window.location.href = BANNER_CONTENT;
 
           return false;
+        } else {
+          var jsonParams = {
+            'funName': 'banner_item_fun',
+            'params': {
+              'SORT': SORT,
+              'BANNER_JUMP_ID': BANNER_JUMP_ID,
+              'BANNER_CONTENT': BANNER_CONTENT,
+              'BANNER_IMG': BANNER_IMG,
+              'ID': ID,
+              'BANNER_LAYOUT': BANNER_LAYOUT,
+              'BANNER_JUMP_FLAG': BANNER_JUMP_FLAG,
+              'STATUS': STATUS,
+              'NUM': NUM,
+              'BANNER_NAME': BANNER_NAME
+            }
+          };
+          LHHybrid.nativeFun(jsonParams);
         }
-
-        var jsonParams = {
-          'funName': 'banner_item_fun',
-          'params': {
-            'SORT': SORT,
-            'BANNER_JUMP_ID': BANNER_JUMP_ID,
-            'BANNER_CONTENT': BANNER_CONTENT,
-            'BANNER_IMG': BANNER_IMG,
-            'ID': ID,
-            'BANNER_LAYOUT': BANNER_LAYOUT,
-            'BANNER_JUMP_FLAG': BANNER_JUMP_FLAG,
-            'STATUS': STATUS,
-            'NUM': NUM,
-            'BANNER_NAME': BANNER_NAME
-          }
-        };
-        LHHybrid.nativeFun(jsonParams);
       },
 
       renderTagList: function(data) {
