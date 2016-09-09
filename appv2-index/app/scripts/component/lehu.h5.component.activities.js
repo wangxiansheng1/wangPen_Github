@@ -100,7 +100,7 @@ define('lehu.h5.component.activities', [
 
       getActivityData: function(activityId, data) {
         var result = _.find(data, function(item) {
-          return item.id == activityId;
+          return item.promotion_id == activityId;
         });
 
         return result;
