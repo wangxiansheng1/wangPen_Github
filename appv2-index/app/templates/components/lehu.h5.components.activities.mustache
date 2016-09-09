@@ -20,7 +20,7 @@
 
         {{#each data}}
         <li class="cms-src-elevatorfloor" style="width: {{tabWidth}}%" data-floor="floor{{@index}}">
-            <span>{{list.TITLE}}</span>
+            <span>{{promotion_name}}</span>
         </li>
         {{/each}}
 
@@ -28,12 +28,12 @@
 
     {{#each data}}
         <div class="list_box_title" id="floor{{@index}}" data-activityid="{{activityId}}">
-            <img src="{{imgprefix}}{{list.bannerImg}}" alt="" style="width:100%">
+            <img src="{{imgprefix}}{{promotion_banner}}" alt="" style="width:100%">
         </div>
 
         <div class="list_box_cont">
-            {{#each list.pageBean}}
-            <a href="javascript:;" data-goods-id={{ID}} data-goods-no={{GOODS_NO}} data-store-id={{STORE_ID}}><img src="{{imgprefix}}{{COMMODITY_IMAGE_PATH}}"><span>{{COMMODITY_NAME}}</span><i>¥ {{PRICE}}</i></a>
+            {{#each goodsList}}
+            <a href="javascript:;" data-goods-id={{GOODS_ID}} data-goods-no={{GOODS_NO}} data-store-id={{STORE_ID}}><img src="{{imgprefix}}{{IMG}}"><span>{{GOODS_NAME}}</span><i>¥ {{GOODS_PRICE}}</i></a>
             {{/each}}
         </div>
 

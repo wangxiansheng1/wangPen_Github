@@ -17,7 +17,8 @@ define('lehu.h5.component.activities', [
     template_components_activities) {
     'use strict';
 
-    var DEFAULT_PAGE_SIZE = 0;
+    var DEFAULT_PAGE_INDEX = 0;
+    var NODATA = false;
 
     can.route.ready();
 
@@ -52,41 +53,67 @@ define('lehu.h5.component.activities', [
 
         var idArr = ids.split("|");
 
+        var firstId = idArr.shift();
+
         var query = can.param({
-          pageSize: DEFAULT_PAGE_SIZE,
-          ids: idArr.join(","),
+          pageIndex: DEFAULT_PAGE_INDEX,
+          id: firstId,
           flag: params.flag
         });
 
         var api = new LHAPI({
-          url: that.URL.SERVER_URL + 'appHomePromotion.do?' + query,
+          url: that.URL.SERVER_URL + 'appPrefecture.do?' + query,
           data: {}
         });
         api.sendRequest()
           .done(function(data) {
 
-            var data = data.data;
-
-            // 对返回数据排序
-            var dataCollection = [];
-
-            _.each(idArr, function(id) {
-              dataCollection.push(that.getActivityData(id, data));
-            })
-
-            // 设置banner
             that.options.imgprefix = that.URL.IMAGE_URL;
             that.options.summary = {};
-            that.options.summary.bannerImg = dataCollection[0].promotion_banner;
-            that.options.summary.activityName = dataCollection[0].promotion_name;
+            that.options.summary.bannerImg = data.list.prefecture[0].BIG_IMG;
+            that.options.summary.activityName = data.list.TITLE;
 
-            //去掉第一个对象
-            dataCollection.shift();
+            var renderFn = can.view.mustache(template_components_activities);
+            var html = renderFn(that.options, that.helpers);
+            that.element.html(html);
+          })
+          .fail(function(error) {
 
-            //剩下的条数
-            that.options.tabWidth = Math.floor(100 / (dataCollection.length));
+          })
+          .then(function() {
 
-            that.options.data = dataCollection;
+            var apis = [];
+
+            _.each(idArr, function(id) {
+              var query = can.param({
+                pageIndex: DEFAULT_PAGE_INDEX,
+                id: id,
+                flag: params.flag
+              });
+
+              var api = new LHAPI({
+                url: that.URL.SERVER_URL + 'appPrefecture.do?' + query,
+                data: {}
+              });
+              apis.push(api.sendRequest());
+            })
+            return can.when.apply(can, apis)
+          })
+          .done(function() {
+
+            var length = arguments.length;
+
+            var result = [];
+
+            _.each(arguments, function(argument, index) {
+              argument.list.bannerImg = argument.list.prefecture[0].BIG_IMG
+              argument.activityId = idArr[index];
+              result.push(argument);
+            })
+
+            that.options.data = result;
+            that.options.tabWidth = Math.floor(100 / (arguments.length));
+            that.options.width = arguments.length * 108 * 2;
 
             var renderFn = can.view.mustache(template_components_activities);
             var html = renderFn(that.options, that.helpers);
@@ -98,22 +125,20 @@ define('lehu.h5.component.activities', [
           })
       },
 
-      getActivityData: function(activityId, data) {
-        var result = _.find(data, function(item) {
-          return item.id == activityId;
-        });
-
-        return result;
-      },
-
       /**
        * 设置自动悬浮
        * @param  {[type]} element [description]
        * @return {[type]} [description]
        */
       autoFixed: function(element) {
-        var that = this;
+        // this.elevatorPosition = $('.cms-src-elevatorbar').position().top;
+        // this.elevatorBarHeight = $(".cms-src-elevatorbar").height();
 
+        // var elevatorBarElement = $('.cms-src-elevatorbar .elevator');
+        var that = this;
+        // if (that.isSupportSticky()) {
+        //   $(element).parent().addClass('elevator-sticky');
+        // } else {
         var nav = $(".list_main_nav").offset().top;
 
         $(window).scroll(function() {
@@ -125,7 +150,14 @@ define('lehu.h5.component.activities', [
             $(".list_main_nav").css("position", "relative");
             $(".list_main_nav").next().css("margin-top", "0rem");
           };
+
+          // if ($(window).scrollTop() >= that.elevatorPosition) {
+          //   elevatorBarElement.addClass('elevator-fixed');
+          // } else if ($(window).scrollTop() < (that.elevatorPosition + that.elevatorBarHeight)) {
+          //   elevatorBarElement.removeClass('elevator-fixed');
+          // }
         });
+        // }
       },
 
       isSupportSticky: function() {
@@ -174,6 +206,16 @@ define('lehu.h5.component.activities', [
         var floorPosition = $("#" + floorId).offset().top - $('.list_main_nav').height();
         $("body").scrollTop(floorPosition);
       },
+
+      // '.cms-src-elevatorfloor click': function(element, event) {
+      //   var floorId = element.attr('data-floor');
+
+      //   var floorPosition = $("#" + floorId).offset().top - $(".cms-src-elevatorbar").height();
+      //   $(window).scrollTop(floorPosition > 0 ? floorPosition : 0);
+      //   // $('html,body').animate({
+      //   //   scrollTop: floorPosition > 0 ? floorPosition : 0
+      //   // }, 800);
+      // },
 
       '.nindex_fanhui click': function() {
 
