@@ -34,6 +34,7 @@ define('lehu.h5.component.activities', [
       },
 
       init: function() {
+        // alert(4);
         this.initData();
         this.render();
       },
