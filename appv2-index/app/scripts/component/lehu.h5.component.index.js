@@ -165,6 +165,12 @@ define('lehu.h5.component.index', [
         var NUM = $(element).attr("data-NUM");
         var BANNER_NAME = $(element).attr("data-BANNER_NAME");
 
+        if (BANNER_CONTENT && BANNER_CONTENT.indexOf("http://") > -1 && BANNER_CONTENT.indexOf(".html") > -1) {
+          window.location.href = BANNER_CONTENT;
+
+          return false;
+        }
+
         var jsonParams = {
           'funName': 'banner_item_fun',
           'params': {
@@ -287,9 +293,9 @@ define('lehu.h5.component.index', [
           query: 'originIds=43&mark=8'
         },
         "7": {
-          type: "h5",
+          type: "h5null",
           name: "全部",
-          url: 'activityzhongqiu.html'
+          url: ''
         }
       },
 

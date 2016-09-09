@@ -42,6 +42,7 @@ define('lehu.h5.component.activityzhongqiu', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL = 'http://app.lehumall.com/'
       },
 
       render: function() {
@@ -220,7 +221,7 @@ define('lehu.h5.component.activityzhongqiu', [
         this.encription(this.param);
 
         var api = new LHAPI({
-          url: 'http://218.91.54.162:9006/' + LHConfig.setting.action.getLHTicket,
+          url: this.URL.SERVER_URL + LHConfig.setting.action.getLHTicket,
           data: this.param,
           method: 'post'
         });
