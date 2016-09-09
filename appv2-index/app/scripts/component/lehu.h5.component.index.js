@@ -23,6 +23,19 @@ define('lehu.h5.component.index', [
       init: function() {
         var that = this;
 
+        //判断当前字符串是否以str开始 先判断是否存在function是避免和js原生方法冲突，自定义方法的效率不如原生的高
+        if (typeof String.prototype.startsWith != 'function') {
+          String.prototype.startsWith = function(str) {
+            return this.slice(0, str.length) == str;
+          };
+        }　　　　
+        //判断当前字符串是否以str结束
+        if (typeof String.prototype.endsWith != 'function') {
+          String.prototype.endsWith = function(str) {
+            return this.slice(-str.length) == str;
+          };
+        }
+
         this.juli = null;
         this.shengyu = null;
 
@@ -165,7 +178,7 @@ define('lehu.h5.component.index', [
         var NUM = $(element).attr("data-NUM");
         var BANNER_NAME = $(element).attr("data-BANNER_NAME");
 
-        if (BANNER_CONTENT && BANNER_CONTENT.indexOf("http://") > -1 && BANNER_CONTENT.indexOf(".html") > -1) {
+        if (BANNER_CONTENT && BANNER_CONTENT.startsWith("http://") && BANNER_CONTENT.endsWith(".html")) {
           window.location.href = BANNER_CONTENT;
 
           return false;
