@@ -24,17 +24,17 @@ define('lehu.h5.component.index', [
         var that = this;
 
         //判断当前字符串是否以str开始 先判断是否存在function是避免和js原生方法冲突，自定义方法的效率不如原生的高
-        if (typeof String.prototype.startsWith != 'function') {
-          String.prototype.startsWith = function(str) {
-            return this.slice(0, str.length) == str;
-          };
-        }　　　　
-        //判断当前字符串是否以str结束
-        if (typeof String.prototype.endsWith != 'function') {
-          String.prototype.endsWith = function(str) {
-            return this.slice(-str.length) == str;
-          };
-        }
+        // if (typeof String.prototype.startsWith != 'function') {
+        //   String.prototype.startsWith = function(str) {
+        //     return this.slice(0, str.length) == str;
+        //   };
+        // }　　　　
+        // //判断当前字符串是否以str结束
+        // if (typeof String.prototype.endsWith != 'function') {
+        //   String.prototype.endsWith = function(str) {
+        //     return this.slice(-str.length) == str;
+        //   };
+        // }
 
         this.juli = null;
         this.shengyu = null;
@@ -167,6 +167,7 @@ define('lehu.h5.component.index', [
       },
 
       '.nbanner .swiper-slide click': function(element, event) {
+        // alert(1);
         var SORT = $(element).attr("data-SORT");
         var BANNER_JUMP_ID = $(element).attr("data-BANNER_JUMP_ID");
         var BANNER_CONTENT = $(element).attr("data-BANNER_CONTENT");
@@ -179,7 +180,9 @@ define('lehu.h5.component.index', [
         var BANNER_NAME = $(element).attr("data-BANNER_NAME");
 
         // if (BANNER_CONTENT && BANNER_CONTENT.startsWith("http://") && BANNER_CONTENT.endsWith(".html")) {
+        // alert(BANNER_CONTENT);
         if (BANNER_CONTENT && BANNER_CONTENT.indexOf("http://") > -1 && BANNER_CONTENT.indexOf(".html") > -1) {
+          // alert("inner");
           window.location.href = BANNER_CONTENT;
 
           return false;

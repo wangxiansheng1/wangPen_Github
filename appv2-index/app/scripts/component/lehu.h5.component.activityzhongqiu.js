@@ -99,8 +99,8 @@ define('lehu.h5.component.activityzhongqiu', [
       },
 
       '#moyingproduct2 click': function(element, event) {
-        var GOODS_ID = "86250";
-        var GOODS_NO = "10020124";
+        var GOODS_ID = "95389";
+        var GOODS_NO = "10020358";
         var STORE_ID = "1031";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
@@ -141,8 +141,8 @@ define('lehu.h5.component.activityzhongqiu', [
       },
 
       '#jinkouproduct2 click': function(element, event) {
-        var GOODS_ID = "95360";
-        var GOODS_NO = "20000024";
+        var GOODS_ID = "95380";
+        var GOODS_NO = "20001019";
         var STORE_ID = "1031";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
@@ -154,7 +154,7 @@ define('lehu.h5.component.activityzhongqiu', [
       },
 
       '#jiajuproduct1 click': function(element, event) {
-        var GOODS_ID = "81880";
+        var GOODS_ID = "95065";
         var GOODS_NO = "8009354"; //TODO
         var STORE_ID = "1031";
 
@@ -162,7 +162,7 @@ define('lehu.h5.component.activityzhongqiu', [
       },
 
       '#jiajuproduct2 click': function(element, event) {
-        var GOODS_ID = "82840";
+        var GOODS_ID = "93074";
         var GOODS_NO = "8012712"; //TODO
         var STORE_ID = "1031";
 
