@@ -95,7 +95,7 @@ define('lehu.h5.component.activities', [
 
             $(".list_main_nav li:first-child").addClass("active")
 
-            that.autoFixed();
+            setTimeout(that.autoFixed, 1000);
           })
       },
 
@@ -118,6 +118,7 @@ define('lehu.h5.component.activities', [
         var nav = $(".list_main_nav").offset().top;
 
         $(window).scroll(function() {
+          // var nav = $(".list_main_nav").offset().top;
           var s = $(window).scrollTop();
           if (s > nav) {
             $(".list_main_nav").css("position", "fixed");
