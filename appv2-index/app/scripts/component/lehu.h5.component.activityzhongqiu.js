@@ -49,6 +49,12 @@ define('lehu.h5.component.activityzhongqiu', [
         var renderFn = can.view.mustache(template_components_activityzhongqiu);
         var html = renderFn(this.options.data, this.helpers);
         this.element.html(html);
+
+        //显示优惠券
+        var params = can.deparam(window.location.search.substr(1));
+        if (params.showcoupon && params.showcoupon === 'true') {
+          $(".coupon").css("display", "block");
+        }
       },
 
       toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
