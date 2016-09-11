@@ -64,7 +64,7 @@ define('lehu.h5.framework.global', [
       var clientWidth = $(".nwrapper").width();
 
       var maxWidth = 640;
-      if (location.href.indexOf("activityzhongqiu.html") > -1 || location.href.indexOf("activities.html") > -1 || location.href.indexOf("activity.html") > -1) {
+      if (location.href.indexOf("activityzhongqiu.html") > -1 || location.href.indexOf("activityzhongqiu2.html") > -1 || location.href.indexOf("activities.html") > -1 || location.href.indexOf("activity.html") > -1) {
         maxWidth = 750;
       }
 
