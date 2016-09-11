@@ -65,6 +65,7 @@ requirejs.config({
         "lehu.h5.page.activity": "scripts/page/lehu.h5.page.activity",
         "lehu.h5.page.activities": "scripts/page/lehu.h5.page.activities",
         "lehu.h5.page.activityzhongqiu": "scripts/page/lehu.h5.page.activityzhongqiu",
+        "lehu.h5.page.activityzhongqiu2": "scripts/page/lehu.h5.page.activityzhongqiu2",
 
         "lehu.h5.component.index": "scripts/component/lehu.h5.component.index",
         "lehu.h5.component.list": "scripts/component/lehu.h5.component.list",
@@ -73,6 +74,7 @@ requirejs.config({
         "lehu.h5.component.activity": "scripts/component/lehu.h5.component.activity",
         "lehu.h5.component.activities": "scripts/component/lehu.h5.component.activities",
         "lehu.h5.component.activityzhongqiu": "scripts/component/lehu.h5.component.activityzhongqiu",
+        "lehu.h5.component.activityzhongqiu2": "scripts/component/lehu.h5.component.activityzhongqiu2",
 
         "template_header_footer": "templates/header/lehu.h5.header.footer.mustache",
         "template_header_header": "templates/header/lehu.h5.header.header.mustache",
@@ -84,6 +86,7 @@ requirejs.config({
         "template_components_activity": "templates/components/lehu.h5.components.activity.mustache",
         "template_components_activities": "templates/components/lehu.h5.components.activities.mustache",
         "template_components_activityzhongqiu": "templates/components/lehu.h5.components.activityzhongqiu.mustache",
+        "template_components_activityzhongqiu2": "templates/components/lehu.h5.components.activityzhongqiu2.mustache",
 
         "swipe": "scripts/vendor/swipe",
         "iSlider": "scripts/vendor/iSlider",
