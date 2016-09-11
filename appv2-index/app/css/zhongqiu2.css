@@ -7,9 +7,9 @@
 .burst_coupon .main a:last-child{ margin-left:2%;}
 .burst_coupon .main a img{ width:100%; height:auto; display:block; float:left;}
 .burst_floor,.burst_floor li{ width:100%; height:auto; display:block; float:left;}
-.burst_floor li .floor_top{ height:1.2rem; background-image:url(../images/zhongqiu/burst_t01.jpg); line-height:1.2rem;}
-.burst_floor li:nth-child(2) .floor_top{ background-image:url(../images/zhongqiu/burst_t02.jpg);}
-.burst_floor li:nth-child(3) .floor_top{ background-image:url(../images/zhongqiu/burst_t03.jpg);}
-.burst_floor li:nth-child(4) .floor_top{ background-image:url(../images/zhongqiu/burst_t04.jpg);}
-.burst_floor li:nth-child(5) .floor_top{ background-image:url(../images/zhongqiu/burst_t05.jpg);}
+.burst_floor li .floor_top{ height:1.2rem; background-image:url(../images/zhongqiu2/burst_t01.jpg); line-height:1.2rem;}
+.burst_floor li:nth-child(2) .floor_top{ background-image:url(../images/zhongqiu2/burst_t02.jpg);}
+.burst_floor li:nth-child(3) .floor_top{ background-image:url(../images/zhongqiu2/burst_t03.jpg);}
+.burst_floor li:nth-child(4) .floor_top{ background-image:url(../images/zhongqiu2/burst_t04.jpg);}
+.burst_floor li:nth-child(5) .floor_top{ background-image:url(../images/zhongqiu2/burst_t05.jpg);}
 body,.foot span{ background-color:#9827fd;}
