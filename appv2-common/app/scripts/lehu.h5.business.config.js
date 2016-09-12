@@ -21,6 +21,8 @@ define('lehu.h5.business.config', ['zepto'], function($) {
     "goodsCategoryList": "goodsList.do",
     "goodsInfo": "goodsInfo.do",
     'getLHTicket': "getLHTicket.do",
+    'login': "forge/login.do",
+
     "addFocus": "addFocus.do",
     "cancelFocus": "cancelFocus.do",
     "queryGoodsReview": "queryGoodsReview.do",
