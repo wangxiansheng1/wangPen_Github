@@ -30,12 +30,6 @@ define('lehu.h5.component.register', [
         var renderList = can.mustache(template_components_register);
         var html = renderList(this.options);
         this.element.html(html);
-
-        this.param = this.initParams();
-        this.totalPageNum = "";
-        this.goodsCategoryList();
-
-        this.bindScroll();
       },
 
       initData: function() {
