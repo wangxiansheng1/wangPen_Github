@@ -844,6 +844,60 @@ module.exports = function(grunt) {
           ],
           insertRequire: ['lehu.h5.page.activityzhongqiu2']
         }
+      },
+      login: {
+        options: {
+          optimize: 'none',
+          preserveLicenseComments: false,
+          baseUrl: './app/',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.login.js',
+          mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
+          paths: {
+            'moment': '../bower_components/momentjs/min/moment.min',
+            'fastclick': '../bower_components/fastclick/lib/fastclick'
+          },
+          include: [
+            'lehu.helpers',
+            'lehu.h5.page.login'
+          ],
+          insertRequire: ['lehu.h5.page.login']
+        }
+      },
+      register: {
+        options: {
+          optimize: 'none',
+          preserveLicenseComments: false,
+          baseUrl: './app/',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.register.js',
+          mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
+          paths: {
+            'moment': '../bower_components/momentjs/min/moment.min',
+            'fastclick': '../bower_components/fastclick/lib/fastclick'
+          },
+          include: [
+            'lehu.helpers',
+            'lehu.h5.page.register'
+          ],
+          insertRequire: ['lehu.h5.page.register']
+        }
+      },
+      forgetpassword: {
+        options: {
+          optimize: 'none',
+          preserveLicenseComments: false,
+          baseUrl: './app/',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.forgetpassword.js',
+          mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
+          paths: {
+            'moment': '../bower_components/momentjs/min/moment.min',
+            'fastclick': '../bower_components/fastclick/lib/fastclick'
+          },
+          include: [
+            'lehu.helpers',
+            'lehu.h5.page.forgetpassword'
+          ],
+          insertRequire: ['lehu.h5.page.forgetpassword']
+        }
       }
     }
   });
