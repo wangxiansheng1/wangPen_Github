@@ -63,9 +63,16 @@ define('lehu.h5.framework.global', [
       var clientWidth = document.documentElement.clientWidth;
       var clientWidth = $(".nwrapper").width();
 
-      var maxWidth = 640;
-      if (location.href.indexOf("activityzhongqiu.html") > -1 || location.href.indexOf("activityzhongqiu2.html") > -1 || location.href.indexOf("activities.html") > -1 || location.href.indexOf("activity.html") > -1) {
-        maxWidth = 750;
+      var maxWidth = 750;
+
+      var pages640 = ["index.html", "list.html", "404.html", '404_index.html'];
+
+      var result = _.find(pages640, function(item) {
+        return location.href.indexOf(item) > -1
+      })
+
+      if (result) {
+        maxWidth = 640;
       }
 
       document.documentElement.style.fontSize = 100 * (clientWidth / maxWidth) + 'px';
