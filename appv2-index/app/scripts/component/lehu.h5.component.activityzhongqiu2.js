@@ -76,8 +76,8 @@ define('lehu.h5.component.activityzhongqiu2', [
 
       '#meirongproduct1 click': function(element, event) {
         //TODO
-        var GOODS_ID = "91053";
-        var GOODS_NO = "8008337";
+        var GOODS_ID = "86773";
+        var GOODS_NO = "77770058";
         var STORE_ID = "1031";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
@@ -105,8 +105,8 @@ define('lehu.h5.component.activityzhongqiu2', [
       },
 
       '#moyingproduct2 click': function(element, event) {
-        var GOODS_ID = "86257";
-        var GOODS_NO = "10020127";
+        var GOODS_ID = "95390";
+        var GOODS_NO = "10020359";
         var STORE_ID = "1031";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
