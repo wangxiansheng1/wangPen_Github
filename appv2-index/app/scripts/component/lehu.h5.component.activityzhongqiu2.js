@@ -99,7 +99,7 @@ define('lehu.h5.component.activityzhongqiu2', [
       '#moyingproduct1 click': function(element, event) {
         var GOODS_ID = "10923";
         var GOODS_NO = "8015530";
-        var STORE_ID = "1031";
+        var STORE_ID = "0";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
       },
@@ -141,7 +141,7 @@ define('lehu.h5.component.activityzhongqiu2', [
       '#jinkouproduct1 click': function(element, event) {
         var GOODS_ID = "95620";
         var GOODS_NO = "8025542";
-        var STORE_ID = "1031";
+        var STORE_ID = "0";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
       },
@@ -149,7 +149,7 @@ define('lehu.h5.component.activityzhongqiu2', [
       '#jinkouproduct2 click': function(element, event) {
         var GOODS_ID = "95328";
         var GOODS_NO = "8022787";
-        var STORE_ID = "1031";
+        var STORE_ID = "0";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
       },
@@ -162,7 +162,7 @@ define('lehu.h5.component.activityzhongqiu2', [
       '#jiajuproduct1 click': function(element, event) {
         var GOODS_ID = "91720";
         var GOODS_NO = "8010615"; //TODO
-        var STORE_ID = "1031";
+        var STORE_ID = "0";
 
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
       },
