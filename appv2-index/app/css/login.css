@@ -35,7 +35,7 @@ body { visibility: hidden; /* display:none;*/ background-color:#ffffff;}
 .icon_pwd{ background-image:url(../images/login/login_mima.png);}
 .icon_sms{ background-image:url(../images/login/login_yanzm.png);}
 .txt_input::-webkit-input-placeholder{color: #e1e1e1;}
-.login_main .btn_retransmit{float:right;overflow:hidden;width:1.5rem;height:.6rem;background:#f51449;border-radius:.1rem;line-height:.6rem;text-align:center;cursor:pointer;font-size:.26rem;color:#ffffff; padding:0 .1rem; margin-top:-.8rem;}
+.login_main .btn_retransmit{float:right;overflow:hidden;height:.6rem;background:#f51449;border-radius:.1rem;line-height:.6rem;text-align:center;cursor:pointer;font-size:.26rem;color:#ffffff; padding:0 .2rem; margin-top:-.8rem;}
 .login_main .btn_retransmit_disabled{background:#e2e2e2 !important;cursor:default;color:#bdbdbd;}
 .login_main .item_btns .btn_findpwd{ margin-top:1.4rem;}
 

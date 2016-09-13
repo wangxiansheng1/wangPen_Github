@@ -90,6 +90,10 @@ define('lehu.h5.component.register', [
       },
 
       '.btn_retransmit click': function(element, event) {
+
+        if (element.hasClass("btn_retransmit_disabled")) {
+          return false;
+        }
         var that = this;
         var userName = $(".txt_phone").val();
 
@@ -208,8 +212,12 @@ define('lehu.h5.component.register', [
         });
         api.sendRequest()
           .done(function(data) {
-            store.set("user", JSON.stringify(data.user));
-            location.href = that.from || DEFAULT_GOTO_URL;
+            if (data.type == 1) {
+              store.set("user", JSON.stringify(data.user));
+              location.href = that.from || DEFAULT_GOTO_URL;
+            } else {
+              $(".err_msg").text(data.msg).parent().css("display", "block");
+            }
           })
           .fail(function(error) {
             alert("注册失败");
