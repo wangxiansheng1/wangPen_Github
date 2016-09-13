@@ -59,6 +59,7 @@ define('lehu.utils.busizutil', [
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7
     });
+    console.log(encrypted.toString());
     return encrypted.toString();
   }
 

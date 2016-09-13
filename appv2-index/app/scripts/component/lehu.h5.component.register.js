@@ -5,14 +5,17 @@ define('lehu.h5.component.register', [
     'lehu.util',
     'lehu.h5.api',
     'lehu.hybrid',
+    'md5',
+    'store',
 
     'imagelazyload',
+    'lehu.utils.busizutil',
 
     'text!template_components_register'
   ],
 
-  function($, can, LHConfig, util, LHAPI, LHHybrid,
-    imagelazyload,
+  function($, can, LHConfig, util, LHAPI, LHHybrid, md5, store,
+    imagelazyload, busizutil,
     template_components_register) {
     'use strict';
 
@@ -34,6 +37,7 @@ define('lehu.h5.component.register', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL = 'http://app.lehumall.com/'
       },
 
       /*密码显示按钮*/
@@ -45,6 +49,72 @@ define('lehu.h5.component.register', [
           element.addClass('btn_on');
           element.prev().attr('type', 'text');
         }
+      },
+
+      '.btn_retransmit click': function(element, event) {
+        var userName = $(".txt_phone").val();
+
+        if (userName == "") {
+          $(".err_msg").text("用户名不能为空!").parent().css("display", "block");
+          return false;
+        }
+
+        this.param = {
+          'phone': userName,
+          'flag': "0"
+        };
+
+        busizutil.encription(this.param);
+
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL + LHConfig.setting.action.verifycode,
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+            console.log(data);
+          })
+          .fail(function(error) {
+            alert("验证码发送成功");
+          })
+      },
+
+      /**
+       * 获取密码强度  
+       * @param password
+       * @return 1弱  2中  3强
+       */
+      getPasswordSafe: function(password) {
+        if (!password) {
+          return "1"
+        }
+
+        //数字，字母，特殊符号
+        var hasNumber = 0;
+        var hasZimu = 0;
+        var hasOther = 0;
+
+        var arr = password.split("");
+
+        for (var i = 0; i < arr.length; i++) {
+          var item = arr[i];
+          if (item >= '0' && item <= '9') {
+            //0-9数字
+            hasNumber = 1;
+            continue;
+          }
+
+          //65-90, 97-122
+          if ((item >= 'A' && item <= 'Z') || (item >= 'a' && item <= 'z')) {
+            hasZimu = 1;
+            continue;
+          } else {
+            //其他字符都算为特殊字符
+            hasOther = 1;
+          }
+        }
+        return hasNumber | hasZimu | hasOther;
       },
 
       '.btn_login click': function(element, event) {
@@ -62,19 +132,6 @@ define('lehu.h5.component.register', [
         //       if(!"Umeng".equals(promotionChannel)) {
         //          params.put("promotionChannel", promotionChannel);
         // }
-        //       //1:web;2:pc;3:android;4:ios;5:wp
-        //       params.put("origin", "3");
-        //       if (!StringUtils.isBlank(access_token)){
-        //         params.put("access_token", access_token);
-        //       }
-        //       if (!StringUtils.isBlank(userIfoJson)){
-        //         params.put("userIfoJson", userIfoJson);
-        //       }
-        //       if (thirdPartyFlag != 0){
-        //         params.put("thirdPartyFlag", String.valueOf(thirdPartyFlag));
-        //       }
-
-
 
         var userName = $(".txt_phone").val();
         var passWord = $(".txt_password").val();
@@ -94,10 +151,10 @@ define('lehu.h5.component.register', [
         }
 
         this.param = {
-          'userName': userName,
+          'phone': userName,
           'password': md5(passWord),
-          'openId': "",
-          'thirdPartyFlag': "-1",
+          'code': captcha,
+          'pwdSafe': this.getPasswordSafe(passWord),
           'origin': '5'
         };
 
@@ -114,7 +171,7 @@ define('lehu.h5.component.register', [
             location.href = that.from || DEFAULT_GOTO_URL;
           })
           .fail(function(error) {
-            alert("登录失败");
+            alert("注册失败");
           })
       }
 

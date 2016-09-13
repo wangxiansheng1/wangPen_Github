@@ -11,12 +11,13 @@ define('lehu.h5.component.activityzhongqiu', [
     'imagelazyload',
     'tripledes',
     'modeecb',
+    'lehu.utils.busizutil',
 
     'text!template_components_activityzhongqiu'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid, _, md5,
-    imagelazyload, tripledes, modeecb,
+    imagelazyload, tripledes, modeecb, busizutil,
     template_components_activityzhongqiu) {
     'use strict';
 
@@ -224,7 +225,7 @@ define('lehu.h5.component.activityzhongqiu', [
           "acitveId": acitveId
         };
 
-        this.encription(this.param);
+        busizutil.encription(this.param);
 
         var api = new LHAPI({
           url: this.URL.SERVER_URL + LHConfig.setting.action.getLHTicket,
