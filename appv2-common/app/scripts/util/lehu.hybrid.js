@@ -59,7 +59,7 @@ define(
       } else if (LHUtil.isMobile.iOS()) {
         alert("版本号:" + param.version);
 
-        if (param.version && param.version > '1.4.0') {
+        if (param.version && param.version >= '1.4.0') {
           alert("进入新版本");
           // 新版本
           setupWebViewJavascriptBridge(function(bridge) {
