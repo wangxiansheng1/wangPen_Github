@@ -7,12 +7,13 @@ define('lehu.h5.component.forgetpassword', [
     'lehu.hybrid',
 
     'imagelazyload',
+    'lehu.utils.busizutil',
 
     'text!template_components_forgetpassword'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
-    imagelazyload,
+    imagelazyload, busizutil,
     template_components_forgetpassword) {
     'use strict';
 
@@ -30,12 +31,6 @@ define('lehu.h5.component.forgetpassword', [
         var renderList = can.mustache(template_components_forgetpassword);
         var html = renderList(this.options);
         this.element.html(html);
-
-        this.param = this.initParams();
-        this.totalPageNum = "";
-        this.goodsCategoryList();
-
-        this.bindScroll();
       },
 
       initData: function() {
