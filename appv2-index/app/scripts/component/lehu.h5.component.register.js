@@ -19,6 +19,8 @@ define('lehu.h5.component.register', [
     template_components_register) {
     'use strict';
 
+    var DEFAULT_GOTO_URL = "index.html";
+
     return can.Control.extend({
 
       param: {},
@@ -51,7 +53,28 @@ define('lehu.h5.component.register', [
         }
       },
 
+      countdown: function(time) {
+        var that = this;
+        setTimeout(function() {
+          if (time > 0) {
+            time--;
+            that.element.find('.btn_retransmit').text(time + '秒后可重新发送').addClass('btn_retransmit_disabled');
+            that.countdown.call(that, time);
+          } else {
+            that.element.find('.btn_retransmit').text('获取验证码').removeClass('btn_retransmit_disabled');
+          }
+        }, 1000);
+      },
+
+      checkmobile: function(mobile) {
+        if (!mobile) {
+          return false;
+        }
+        var isTelNum = /^1\d{10}$/.test(mobile);
+      },
+
       '.btn_retransmit click': function(element, event) {
+        var that = this;
         var userName = $(".txt_phone").val();
 
         if (userName == "") {
@@ -73,10 +96,13 @@ define('lehu.h5.component.register', [
         });
         api.sendRequest()
           .done(function(data) {
-            console.log(data);
+            if (data.type == 1) {
+              that.countdown.call(that, 60);
+              $(".item_tips").css("display", "none");
+            }
           })
           .fail(function(error) {
-            alert("验证码发送成功");
+            $(".err_msg").text("短信验证码发送失败!").parent().css("display", "block");
           })
       },
 
@@ -114,24 +140,11 @@ define('lehu.h5.component.register', [
             hasOther = 1;
           }
         }
-        return hasNumber | hasZimu | hasOther;
+        return "" + (hasNumber | hasZimu | hasOther);
       },
 
       '.btn_login click': function(element, event) {
         var that = this;
-
-        //   params.put("phone", phone);
-        //       params.put("password", mPassword);
-        //       params.put("pwdSafe", pwdSafe);
-        //       params.put("code", code);
-        //       if(!StringUtils.isBlank(referralCode)) {
-        //         params.put("referralCode", referralCode);
-        //       }
-        //       Log.d("yzh", "promotionChannel = " + promotionChannel);
-        //       //第三方渠道
-        //       if(!"Umeng".equals(promotionChannel)) {
-        //          params.put("promotionChannel", promotionChannel);
-        // }
 
         var userName = $(".txt_phone").val();
         var passWord = $(".txt_password").val();
