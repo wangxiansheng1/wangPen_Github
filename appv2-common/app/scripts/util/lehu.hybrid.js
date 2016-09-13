@@ -11,6 +11,8 @@ define(
   function($, can, _, md5, store, LHUtil) {
     'use strict';
 
+    var param = can.deparam(window.location.search.substr(1));
+
     var setupWebViewJavascriptBridge = function(callback) {
       if (window.WebViewJavascriptBridge) {
         return callback(WebViewJavascriptBridge);
@@ -50,11 +52,27 @@ define(
 
     // 运行native代码
     var nativeFun = function(params) {
+
       if (LHUtil.isMobile.Android()) {
         params = JSON.stringify(params);
         JSInterface.nativeFunction(params);
       } else if (LHUtil.isMobile.iOS()) {
-        WebViewJavascriptBridge.send(params)
+        alert("版本号:" + param.version);
+
+        if (param.version && param.version > '1.4.0') {
+          alert("进入新版本");
+          // 新版本
+          setupWebViewJavascriptBridge(function(bridge) {
+
+            bridge.callHandler(params.funName, params.params, function responseCallback(responseData) {
+              alert("调用新版本bridge成功");
+              console.log("JS received response:", responseData)
+            })
+          })
+        } else {
+          // 老版本
+          WebViewJavascriptBridge.send(params)
+        }
       }
     }
 
