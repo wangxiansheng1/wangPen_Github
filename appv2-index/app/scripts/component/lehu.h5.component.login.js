@@ -102,6 +102,24 @@ define('lehu.h5.component.login', [
           .fail(function(error) {
             alert("登录失败");
           })
+      },
+
+      '.rightlink click': function(element, event) {
+        window.location.href = 'register.html';
+      },
+
+      '.back click': function() {
+
+        if (util.isMobile.Android() || util.isMobile.iOS()) {
+          var jsonParams = {
+            'funName': 'back_fun',
+            'params': {}
+          };
+          LHHybrid.nativeFun(jsonParams);
+          console.log('back_fun');
+        } else {
+          history.go(-1);
+        }
       }
     });
 
