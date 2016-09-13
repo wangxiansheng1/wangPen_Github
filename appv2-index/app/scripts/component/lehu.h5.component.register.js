@@ -70,7 +70,23 @@ define('lehu.h5.component.register', [
         if (!mobile) {
           return false;
         }
-        var isTelNum = /^1\d{10}$/.test(mobile);
+        return /^1\d{10}$/.test(mobile);
+      },
+
+      '.txt_phone focus': function($element, event) {
+        $(".item_tips").css("display", "none");
+      },
+
+      '.txt_password focus': function($element, event) {
+        $(".item_tips").css("display", "none");
+      },
+
+      '.txt_sms_captcha focus': function($element, event) {
+        $(".item_tips").css("display", "none");
+      },
+
+      ".reg_protocol click": function(element, event) {
+        element.toggleClass('reg_protocol_selected');
       },
 
       '.btn_retransmit click': function(element, event) {
@@ -78,7 +94,12 @@ define('lehu.h5.component.register', [
         var userName = $(".txt_phone").val();
 
         if (userName == "") {
-          $(".err_msg").text("用户名不能为空!").parent().css("display", "block");
+          $(".err_msg").text("手机号码不能为空").parent().css("display", "block");
+          return false;
+        }
+
+        if (!that.checkmobile(userName)) {
+          $(".err_msg").text("手机号码格式错误").parent().css("display", "block");
           return false;
         }
 
@@ -99,10 +120,12 @@ define('lehu.h5.component.register', [
             if (data.type == 1) {
               that.countdown.call(that, 60);
               $(".item_tips").css("display", "none");
+            } else {
+              $(".err_msg").text(data.msg).parent().css("display", "block");
             }
           })
           .fail(function(error) {
-            $(".err_msg").text("短信验证码发送失败!").parent().css("display", "block");
+            $(".err_msg").text("短信验证码发送失败").parent().css("display", "block");
           })
       },
 
@@ -160,6 +183,11 @@ define('lehu.h5.component.register', [
         }
         if (passWord == "") {
           $(".err_msg").text("密码不能为空!").parent().css("display", "block")
+          return false;
+        }
+
+        if (!that.checkmobile(userName)) {
+          $(".err_msg").text("手机号码格式错误!").parent().css("display", "block");
           return false;
         }
 
