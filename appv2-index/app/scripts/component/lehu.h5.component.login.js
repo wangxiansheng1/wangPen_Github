@@ -108,6 +108,10 @@ define('lehu.h5.component.login', [
         window.location.href = 'register.html';
       },
 
+      ".login_free click": function(element, event) {
+        element.toggleClass('login_free_selected');
+      },
+
       '.back click': function() {
 
         if (util.isMobile.Android() || util.isMobile.iOS()) {
