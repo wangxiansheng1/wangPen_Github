@@ -57,15 +57,15 @@ define(
         params = JSON.stringify(params);
         JSInterface.nativeFunction(params);
       } else if (LHUtil.isMobile.iOS()) {
-        alert("版本号:" + param.version);
+        // alert("版本号:" + param.version);
 
         if (param.version && param.version >= '1.4.0') {
-          alert("进入新版本");
+          // alert("进入新版本");
           // 新版本
           setupWebViewJavascriptBridge(function(bridge) {
 
             bridge.callHandler(params.funName, params.params, function responseCallback(responseData) {
-              alert("调用新版本bridge成功");
+              // alert("调用新版本bridge成功");
               console.log("JS received response:", responseData)
             })
           })
