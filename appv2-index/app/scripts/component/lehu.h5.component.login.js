@@ -71,7 +71,7 @@ define('lehu.h5.component.login', [
         var userName = $(".txt_username").val();
         var passWord = $(".txt_password").val();
         if (userName == "") {
-          $(".err_msg").text("用户名不能为空!").parent().css("display", "block");
+          $(".err_msg").text("手机号码不能为空!").parent().css("display", "block");
           return false;
         }
         if (passWord == "") {

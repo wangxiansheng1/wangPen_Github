@@ -68,6 +68,59 @@ define('lehu.h5.component.forgetpassword', [
         }, 1000);
       },
 
+      '.btn_findpwd click': function(element, event) {
+        var that = this;
+
+        var userName = $(".txt_phone").val();
+        var passWord = $(".txt_password").val();
+        var captcha = $(".txt_sms_captcha").val();
+
+        if (userName == "") {
+          $(".err_msg").text("手机号码不能为空!").parent().css("display", "block");
+          return false;
+        }
+        if (captcha == "") {
+          $(".err_msg").text("验证码不能为空!").parent().css("display", "block")
+          return false;
+        }
+        if (passWord == "") {
+          $(".err_msg").text("密码不能为空!").parent().css("display", "block")
+          return false;
+        }
+
+        if (!that.checkmobile(userName)) {
+          $(".err_msg").text("手机号码格式错误!").parent().css("display", "block");
+          return false;
+        }
+
+        this.param = {
+          'phone': userName,
+          'password': md5(passWord),
+          'code': captcha,
+          'pwdSafe': this.getPasswordSafe(passWord),
+          'origin': '5'
+        };
+
+        busizutil.encription(this.param);
+
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL + LHConfig.setting.action.appFindPasswordSave,
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+            if (data.type == 1) {
+              location.href = 'login.html';
+            } else {
+              $(".err_msg").text(data.msg).parent().css("display", "block");
+            }
+          })
+          .fail(function(error) {
+            $(".err_msg").text("找回密码失败").parent().css("display", "block");
+          })
+      },
+
       '.btn_retransmit click': function(element, event) {
 
         if (element.hasClass("btn_retransmit_disabled")) {
