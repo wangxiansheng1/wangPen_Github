@@ -5,6 +5,7 @@ define('lehu.h5.component.forgetpassword', [
     'lehu.util',
     'lehu.h5.api',
     'lehu.hybrid',
+    'md5',
 
     'imagelazyload',
     'lehu.utils.busizutil',
@@ -12,7 +13,7 @@ define('lehu.h5.component.forgetpassword', [
     'text!template_components_forgetpassword'
   ],
 
-  function($, can, LHConfig, util, LHAPI, LHHybrid,
+  function($, can, LHConfig, util, LHAPI, LHHybrid, md5,
     imagelazyload, busizutil,
     template_components_forgetpassword) {
     'use strict';
@@ -97,7 +98,7 @@ define('lehu.h5.component.forgetpassword', [
           'phone': userName,
           'password': md5(passWord),
           'code': captcha,
-          'pwdSafe': this.getPasswordSafe(passWord),
+          'pwdSafe': busizutil.getPasswordSafe(passWord),
           'origin': '5'
         };
 
@@ -141,7 +142,7 @@ define('lehu.h5.component.forgetpassword', [
 
         this.param = {
           'phone': userName,
-          'flag': "0"
+          'flag': "1"
         };
 
         busizutil.encription(this.param);
