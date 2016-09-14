@@ -112,6 +112,10 @@ define('lehu.h5.component.login', [
         element.toggleClass('login_free_selected');
       },
 
+      '.retrieve_password click': function(element, event) {
+        window.location.href = "forgetpassword.html";
+      },
+
       '.back click': function() {
 
         if (util.isMobile.Android() || util.isMobile.iOS()) {
