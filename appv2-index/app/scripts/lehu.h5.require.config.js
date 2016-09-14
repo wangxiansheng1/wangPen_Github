@@ -88,6 +88,7 @@ requirejs.config({
         "iSliderAnimate": "scripts/vendor/iSlider.animate",
         "Slider": "scripts/vendor/Slider",
         "swiper": "scripts/vendor/swiper",
+        "slide": "scripts/vendor/slide",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min",
 
         // 3des加密
