@@ -84,10 +84,6 @@ requirejs.config({
         'lehu.utils.busizutil': 'scripts/utils/lehu.utils.busizutil',
 
         "swipe": "scripts/vendor/swipe",
-        "iSlider": "scripts/vendor/iSlider",
-        "iSliderAnimate": "scripts/vendor/iSlider.animate",
-        "Slider": "scripts/vendor/Slider",
-        "swiper": "scripts/vendor/swiper",
         "slide": "scripts/vendor/slide",
         "imagelazyload": "scripts/vendor/zepto.picLazyLoad.min",
 
