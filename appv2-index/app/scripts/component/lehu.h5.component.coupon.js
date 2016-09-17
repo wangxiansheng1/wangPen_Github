@@ -113,7 +113,7 @@ define('lehu.h5.component.coupon', [
         this.getCoupon(this.userId, couponid);
       },
 
-      '.nindex_fanhui click': function() {
+      '.back click': function() {
 
         if (util.isMobile.Android() || util.isMobile.iOS()) {
           var jsonParams = {
