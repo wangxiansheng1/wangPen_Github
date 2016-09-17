@@ -115,12 +115,16 @@ define('lehu.h5.component.coupon', [
 
       '.nindex_fanhui click': function() {
 
-        var jsonParams = {
-          'funName': 'back_fun',
-          'params': {}
-        };
-        LHHybrid.nativeFun(jsonParams);
-        console.log('back_fun');
+        if (util.isMobile.Android() || util.isMobile.iOS()) {
+          var jsonParams = {
+            'funName': 'back_fun',
+            'params': {}
+          };
+          LHHybrid.nativeFun(jsonParams);
+          console.log('back_fun');
+        } else {
+          history.go(-1);
+        }
 
       }
     });
