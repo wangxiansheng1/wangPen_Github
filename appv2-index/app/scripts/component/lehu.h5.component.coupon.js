@@ -17,22 +17,23 @@ define('lehu.h5.component.coupon', [
     template_components_coupon) {
     'use strict';
 
-    // 优惠券类型：未领取0 未使用1
-    var COUPON_UNGET = "0";
-    var COUPON_UNUSED = "1";
+    // 1全部（未使用），2即将过期，3待领取的
+    var COUPON_ALL = "1";
+    var COUPON_UNUSED = "2";
+    var COUPON_UNGET = "3";
 
     return can.Control.extend({
 
       param: {},
 
       helpers: {
-        'getDay': function(time, img) {
-          if (_.isFunction(time)) {
-            time = time();
+        hasnodata: function(data, options) {
+          if (!data || data.length == 0) {
+            return options.fn(options.contexts || this);
+          } else {
+            return options.inverse(options.contexts || this);
           }
-
-          return time.substring(0, 10);
-        }
+        },
       },
 
       /**
@@ -59,7 +60,7 @@ define('lehu.h5.component.coupon', [
 
         this.param = {
           "userId": this.userId,
-          "flag": COUPON_UNGET,
+          "status": COUPON_UNGET,
           "pageindex": "1",
           "pagesize": "20"
         };
@@ -67,13 +68,13 @@ define('lehu.h5.component.coupon', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL + LHConfig.setting.action.appMyCoupon,
+          url: this.URL.SERVER_URL + LHConfig.setting.action.ticketData,
           data: this.param,
           method: 'post'
         });
         api.sendRequest()
           .done(function(data) {
-            that.options.data = data.couponList;
+            that.options.data = data.ticketList;
 
             var renderList = can.mustache(template_components_coupon);
             var html = renderList(that.options, that.helpers);
