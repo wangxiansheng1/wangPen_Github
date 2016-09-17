@@ -108,7 +108,7 @@ define([
         var that = this;
 
         var successCallback = function(response) {
-          def.resolve(JSON.parse(response));
+          def.resolve(response);
         }
 
         var failCallback = function(error) {
@@ -121,14 +121,24 @@ define([
             contentType: method == 'get' ? "text/x-json;charset=UTF-8" : "application/x-www-form-urlencoded; charset=UTF-8",
             data: data,
             success: function(response) {
-              successCallback(response);
+              var result = JSON.parse(response);
+              if (result.type === 1) {
+                successCallback(result);
+              } else if (result.type === 0) {
+                failCallback(result);
+              }
             },
             fail: function(error) {
               failCallback(error);
             }
           })
           .done(function(response) {
-            successCallback(response);
+            var result = JSON.parse(response);
+            if (response.type === 1) {
+              successCallback(result);
+            } else if (response.type === 0) {
+              failCallback(result);
+            }
           })
           .fail(function(error) {
             failCallback(error);

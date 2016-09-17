@@ -25,6 +25,7 @@ define('lehu.h5.business.config', ['zepto'], function($) {
     "register": "forge/register.do",
     "verifycode": "appMessageVerify.do",
     "appFindPasswordSave": "appFindPasswordSave.do",
+    "appMyCoupon": "appMyCoupon.do",
 
     "addFocus": "addFocus.do",
     "cancelFocus": "cancelFocus.do",
