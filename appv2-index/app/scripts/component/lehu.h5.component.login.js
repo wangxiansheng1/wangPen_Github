@@ -96,11 +96,11 @@ define('lehu.h5.component.login', [
         });
         api.sendRequest()
           .done(function(data) {
-            store.set("user", JSON.stringify(data.user));
+            store.set("user", data.user);
             location.href = that.from || DEFAULT_GOTO_URL;
           })
           .fail(function(error) {
-            alert("登录失败");
+            $(".err_msg").text("登录失败").parent().css("display", "block")
           })
       },
 

@@ -98,11 +98,27 @@ define('lehu.utils.busizutil', [
       }
     }
     return "" + (hasNumber | hasZimu | hasOther);
+  };
+
+  var getUserId = function() {
+    var param = can.deparam(window.location.search.substr(1));
+    var userId = param.userid;
+    if (userId) {
+      return userId;
+    }
+
+    var user = store.get("user");
+    if (user) {
+      userId = user.userId;
+    }
+
+    return userId;
   }
 
   return {
     encription: encription,
-    getPasswordSafe: getPasswordSafe
+    getPasswordSafe: getPasswordSafe,
+    getUserId: getUserId
   };
 
 });
