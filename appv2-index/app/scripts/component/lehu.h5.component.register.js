@@ -213,7 +213,7 @@ define('lehu.h5.component.register', [
         api.sendRequest()
           .done(function(data) {
             if (data.type == 1) {
-              store.set("user", JSON.stringify(data.user));
+              store.set("user", data.user);
               location.href = that.from || DEFAULT_GOTO_URL;
             } else {
               $(".err_msg").text(data.msg).parent().css("display", "block");
