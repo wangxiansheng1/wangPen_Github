@@ -8,12 +8,13 @@ define('lehu.h5.page.activityzhongqiu', [
         'lehu.hybrid',
 
         'lehu.h5.header.footer',
+        'lehu.h5.header.download',
 
         'lehu.h5.component.activityzhongqiu'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
-        LHFooter,
+        LHFooter, LHDownload,
         LHActivityzhongqiu) {
         'use strict';
 
@@ -29,6 +30,7 @@ define('lehu.h5.page.activityzhongqiu', [
             init: function(element, options) {
                 var activityzhongqiu = new LHActivityzhongqiu("#activityzhongqiu");
                 new LHFooter();
+                new LHDownload();
             }
         });
 
