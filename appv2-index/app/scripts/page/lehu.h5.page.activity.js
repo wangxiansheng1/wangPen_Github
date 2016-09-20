@@ -8,12 +8,13 @@ define('lehu.h5.page.activity', [
         'lehu.hybrid',
 
         'lehu.h5.header.footer',
+        'lehu.h5.header.download',
 
         'lehu.h5.component.activity'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
-        LHFooter,
+        LHFooter, LHDownload,
         LHActivity) {
         'use strict';
 
@@ -29,6 +30,9 @@ define('lehu.h5.page.activity', [
             init: function(element, options) {
                 var activity = new LHActivity("#activity");
                 new LHFooter();
+                if (!util.isMobile.Android() && !util.isMobile.iOS()) {
+                    new LHDownload();
+                }
             }
         });
 
