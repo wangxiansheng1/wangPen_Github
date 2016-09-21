@@ -32,7 +32,7 @@ define('lehu.h5.page.activity', [
                 new LHFooter();
 
                 var param = can.deparam(window.location.search.substr(1));
-                alert("version:" + param.version);
+
                 if (!param.version) {
                     new LHDownload();
                 }
