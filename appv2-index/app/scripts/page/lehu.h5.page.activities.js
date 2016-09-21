@@ -32,7 +32,10 @@ define('lehu.h5.page.activities', [
                 // new LHHeader();
                 var activities = new LHActivities("#activities");
                 new LHFooter();
-                if (!util.isMobile.Android() && !util.isMobile.iOS()) {
+
+                var param = can.deparam(window.location.search.substr(1));
+                alert("version:" + param.version);
+                if (!param.version) {
                     new LHDownload();
                 }
             }
