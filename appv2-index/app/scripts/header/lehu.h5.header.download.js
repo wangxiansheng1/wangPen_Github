@@ -25,7 +25,7 @@ define('lehu.h5.header.download', [
        * @override
        * @description 初始化方法
        */
-      init: function() {
+      init: function(element, options) {
         var renderDownload = can.mustache(template_header_download);
         var html = renderDownload(this.options);
         $("#download").html(html);
@@ -33,6 +33,12 @@ define('lehu.h5.header.download', [
         var isHideAd = store.get('IS_HIDE_AD');
         if (isHideAd && (Date.now() - isHideAd > 1 * 24 * 60 * 60 * 1000)) {
           store.remove('IS_HIDE_AD');
+        }
+
+        if (this.options.position !== "bottom") {
+          $('.downloadapp-content').css({
+            'top': '0'
+          });
         }
 
         if (isHideAd) {

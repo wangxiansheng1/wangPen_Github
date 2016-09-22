@@ -43,7 +43,9 @@ define('lehu.h5.page.index', [
                 var param = can.deparam(window.location.search.substr(1));
 
                 if (!param.version) {
-                    new LHDownload();
+                    new LHDownload(null, {
+                        "position": "bottom"
+                    });
                 }
             }
         });
