@@ -30,7 +30,10 @@ define('lehu.h5.page.activityzhongqiu', [
             init: function(element, options) {
                 var activityzhongqiu = new LHActivityzhongqiu("#activityzhongqiu");
                 new LHFooter();
-                if (!util.isMobile.Android() && !util.isMobile.iOS()) {
+
+                var param = can.deparam(window.location.search.substr(1));
+
+                if (!param.version) {
                     new LHDownload();
                 }
             }

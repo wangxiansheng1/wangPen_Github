@@ -8,12 +8,13 @@ define('lehu.h5.page.activityzhongqiu2', [
         'lehu.hybrid',
 
         'lehu.h5.header.footer',
+        'lehu.h5.header.download',
 
         'lehu.h5.component.activityzhongqiu2'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
-        LHFooter,
+        LHFooter, LHDownload,
         LHActivityzhongqiu2) {
         'use strict';
 
@@ -29,6 +30,12 @@ define('lehu.h5.page.activityzhongqiu2', [
             init: function(element, options) {
                 var activityzhongqiu = new LHActivityzhongqiu2("#activityzhongqiu2");
                 new LHFooter();
+
+                var param = can.deparam(window.location.search.substr(1));
+
+                if (!param.version) {
+                    new LHDownload();
+                }
             }
         });
 
