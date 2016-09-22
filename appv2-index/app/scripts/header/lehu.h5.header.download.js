@@ -29,11 +29,24 @@ define('lehu.h5.header.download', [
         var renderDownload = can.mustache(template_header_download);
         var html = renderDownload(this.options);
         $("#download").html(html);
-      },
 
-      ".downloadapp-close click": function(element, event) {
-        store.set("IS_HIDE_AD", Date.now());
-        $("#download").hide();
+        var isHideAd = store.get('IS_HIDE_AD');
+        if (isHideAd && (Date.now() - isHideAd > 1 * 24 * 60 * 60 * 1000)) {
+          store.remove('IS_HIDE_AD');
+        }
+
+        if (isHideAd) {
+          $('.downloadapp').hide();
+        } else {
+          $('.downloadapp').css({
+            'display': 'block'
+          });
+        }
+
+        $(".downloadapp-close").bind("click", function() {
+          store.set("IS_HIDE_AD", Date.now());
+          $(".downloadapp").hide()
+        })
       }
     });
 

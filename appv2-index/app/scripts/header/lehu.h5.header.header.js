@@ -16,6 +16,8 @@ define('lehu.h5.header.header', [
     template_header_header) {
     'use strict';
 
+    Fastclick.attach(document.body);
+
     return can.Control.extend({
 
       param: {},
