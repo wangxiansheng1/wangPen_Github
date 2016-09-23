@@ -41,6 +41,11 @@ define('lehu.h5.header.download', [
           });
         }
 
+        //暂时关闭
+        $('.downloadapp').hide();
+        return false;
+        //暂时关闭
+
         if (isHideAd) {
           $('.downloadapp').hide();
         } else {
