@@ -39,7 +39,6 @@ define('lehu.h5.component.register', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL = 'http://app.lehumall.com/'
       },
 
       /*密码显示按钮*/
@@ -85,8 +84,8 @@ define('lehu.h5.component.register', [
         $(".item_tips").css("display", "none");
       },
 
-      ".reg_protocol click": function(element, event) {
-        element.toggleClass('reg_protocol_selected');
+      ".reg_protocol i click": function(element, event) {
+        $(".reg_protocol").toggleClass('reg_protocol_selected');
       },
 
       '.btn_retransmit click': function(element, event) {
@@ -178,7 +177,7 @@ define('lehu.h5.component.register', [
         var captcha = $(".txt_sms_captcha").val();
 
         if (userName == "") {
-          $(".err_msg").text("用户名不能为空!").parent().css("display", "block");
+          $(".err_msg").text("手机号码不能为空!").parent().css("display", "block");
           return false;
         }
         if (captcha == "") {

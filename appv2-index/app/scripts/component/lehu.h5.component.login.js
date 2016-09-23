@@ -54,6 +54,21 @@ define('lehu.h5.component.login', [
         this.element.find('.item_tips').hide();
       },
 
+      '.login_tab span click': function(element, event) {
+        $('.login_tab span').removeClass('active');
+        element.addClass('active');
+
+        if ($('.login_tab_sms').hasClass('active')) {
+          $('.item.item_password').hide();
+          $('.item.item_sms_captcha').show();
+          $('.txt_password').val("");
+        } else {
+          $('.item.item_password').show();
+          $('.item.item_sms_captcha').hide();
+          $('.txt_sms_captcha').val("");
+        }
+      },
+
       /*密码显示按钮*/
       ".btn_off click": function(element, event) {
         if (element.hasClass('btn_on')) {
@@ -63,6 +78,70 @@ define('lehu.h5.component.login', [
           element.addClass('btn_on');
           element.prev().attr('type', 'text');
         }
+      },
+
+      checkmobile: function(mobile) {
+        if (!mobile) {
+          return false;
+        }
+        return /^1\d{10}$/.test(mobile);
+      },
+
+      countdown: function(time) {
+        var that = this;
+        setTimeout(function() {
+          if (time > 0) {
+            time--;
+            that.element.find('.btn_retransmit').text(time + '秒后可重新发送').addClass('btn_retransmit_disabled');
+            that.countdown.call(that, time);
+          } else {
+            that.element.find('.btn_retransmit').text('获取验证码').removeClass('btn_retransmit_disabled');
+          }
+        }, 1000);
+      },
+
+      '.btn_retransmit click': function(element, event) {
+
+        if (element.hasClass("btn_retransmit_disabled")) {
+          return false;
+        }
+        var that = this;
+        var userName = $(".txt_username").val();
+
+        if (userName == "") {
+          $(".err_msg").text("手机号码不能为空").parent().css("display", "block");
+          return false;
+        }
+
+        if (!that.checkmobile(userName)) {
+          $(".err_msg").text("手机号码格式错误").parent().css("display", "block");
+          return false;
+        }
+
+        this.param = {
+          'phone': userName,
+          'flag': "0"
+        };
+
+        busizutil.encription(this.param);
+
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL + LHConfig.setting.action.verifycode,
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+            if (data.type == 1) {
+              that.countdown.call(that, 60);
+              $(".item_tips").css("display", "none");
+            } else {
+              $(".err_msg").text(data.msg).parent().css("display", "block");
+            }
+          })
+          .fail(function(error) {
+            $(".err_msg").text("短信验证码发送失败").parent().css("display", "block");
+          })
       },
 
       '.btn_login click': function(element, event) {

@@ -49,6 +49,7 @@ requirejs.config({
         "lehu.h5.page.activityzhongqiu2": "scripts/page/lehu.h5.page.activityzhongqiu2",
         "lehu.h5.page.login": "scripts/page/lehu.h5.page.login",
         "lehu.h5.page.register": "scripts/page/lehu.h5.page.register",
+        "lehu.h5.page.registerhelp": "scripts/page/lehu.h5.page.registerhelp",
         "lehu.h5.page.forgetpassword": "scripts/page/lehu.h5.page.forgetpassword",
         "lehu.h5.page.coupon": "scripts/page/lehu.h5.page.coupon",
 
@@ -64,6 +65,8 @@ requirejs.config({
         "lehu.h5.component.register": "scripts/component/lehu.h5.component.register",
         "lehu.h5.component.forgetpassword": "scripts/component/lehu.h5.component.forgetpassword",
         "lehu.h5.component.coupon": "scripts/component/lehu.h5.component.coupon",
+
+        "template_page_registerhelp": "templates/page/lehu.h5.page.registerhelp.mustache",
 
         "template_header_footer": "templates/header/lehu.h5.header.footer.mustache",
         "template_header_header": "templates/header/lehu.h5.header.header.mustache",
