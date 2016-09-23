@@ -30,6 +30,10 @@
 	<img src="images/loading.gif" class="nlist_loading">
 </div>
 
+<div id="download">
+    
+</div>
+
 <div id="footer">
     
 </div>
@@ -53,6 +57,24 @@
 require(['lehu.h5.page.activities']);
 </script>
 <!-- endbuild -->
+
+<script src="https://s.mlinks.cc/scripts/dist/mlink.min.js"></script>
+<script type="text/javascript">
+    // if (document.querySelector("a#btnOpenApp")) {
+        setTimeout(function() {
+
+			var param = can.deparam(window.location.search.substr(1));
+
+            new Mlink({
+                mlink : "http://a.mlinks.cc/AA9e?ids=" + param.ids + "&pageIndex=1&flag=2&from=magic",
+                button : document.querySelector("a#btnOpenApp"),
+                autoRedirect : false,    //自动打开App, 此配置在Android Chrome 35以上版本, 部分其他Android机型和浏览器, iOS 9.0以上系统无效;
+                autoRedirectToDownloadUrl: true // 默认true, 当用户设备上未安装应用时自动打开下载地址; 如果您不希望直接打开下载地址, 设为false即可;
+            });
+        }, 0)
+        
+    // }
+</script>
 
 </body>
 </html>

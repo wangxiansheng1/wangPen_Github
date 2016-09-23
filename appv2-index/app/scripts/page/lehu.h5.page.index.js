@@ -9,12 +9,13 @@ define('lehu.h5.page.index', [
         'lehu.hybrid',
 
         'lehu.h5.header.footer',
+        'lehu.h5.header.download',
 
         'lehu.h5.component.index'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHSwitcher, LHHybrid,
-        LHFooter,
+        LHFooter, LHDownload,
         LHIndex) {
         'use strict';
 
@@ -38,6 +39,14 @@ define('lehu.h5.page.index', [
                 var index = new LHIndex("#index");
 
                 new LHFooter();
+
+                var param = can.deparam(window.location.search.substr(1));
+
+                if (!param.version) {
+                    new LHDownload(null, {
+                        "position": "bottom"
+                    });
+                }
             }
         });
 

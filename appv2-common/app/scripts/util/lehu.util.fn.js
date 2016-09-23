@@ -56,11 +56,17 @@ define('lehu.util', [
       Android: function() {
         return navigator.userAgent.match(/Android/i);
       },
+      AndroidApp: function() {
+        return navigator.userAgent.match(/Android/i) && navigator.userAgent.match(/Adr/i);
+      },
       BlackBerry: function() {
         return navigator.userAgent.match(/BlackBerry/i);
       },
       iOS: function() {
         return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      iOSApp: function() {
+        return navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
       },
       Opera: function() {
         return navigator.userAgent.match(/Opera Mini/i);

@@ -9,12 +9,13 @@ define('lehu.h5.page.activities', [
 
         'lehu.h5.header.footer',
         'lehu.h5.header.header',
+        'lehu.h5.header.download',
 
         'lehu.h5.component.activities'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
-        LHFooter, LHHeader,
+        LHFooter, LHHeader, LHDownload,
         LHActivities) {
         'use strict';
 
@@ -31,6 +32,12 @@ define('lehu.h5.page.activities', [
                 // new LHHeader();
                 var activities = new LHActivities("#activities");
                 new LHFooter();
+
+                var param = can.deparam(window.location.search.substr(1));
+
+                if (!param.version) {
+                    new LHDownload();
+                }
             }
         });
 
