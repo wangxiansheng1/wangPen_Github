@@ -37,7 +37,7 @@ define('lehu.h5.page.registerhelp', [
                 this.initData();
 
                 var api = new LHAPI({
-                    url: this.URL.SERVER_URL + LHConfig.setting.action.appHelp,
+                    url: this.URL.SERVER_URL + LHConfig.setting.action.queryRegistrationAgreement,
                     data: {
                         "flag": 362
                     },

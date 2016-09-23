@@ -42,6 +42,7 @@ define('lehu.h5.component.login', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.loginBysms = false;
       },
 
       '.txt_username keyup': function(element, event) {
@@ -59,10 +60,12 @@ define('lehu.h5.component.login', [
         element.addClass('active');
 
         if ($('.login_tab_sms').hasClass('active')) {
+          this.loginBysms = true;
           $('.item.item_password').hide();
           $('.item.item_sms_captcha').show();
           $('.txt_password').val("");
         } else {
+          this.loginBysms = false;
           $('.item.item_password').show();
           $('.item.item_sms_captcha').hide();
           $('.txt_sms_captcha').val("");
@@ -120,7 +123,7 @@ define('lehu.h5.component.login', [
 
         this.param = {
           'phone': userName,
-          'flag': "0"
+          'flag': "4"
         };
 
         busizutil.encription(this.param);
@@ -144,15 +147,53 @@ define('lehu.h5.component.login', [
           })
       },
 
+      loginBySms: function(userName, captcha) {
+        if (captcha == "") {
+          $(".err_msg").text("验证码不能为空!").parent().css("display", "block")
+          return false;
+        }
+
+        this.param = {
+          'phone': userName,
+          'code': captcha,
+          'origin': '5'
+        };
+
+        busizutil.encription(this.param);
+
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL + LHConfig.setting.action.login4Code,
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+            store.set("user", data.user);
+            location.href = that.from || DEFAULT_GOTO_URL;
+          })
+          .fail(function(error) {
+            $(".err_msg").text("登录失败").parent().css("display", "block")
+          })
+      },
+
       '.btn_login click': function(element, event) {
         var that = this;
 
         var userName = $(".txt_username").val();
         var passWord = $(".txt_password").val();
+        var captcha = $(".txt_sms_captcha").val();
+
         if (userName == "") {
           $(".err_msg").text("手机号码不能为空!").parent().css("display", "block");
           return false;
         }
+
+        // 如果是验证码登录走另一个分支
+        if (this.loginBysms) {
+          this.loginBySms(userName, captcha);
+          return false;
+        }
+
         if (passWord == "") {
           $(".err_msg").text("密码不能为空!").parent().css("display", "block")
           return false;
