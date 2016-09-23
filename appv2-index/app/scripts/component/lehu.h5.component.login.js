@@ -148,6 +148,8 @@ define('lehu.h5.component.login', [
       },
 
       loginBySms: function(userName, captcha) {
+        var that = this;
+
         if (captcha == "") {
           $(".err_msg").text("验证码不能为空!").parent().css("display", "block")
           return false;
@@ -172,7 +174,7 @@ define('lehu.h5.component.login', [
             location.href = that.from || DEFAULT_GOTO_URL;
           })
           .fail(function(error) {
-            $(".err_msg").text("登录失败").parent().css("display", "block")
+            $(".err_msg").text(error.msg).parent().css("display", "block")
           })
       },
 
@@ -220,7 +222,7 @@ define('lehu.h5.component.login', [
             location.href = that.from || DEFAULT_GOTO_URL;
           })
           .fail(function(error) {
-            $(".err_msg").text("登录失败").parent().css("display", "block")
+            $(".err_msg").text(error.msg).parent().css("display", "block")
           })
       },
 
