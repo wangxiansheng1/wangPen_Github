@@ -43,9 +43,6 @@ define('lehu.h5.component.coupon', [
       init: function() {
         this.initData();
 
-        var param = can.deparam(window.location.search.substr(1));
-        var appinner = param.appinner;
-
         this.userId = busizutil.getUserId();
         if (!this.userId) {
 
@@ -68,6 +65,13 @@ define('lehu.h5.component.coupon', [
       },
 
       "#share click": function(element, event) {
+        var param = can.deparam(window.location.search.substr(1));
+        var version = param.version;
+        if (!version && !util.isMobile.WeChat()) {
+          util.tip("请升级app到最新版本后使用");
+          return false;
+        }
+
         if (util.isMobile.WeChat()) {
           $("#sharetip").show();
           return false;
