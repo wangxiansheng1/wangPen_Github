@@ -43,15 +43,35 @@ define('lehu.h5.component.coupon', [
       init: function() {
         this.initData();
 
+        var param = can.deparam(window.location.search.substr(1));
+        var appinner = param.appinner;
+
         this.userId = busizutil.getUserId();
         if (!this.userId) {
-          location.href = "login.html?from=coupon.html"
+
+          if (util.isMobile.WeChat()) {
+            location.href = "login.html?from=coupon.html";
+          } else {
+            var jsonParams = {
+              'funName': 'login',
+              'params': {}
+            };
+            LHHybrid.nativeFun(jsonParams);
+          }
         }
 
         this.render();
       },
 
+      "#sharetip click": function(element, event) {
+        $("#sharetip").hide();
+      },
+
       "#share click": function(element, event) {
+        if (util.isMobile.WeChat()) {
+          $("#sharetip").show();
+          return false;
+        }
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
