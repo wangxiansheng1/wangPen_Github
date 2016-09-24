@@ -51,6 +51,21 @@ define('lehu.h5.component.coupon', [
         this.render();
       },
 
+      "#share click": function(element, event) {
+        var jsonParams = {
+          'funName': 'share_fun',
+          'params': {
+            'title': "汇银乐虎全球购-领券中心",
+            'type': "1",
+            'video_img': "",
+            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html",
+            'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
+            'text': "汇银乐虎全球购，赶紧领取优惠券吧！"
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
       initData: function() {
         this.URL = LHHybrid.getUrl();
       },
