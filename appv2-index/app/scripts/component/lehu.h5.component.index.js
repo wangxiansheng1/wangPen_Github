@@ -148,7 +148,7 @@ define('lehu.h5.component.index', [
         var bannerList = data.bannerList;
         for (var k = 0; k < bannerList.length; k++) {
           html += "<li style='height:100%' data-ul-child='child'  class='slide-li swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
-          html += "<img style='width:100%; height:100%' class='lazyload' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          html += "<img style='width:100%; height: 4.8rem;' class='lazyload' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
           html += "</li>";
         }
         html += "</ul>";
@@ -171,7 +171,7 @@ define('lehu.h5.component.index', [
           loop: true,
           smallBtn: true,
           autoPlay: true,
-          autoHeight: true,
+          autoHeight: false,
           playTime: 4000
         });
 
