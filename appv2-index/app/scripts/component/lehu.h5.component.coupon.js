@@ -51,7 +51,9 @@ define('lehu.h5.component.coupon', [
           } else {
             var jsonParams = {
               'funName': 'login',
-              'params': {}
+              'params': {
+                "backurl": "index"
+              }
             };
             LHHybrid.nativeFun(jsonParams);
           }
@@ -68,7 +70,7 @@ define('lehu.h5.component.coupon', [
         var param = can.deparam(window.location.search.substr(1));
         var version = param.version;
         if (!version && !util.isMobile.WeChat()) {
-          util.tip("请升级app到最新版本后使用");
+          util.tip("请升级app到最新版本后使用!");
           return false;
         }
 
@@ -76,15 +78,16 @@ define('lehu.h5.component.coupon', [
           $("#sharetip").show();
           return false;
         }
+
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
-            'title': "汇银乐虎全球购-领券中心",
+            'title': "新人券-汇银乐虎全球购-领券中心",
             'type': "1",
             'video_img': "",
             'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html",
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
-            'text': "汇银乐虎全球购，赶紧领取优惠券吧！"
+            'text': "汇银乐虎全球购新人券，赶紧领取优惠券吧，手慢无！"
           }
         };
         LHHybrid.nativeFun(jsonParams);
