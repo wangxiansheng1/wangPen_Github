@@ -161,7 +161,9 @@ define('lehu.h5.component.coupon', [
         if (util.isMobile.Android() || util.isMobile.iOS()) {
           var jsonParams = {
             'funName': 'back_fun',
-            'params': {}
+            'params': {
+              "backurl": "index"
+            }
           };
           LHHybrid.nativeFun(jsonParams);
           console.log('back_fun');
