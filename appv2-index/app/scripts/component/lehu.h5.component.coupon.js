@@ -43,10 +43,12 @@ define('lehu.h5.component.coupon', [
       init: function() {
         this.initData();
 
+        var param = can.deparam(window.location.search.substr(1));
+
         this.userId = busizutil.getUserId();
         if (!this.userId) {
 
-          if (util.isMobile.WeChat()) {
+          if (util.isMobile.WeChat() || param.from == 'share') {
             location.href = "login.html?from=coupon.html";
           } else {
             var jsonParams = {
@@ -85,7 +87,7 @@ define('lehu.h5.component.coupon', [
             'title': "新人券-汇银乐虎全球购-领券中心",
             'type': "1",
             'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html",
+            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
             'text': "汇银乐虎全球购新人券，赶紧领取优惠券吧，手慢无！"
           }
@@ -168,7 +170,12 @@ define('lehu.h5.component.coupon', [
           LHHybrid.nativeFun(jsonParams);
           console.log('back_fun');
         } else {
-          history.go(-1);
+          if (history.length == 1) {
+            window.opener = null;
+            window.close();
+          } else {
+            history.go(-1);
+          }
         }
 
       }

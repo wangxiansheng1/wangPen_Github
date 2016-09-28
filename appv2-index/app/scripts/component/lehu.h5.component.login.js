@@ -227,7 +227,11 @@ define('lehu.h5.component.login', [
       },
 
       '.rightlink click': function(element, event) {
-        window.location.href = 'register.html';
+        if (this.from) {
+          window.location.href = 'register.html?from=' + this.from;
+        } else {
+          window.location.href = 'register.html';
+        }
       },
 
       ".login_free click": function(element, event) {
