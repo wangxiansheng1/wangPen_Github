@@ -84,10 +84,24 @@ define('lehu.h5.component.index', [
             that.timer = setInterval(function() {
               that.countDown();
             }, 1000);
+
+            that.doOther(data);
           })
           .fail(function(error) {
             $(".ajax_noload").show();
           })
+      },
+
+      doOther: function(data) {
+        //加载_400电话
+        var hotline = data.hotline;
+        var jsonParams = {
+          'funName': 'set_hotline_fun',
+          'params': {
+            'hotline': hotline
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       initData: function() {
