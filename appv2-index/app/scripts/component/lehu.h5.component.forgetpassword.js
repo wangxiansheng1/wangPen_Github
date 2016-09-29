@@ -32,6 +32,41 @@ define('lehu.h5.component.forgetpassword', [
         var renderList = can.mustache(template_components_forgetpassword);
         var html = renderList(this.options);
         this.element.html(html);
+
+        this.bindEvent();
+      },
+
+
+      bindEvent: function() {
+        var that = this;
+
+        this.userNameLength = 0;
+        this.passwordLength = 0;
+        this.captchaLength = 0;
+
+        $('.txt_phone').on('keyup', function() {
+          that.userNameLength = this.value.length;
+          that.enableLogin();
+        });
+
+        /*密码*/
+        $('.txt_password').on('keyup', function() {
+          that.passwordLength = this.value.length;
+          that.enableLogin();
+        })
+
+        $('.txt_sms_captcha').on('keyup', function() {
+          that.captchaLength = this.value.length;
+          that.enableLogin();
+        })
+      },
+
+      enableLogin: function() {
+        if (this.userNameLength && this.captchaLength && this.passwordLength) {
+          $('.btn_login').removeClass('btn_disabled');
+        } else {
+          $('.btn_login').addClass('btn_disabled');
+        }
       },
 
       initData: function() {
@@ -71,6 +106,10 @@ define('lehu.h5.component.forgetpassword', [
 
       '.btn_findpwd click': function(element, event) {
         var that = this;
+
+        if (element.hasClass('btn_disabled')) {
+          return false;
+        }
 
         var userName = $(".txt_phone").val();
         var passWord = $(".txt_password").val();

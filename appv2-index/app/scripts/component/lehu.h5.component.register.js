@@ -35,6 +35,41 @@ define('lehu.h5.component.register', [
         var renderList = can.mustache(template_components_register);
         var html = renderList(this.options);
         this.element.html(html);
+
+        this.bindEvent();
+      },
+
+
+      bindEvent: function() {
+        var that = this;
+
+        this.userNameLength = 0;
+        this.passwordLength = 0;
+        this.captchaLength = 0;
+
+        $('.txt_phone').on('keyup', function() {
+          that.userNameLength = this.value.length;
+          that.enableLogin();
+        });
+
+        /*密码*/
+        $('.txt_password').on('keyup', function() {
+          that.passwordLength = this.value.length;
+          that.enableLogin();
+        })
+
+        $('.txt_sms_captcha').on('keyup', function() {
+          that.captchaLength = this.value.length;
+          that.enableLogin();
+        })
+      },
+
+      enableLogin: function() {
+        if (this.userNameLength && this.captchaLength && this.passwordLength) {
+          $('.btn_login').removeClass('btn_disabled');
+        } else {
+          $('.btn_login').addClass('btn_disabled');
+        }
       },
 
       initData: function() {
@@ -172,6 +207,10 @@ define('lehu.h5.component.register', [
       '.btn_login click': function(element, event) {
         var that = this;
 
+        if (element.hasClass('btn_disabled')) {
+          return false;
+        }
+
         var userName = $(".txt_phone").val();
         var passWord = $(".txt_password").val();
         var captcha = $(".txt_sms_captcha").val();
@@ -224,6 +263,20 @@ define('lehu.h5.component.register', [
       },
 
       '.back click': function() {
+
+        // temp begin  
+        // 在app外部使用 点击返回 如果没有可返回则关闭掉页面
+        var param = can.deparam(window.location.search.substr(1));
+        if (!param.version) {
+          if (history.length == 1) {
+            window.opener = null;
+            window.close();
+          } else {
+            history.go(-1);
+          }
+          return false;
+        }
+        // temp end
 
         if (util.isMobile.Android() || util.isMobile.iOS()) {
           var jsonParams = {
