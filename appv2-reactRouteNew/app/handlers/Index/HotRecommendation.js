@@ -20,7 +20,7 @@ var Banner = module.exports = React.createClass({
     var map = {
       1: (goods) => {
         return <div className='nindex_ad_one'><a href='javascript:;'>
-              <img  className='lazyload' data-src={this.helpers.bannerImg(goods[0].IMG_URL)} />
+              <img  className='lazyload' src={this.helpers.bannerImg(goods[0].IMG_URL)} />
               </a></div>;
       },
       2: (goods) => {
@@ -28,7 +28,7 @@ var Banner = module.exports = React.createClass({
               {
                 goods.map((good) => {
                   return <a href='javascript:;'>
-                         <img  className='lazyload' data-src={this.helpers.bannerImg(good.IMG_URL)} />
+                         <img  className='lazyload' src={this.helpers.bannerImg(good.IMG_URL)} />
                          </a>
                 })
               }
@@ -39,7 +39,7 @@ var Banner = module.exports = React.createClass({
               {
                 goods.map((good) => {
                   return <a href='javascript:;'>
-                         <img  className='lazyload' data-src={this.helpers.bannerImg(good.IMG_URL)} />
+                         <img  className='lazyload' src={this.helpers.bannerImg(good.IMG_URL)} />
                          </a>
                 })
               }

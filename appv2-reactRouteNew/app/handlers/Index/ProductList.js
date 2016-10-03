@@ -49,11 +49,13 @@ var Banner = module.exports = React.createClass({
                         </div>
 
                         <div className='ntuijian_ad'>
-                          <a href='javascript:;'></a>
+                          <a href='javascript:;' >
+                            <img className='lazyload' src={this.helpers.bannerImg(prommotion['PROMOTION_BANNER'])}/>
+                          </a>
                         </div>
 
                         <div className='ntuijian_main'>
-                          <div className='swiper-container' style=''>
+                          <div className='swiper-container'>
                             <div className='swiper-wrapper'>
 
                             {
@@ -62,8 +64,8 @@ var Banner = module.exports = React.createClass({
                                 var q = Math.floor(PRICE);
                                 var h = (PRICE).slice(-2);
 
-                                return <a href='javascript:;'>
-                                      <img className='lazyload' data-original={this.good['GOODS_IMG']} />
+                                return <a href='javascript:;' className="swiper-slide prommotionLayout_detail">
+                                      <img className='lazyload' data-src={this.helpers.bannerImg(good['GOODS_IMG'])} />
                                       <title>{good['GOODS_NAME']}</title>
                                       <span>￥ {q} .<i> {h} </i></span>
                                       </a>
@@ -71,7 +73,7 @@ var Banner = module.exports = React.createClass({
                             }
 
                             <a href='javascript:;' className='swiper-slide prommotionLayout_detail_more'>
-                            <img className='lazyload' data-original='images/more.jpg'/>
+                            <img className='lazyload' data-src='images/more.jpg'/>
                             </a>
                             </div>
                           </div>

@@ -1,5 +1,5 @@
 var React = require('react');
-var safe = require('./Safe');
+var safe = require('./safe');
 
 var _func = React.createElement;
 

@@ -50,6 +50,7 @@ var Index = module.exports = React.createClass({
         <Secondkill {...this.props} ></Secondkill>
         <HotRecommendation {...this.props} ></HotRecommendation>
         <ProductList {...this.props} ></ProductList>
+        <Discovery {...this.props} ></Discovery>
       </div>
     );
   }
