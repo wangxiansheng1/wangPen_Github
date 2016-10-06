@@ -267,6 +267,7 @@ define('lehu.h5.component.login', [
           .done(function(data) {
             store.set("user", data.user);
             location.href = that.from || DEFAULT_GOTO_URL;
+            return false;
           })
           .fail(function(error) {
             $(".err_msg").text(error.msg).parent().css("display", "block")
