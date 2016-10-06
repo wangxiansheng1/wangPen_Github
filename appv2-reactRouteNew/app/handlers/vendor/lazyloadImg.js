@@ -65,7 +65,7 @@
             var style = document.getElementById('LazyloadImg-style');
             if (style) {
                 return false; //已经创建了样式
-            }
+            };
             style = document.createElement('style');
             style.id = 'LazyloadImg-style';
             style.type = 'text/css';
@@ -100,7 +100,6 @@
             var list = document.querySelectorAll(this.el);
             var trueList = [];
             for (var i = 0; i < list.length; i++) {
-                console.log(this.testMeet(list[i]));
                 if (this.testMeet(list[i]) === true) {
                     trueList.push(list[i]);
                 }
@@ -117,6 +116,8 @@
          * @param {object} el 检测的元素
          */
         this.testMeet = (el) => {
+            console.log(el.dataset.reactid)
+
             var bcr = el.getBoundingClientRect(); //取得元素在可视区的位置
 
             var mw = el.offsetWidth; //元素自身宽度
@@ -125,7 +126,16 @@
             var h = window.innerHeight; //视窗的高度
             var boolX = (!((bcr.right - this.left) <= 0 && ((bcr.left + mw) - this.left) <= 0) && !((bcr.left + this.right) >= w && (bcr.right + this.right) >= (mw + w))); //上下符合条件
             var boolY = (!((bcr.bottom - this.top) <= 0 && ((bcr.top + mh) - this.top) <= 0) && !((bcr.top + this.bottom) >= h && (bcr.bottom + this.bottom) >= (mh + h))); //上下符合条件
+
+            if (el.dataset.reactid == 2411) {
+
+                console.log(bcr.right - this.left);
+                console.log((bcr.left + mw) - this.left);
+                console.log(el.width != 0 && el.height != 0 && boolX && boolY);
+            }
+
             if (el.width != 0 && el.height != 0 && boolX && boolY) {
+
                 return true;
             } else {
                 return false;

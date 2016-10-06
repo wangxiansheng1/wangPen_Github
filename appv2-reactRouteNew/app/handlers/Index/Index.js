@@ -22,7 +22,7 @@ var Index = module.exports = React.createClass({
     var lazyloadImg = new LazyloadImg({
       el: '[data-src]',
       top: 50,
-      right: 50,
+      right: -800,
       bottom: 50,
       left: 50,
       qriginal: false,

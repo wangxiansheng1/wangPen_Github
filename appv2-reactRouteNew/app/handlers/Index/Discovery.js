@@ -10,25 +10,6 @@ var Banner = module.exports = React.createClass({
 
   componentDidMount() {
 
-    // 滚动
-    var swiper = require('./../vendor/swiper');
-    var swiper = new Swiper('.nbanner .swiper-container', {
-      pagination: '.nbanner .swiper-pagination',
-      autoplay: 4000,
-      autoplayDisableOnInteraction: false,
-      speed: 300,
-      loop: true,
-      longSwipesRatio: 1
-    });
-
-    // 第三张之后图片懒加载
-    var list = document.querySelectorAll('.nbanner [data-src]');
-    for (var i = 0; i < list.length; i++) {
-      if (i >= PIC_LIMIT - 1) {
-        list[i].src = list[i].dataset["src"];
-      }
-    }
-
   },
 
   helpers: {
@@ -42,10 +23,10 @@ var Banner = module.exports = React.createClass({
 
   getCommonTemplate: function(item) {
     return <div className="nfaxian">
-      <div className="nfaxian_main" id="ajax_showList">
-      <div className='nshow_listmsg'>
+            <div className="nfaxian_main" id="ajax_showList">
+              <div className='nshow_listmsg'>
                 <a className=''>
-                  <img className='lazyload' src={this.helpers.bannerImg(item.FACE_IMAGE_PATH)} />
+                  <img className='lazyload' data-src={this.helpers.bannerImg(item.FACE_IMAGE_PATH)} />
                   <span className='nshow_listmsg_name ell'>
                     {item.USER_NAME}
                   </span>
@@ -59,11 +40,10 @@ var Banner = module.exports = React.createClass({
                   <div className='nshow_listmsg_pl'>
                     <i className='nshow_iconfont'>&#xe600;</i><span>{item['APPRAISENUM']}</span>
                   </div>
-
                 </a>
-      </div>
-      </div>
-    </div>
+              </div>
+            </div>
+          </div>
   },
 
   render: function() {
@@ -80,7 +60,7 @@ var Banner = module.exports = React.createClass({
             var showImg = item['SHOW_IMG'].split(',')[0];
 
             return type == 3 ? (
-               <div className='nshow_list_video' >
+              <div className='nshow_list_video' >
                 <div className=' nshow_listbox_video'>
                   <video className='myVideo' src={this.helpers.bannerImg(item['SHOW_FILE'])} controls poster={item['VIDEO_IMG']}></video>
                 </div>
@@ -88,17 +68,17 @@ var Banner = module.exports = React.createClass({
                 <div className='nshow_listbox_title ell'>{item.TITLE}</div>
 
                 {this.getCommonTemplate(item)}
-            </div>
+              </div>
             ) : (
-               <div className='nshow_listbox' >
+              <div className='nshow_listbox' >
                 <a href='javascript:;' className='nshow_listbox_img'>
-                  <img className='lazyload' src={this.helpers.bannerImg(showImg)} />
+                  <img className='lazyload' data-src={this.helpers.bannerImg(showImg)} />
                 </a>
 
                 <div className='nshow_listbox_title ell'>{item.TITLE}</div>
 
                 {this.getCommonTemplate(item)}
-            </div>
+              </div>
             )
 
           })

@@ -19,28 +19,38 @@ var Banner = module.exports = React.createClass({
   getTemplateByType: function(item) {
     var map = {
       1: (goods) => {
-        return <div className='nindex_ad_one'><a href='javascript:;'>
+        return (
+          <div className='nindex_ad_one'>
+            <a href='javascript:;'>
               <img  className='lazyload' src={this.helpers.bannerImg(goods[0].IMG_URL)} />
-              </a></div>;
+            </a>
+          </div>
+        );
       },
       2: (goods) => {
-        return <div className='nindex_ad_two'>
+        return (
+          <div className='nindex_ad_two'>
               {
                 goods.map((good) => {
-                  return <a href='javascript:;'>
-                         <img  className='lazyload' src={this.helpers.bannerImg(good.IMG_URL)} />
-                         </a>
+                  return (
+                    <a href='javascript:;'>
+                      <img  className='lazyload' src={this.helpers.bannerImg(good.IMG_URL)} />
+                    </a>
+                    );
                 })
               }
-              </div>
+          </div>
+        );
       },
       3: (goods) => {
         return <div className='nindex_ad_three'>
               {
                 goods.map((good) => {
-                  return <a href='javascript:;'>
-                         <img  className='lazyload' src={this.helpers.bannerImg(good.IMG_URL)} />
-                         </a>
+                  return (
+                    <a href='javascript:;'>
+                      <img  className='lazyload' src={this.helpers.bannerImg(good.IMG_URL)} />
+                    </a>
+                    );
                 })
               }
               </div>
