@@ -338,7 +338,7 @@ define('lehu.h5.component.index', [
         },
         "7": {
           type: "h5",
-          name: "优惠券",
+          name: "领券中心",
           url: 'coupon.html?appinner=true',
           query: 'originIds=43&mark=8'
         }
