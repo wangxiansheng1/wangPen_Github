@@ -337,9 +337,10 @@ define('lehu.h5.component.index', [
           query: 'originIds=43&mark=8'
         },
         "7": {
-          type: "h5null",
-          name: "全部",
-          url: ''
+          type: "h5",
+          name: "优惠券",
+          url: 'coupon.html?appinner=true',
+          query: 'originIds=43&mark=8'
         }
       },
 
