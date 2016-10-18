@@ -86,12 +86,12 @@ define('lehu.h5.component.coupon', [
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
-            'title': "新人券-汇银乐虎全球购-领券中心",
+            'title': "汇银乐虎全球购-领券中心",
             'type': "1",
             'video_img': "",
             'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
-            'text': "汇银乐虎全球购新人券，赶紧领取优惠券吧，手慢无！"
+            'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
           }
         };
         LHHybrid.nativeFun(jsonParams);
@@ -154,6 +154,12 @@ define('lehu.h5.component.coupon', [
         api.sendRequest()
           .done(function(data) {
             util.tip(data.msg);
+
+            if (util.isMobile.WeChat()) {
+              setTimeout(function() {
+                window.location.href = "http://www.lehumall.com/ios/huiyin_ios_download/nearShop_-1.html";
+              }, 2000);
+            }
           })
           .fail(function(error) {
             util.tip(error.msg);
