@@ -42,27 +42,6 @@ define('lehu.h5.component.coupon', [
        */
       init: function() {
         this.initData();
-
-        var param = can.deparam(window.location.search.substr(1));
-
-        this.userId = busizutil.getUserId();
-        if (!this.userId) {
-          if (util.isMobile.WeChat() || param.from == 'share' || !param.appinner) {
-            location.href = "login.html?from=coupon.html";
-            return false;
-          } else {
-            var jsonParams = {
-              'funName': 'login',
-              'params': {
-                "backurl": "index"
-              }
-            };
-            LHHybrid.nativeFun(jsonParams);
-
-            return false;
-          }
-        }
-
         this.render();
       },
 
@@ -105,7 +84,7 @@ define('lehu.h5.component.coupon', [
         var that = this;
 
         this.param = {
-          "userId": this.userId,
+          // "userId": this.userId,
           "status": COUPON_UNGET,
           "pageindex": "1",
           "pagesize": "20"
@@ -114,7 +93,8 @@ define('lehu.h5.component.coupon', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL + LHConfig.setting.action.ticketData,
+          // url: this.URL.SERVER_URL + LHConfig.setting.action.ticketData,
+          url: this.URL.SERVER_URL + "ticketAllData.do",
           data: this.param,
           method: 'post'
         });
@@ -168,6 +148,26 @@ define('lehu.h5.component.coupon', [
 
       ".coupons_box_r click": function(element, event) {
         var couponid = element.attr("data-id");
+        var param = can.deparam(window.location.search.substr(1));
+
+        this.userId = busizutil.getUserId();
+        if (!this.userId) {
+          if (util.isMobile.WeChat() || param.from == 'share' || !param.appinner) {
+            location.href = "login.html?from=coupon.html";
+            return false;
+          } else {
+            var jsonParams = {
+              'funName': 'login',
+              'params': {
+                "backurl": "index"
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+
+            return false;
+          }
+        }
+
         this.getCoupon(this.userId, couponid);
       },
 
