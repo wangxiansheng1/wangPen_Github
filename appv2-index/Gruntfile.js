@@ -934,6 +934,42 @@ module.exports = function(grunt) {
           ],
           insertRequire: ['lehu.h5.page.coupon']
         }
+      },
+      coupondetail: {
+        options: {
+          optimize: 'none',
+          preserveLicenseComments: false,
+          baseUrl: './app/',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.coupondetail.js',
+          mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
+          paths: {
+            'moment': '../bower_components/momentjs/min/moment.min',
+            'fastclick': '../bower_components/fastclick/lib/fastclick'
+          },
+          include: [
+            'lehu.helpers',
+            'lehu.h5.page.coupondetail'
+          ],
+          insertRequire: ['lehu.h5.page.coupondetail']
+        }
+      },
+      wheel: {
+        options: {
+          optimize: 'none',
+          preserveLicenseComments: false,
+          baseUrl: './app/',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.wheel.js',
+          mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
+          paths: {
+            'moment': '../bower_components/momentjs/min/moment.min',
+            'fastclick': '../bower_components/fastclick/lib/fastclick'
+          },
+          include: [
+            'lehu.helpers',
+            'lehu.h5.page.wheel'
+          ],
+          insertRequire: ['lehu.h5.page.wheel']
+        }
       }
     }
   });
