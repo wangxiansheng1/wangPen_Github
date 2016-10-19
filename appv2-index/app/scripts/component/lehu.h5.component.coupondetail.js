@@ -102,7 +102,7 @@ define('lehu.h5.component.coupondetail', [
           .done(function(data) {
             that.options.data = data.ticketList;
 
-            var renderList = can.mustache(template_components_coupon);
+            var renderList = can.mustache(template_components_coupondetail);
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
           })
