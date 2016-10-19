@@ -6,12 +6,15 @@ define('lehu.h5.component.index', [
     'lehu.h5.api',
     'lehu.hybrid',
 
+    'lehu.utils.busizutil',
+
     // 'swiper',
     'slide',
     'imagelazyload'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid,
+    busizutil,
     slide, imagelazyload) {
     'use strict';
 
@@ -24,19 +27,6 @@ define('lehu.h5.component.index', [
       init: function() {
         var that = this;
 
-        //判断当前字符串是否以str开始 先判断是否存在function是避免和js原生方法冲突，自定义方法的效率不如原生的高
-        // if (typeof String.prototype.startsWith != 'function') {
-        //   String.prototype.startsWith = function(str) {
-        //     return this.slice(0, str.length) == str;
-        //   };
-        // }　　　　
-        // //判断当前字符串是否以str结束
-        // if (typeof String.prototype.endsWith != 'function') {
-        //   String.prototype.endsWith = function(str) {
-        //     return this.slice(-str.length) == str;
-        //   };
-        // }
-
         this.juli = null;
         this.shengyu = null;
 
@@ -45,6 +35,111 @@ define('lehu.h5.component.index', [
         setTimeout(function() {
           that.sendRequest.apply(that);
         }, 0);
+
+        this.bindEvent();
+
+        this.shouldShowCoupon();
+      },
+
+      shouldShowCoupon: function() {
+        var activeIds = $(".index_popup_box_get").attr("data-acitveIds");
+
+        this.userId = busizutil.getUserId();
+        if (!this.userId) {
+          $(".index_popup").show();
+          return false;
+        }
+
+        this.param = {
+          "userId": this.userId,
+          "acitveIds": activeIds
+        };
+
+        busizutil.encription(this.param);
+
+        // TODO
+        var tempURL = "http://172.16.201.84:8080/lehu-app-back/";
+
+        var api = new LHAPI({
+          // url: this.URL.SERVER_URL + "judgeLHTicketReceived.do",
+          url: tempURL + "judgeLHTicketReceived.do",
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+
+            if (data.hasReceived) {
+              $(".index_popup").hide();
+            } else {
+              $(".index_popup").show();
+            }
+          })
+          .fail(function(error) {
+            // util.tip(error.msg);
+          });
+      },
+
+      bindEvent: function() {
+        var that = this;
+
+        $('.index_popup_box_close').on('click', function() {
+          $(".index_popup").hide();
+        });
+
+        $(".index_popup_box_get").on('click', function() {
+          that.getCoupon();
+        });
+      },
+
+      getCoupon: function() {
+        var activeIds = $(".index_popup_box_get").attr("data-acitveIds");
+
+        var param = can.deparam(window.location.search.substr(1));
+
+        this.userId = busizutil.getUserId();
+        if (!this.userId) {
+          if (util.isMobile.WeChat()) {
+            location.href = "login.html?from=index.html";
+            return false;
+          } else {
+            var jsonParams = {
+              'funName': 'login',
+              'params': {
+                "backurl": "index"
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+
+            return false;
+          }
+        }
+
+        var that = this;
+
+        this.param = {
+          "userId": this.userId,
+          "acitveIds": activeIds
+        };
+
+        busizutil.encription(this.param);
+
+        var tempURL = "http://172.16.201.84:8080/lehu-app-back/";
+
+        var api = new LHAPI({
+          // url: this.URL.SERVER_URL + "getMultipleLHTicket.do",
+          url: tempURL + "getMultipleLHTicket.do",
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+            $(".index_popup").hide();
+            util.tip(data.msg);
+          })
+          .fail(function(error) {
+            util.tip(error.msg);
+          });
       },
 
       sendRequest: function() {

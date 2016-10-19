@@ -84,6 +84,22 @@
 
 <body class="">
 
+<!--弹出层-->
+<div class="index_popup" style="display: none">
+    <div class="index_popup_box">
+        <!--关闭-->       
+        <div class="index_popup_box_close"></div>
+        <div class="index_popup_box_main">
+            <p><em>¥</em><i>20</i><span>乐虎券</span></p>
+            <p><em>¥</em><i>50</i><span>乐虎券</span></p>
+            <p><em>¥</em><i>80</i><span>乐虎券</span></p>
+        </div>
+        <!--领取-->
+        <div class="index_popup_box_get" data-acitveIds="2153,2153,2153"></div>
+    </div>
+</div>
+<!--/弹出层-->
+
 <div id="index" class="nwrapper">
     <div>
 <div class="ajax_noload"><img src="images/wifi.png">网络请求失败，请稍候再试<span><img src="images/sx.png"></span></div>
@@ -177,6 +193,46 @@ require(['lehu.h5.page.indexpre']);
 require(['lehu.h5.page.index']);
 </script>
 <!-- endbuild -->
+
+<style type="text/css">
+    /*首页弹出层*/
+.index_popup{ width:100%; height:100%; position:fixed; z-index:999; background:rgba(0,0,0,.7);}
+.index_popup_box{ width:83%; height:7.86rem; display: block; float:left; margin:1.2rem 8.5% 0; background: url(images/1111/popup_bj.png) no-repeat; background-size:100%; position:relative;}
+.index_popup_box_close{ width:.8rem; height:.8rem;position:absolute; top:0; right:0;}
+.index_popup_box_get{ width:3.2rem; height:1.2rem;position:absolute; bottom:.2rem; left:1.1rem;}
+.index_popup_box_main{ width:4.6rem; height:4.3rem; display:block; float:left; margin:1.9rem .37rem 0;}
+.index_popup_box_main p{ width:100%; height:1.2rem;  display:block; float:left;}
+.index_popup_box_main p em{ font-size:.2rem; color:#ff0000; font-weight:bold;font-family:arial;display:block;float: left;margin: .5rem 0 0 1.2rem;}
+.index_popup_box_main p i{ font-size:.6rem; color:#ff002d; font-weight:bold;margin:0 .1rem;}
+.index_popup_box_main p span{ font-size:.3rem; color:#333333; font-weight:bold; margin-top:-1rem;}
+</style>
+
+<style type="text/css">
+    .dialog-cart {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 999; }
+
+.dialog-cart-inner {
+  position: relative;
+  left: -50%;
+  color: #fff;
+  background: #333;
+  background: rgba(51, 51, 51, 0.9);
+  font-size: 14px;
+  line-height: 21px;
+  padding: 20px 82px;
+  -webkit-border-radius: 4px;
+          border-radius: 4px;
+  text-align: center; }
+
+.dialog-cart .icon {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  margin-left: -25px; }
+</style>
 
 <script src="https://s.mlinks.cc/scripts/dist/mlink.min.js"></script>
 <script type="text/javascript">
