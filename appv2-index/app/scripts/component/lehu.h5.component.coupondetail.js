@@ -35,6 +35,44 @@ define('lehu.h5.component.coupondetail', [
         this.render();
       },
 
+      isEnd: function() {
+        var activeId = $(".bt_get").attr("data-id");
+
+        this.userId = busizutil.getUserId();
+        if (this.userId) {
+          this.param = {
+            "userId": this.userId,
+            "acitveIds": activeId
+          };
+
+          busizutil.encription(this.param);
+
+          // TODO
+          var tempURL = "http://172.16.201.84:8080/lehu-app-back/";
+
+          var api = new LHAPI({
+            url: this.URL.SERVER_URL + "judgeLHTicketReceived.do",
+            // url: tempURL + "judgeLHTicketReceived.do",
+            data: this.param,
+            method: 'post'
+          });
+          api.sendRequest()
+            .done(function(data) {
+
+              if (data.hasReceived) {
+                $(".bt_get").addClass("end");
+                $(".coupons_main").addClass("end");
+              } else {
+                $(".bt_get").removeClass("end");
+                $(".coupons_main").addClass("end");
+              }
+            })
+            .fail(function(error) {
+              // util.tip(error.msg);
+            });
+        }
+      },
+
       "#sharetip click": function(element, event) {
         $("#sharetip").hide();
       },
@@ -98,6 +136,8 @@ define('lehu.h5.component.coupondetail', [
             var renderList = can.mustache(template_components_coupondetail);
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
+
+            that.isEnd();
           })
           .fail(function(error) {
             util.tip(error.msg);
