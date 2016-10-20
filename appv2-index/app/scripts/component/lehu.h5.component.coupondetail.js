@@ -26,16 +26,6 @@ define('lehu.h5.component.coupondetail', [
 
       param: {},
 
-      helpers: {
-        hasnodata: function(data, options) {
-          if (!data || data.length == 0) {
-            return options.fn(options.contexts || this);
-          } else {
-            return options.inverse(options.contexts || this);
-          }
-        },
-      },
-
       /**
        * @override
        * @description 初始化方法
@@ -49,31 +39,26 @@ define('lehu.h5.component.coupondetail', [
         $("#sharetip").hide();
       },
 
-      "#share click": function(element, event) {
+      ".bt_share click": function(element, event) {
         var param = can.deparam(window.location.search.substr(1));
-        var version = param.version;
-        if (!version && !util.isMobile.WeChat()) {
-          util.tip("请升级app到最新版本后使用!");
-          return false;
-        }
 
         if (util.isMobile.WeChat()) {
           $("#sharetip").show();
           return false;
         }
 
-        var jsonParams = {
-          'funName': 'share_fun',
-          'params': {
-            'title': "汇银乐虎全球购-领券中心",
-            'type': "1",
-            'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
-            'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
-            'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
-          }
-        };
-        LHHybrid.nativeFun(jsonParams);
+        // var jsonParams = {
+        //   'funName': 'share_fun',
+        //   'params': {
+        //     'title': "汇银乐虎全球购-领券中心",
+        //     'type': "1",
+        //     'video_img': "",
+        //     'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
+        //     'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
+        //     'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
+        //   }
+        // };
+        // LHHybrid.nativeFun(jsonParams);
       },
 
       initData: function() {
@@ -82,25 +67,33 @@ define('lehu.h5.component.coupondetail', [
 
       render: function() {
         var that = this;
+        var param = can.deparam(window.location.search.substr(1));
 
         this.param = {
-          // "userId": this.userId,
-          "status": COUPON_UNGET,
-          "pageindex": "1",
-          "pagesize": "20"
+          "ID": param.id
         };
 
         busizutil.encription(this.param);
 
         var api = new LHAPI({
           // url: this.URL.SERVER_URL + LHConfig.setting.action.ticketData,
-          url: this.URL.SERVER_URL + "ticketAllData.do",
+          url: this.URL.SERVER_URL + "getTicketInfo.do",
           data: this.param,
           method: 'post'
         });
         api.sendRequest()
           .done(function(data) {
-            that.options.data = data.ticketList;
+
+            if (data.ticketList.length > 0) {
+              that.options.data = data.ticketList[0];
+              document.title = "汇银乐虎";
+            }
+
+            if (that.options.data.HQ_TYPE == "1") {
+              that.options.data.TIP = "满" + that.options.data.DEMAND + "使用";
+            } else if (that.options.data.HQ_TYPE == "2") {
+              that.options.data.TIP = "面值" + that.options.data.PRICE;
+            }
 
             var renderList = can.mustache(template_components_coupondetail);
             var html = renderList(that.options, that.helpers);
@@ -108,11 +101,6 @@ define('lehu.h5.component.coupondetail', [
           })
           .fail(function(error) {
             util.tip(error.msg);
-            // var jsonParams = {
-            //   'funName': 'network_error',
-            //   'params': {}
-            // };
-            // LHHybrid.nativeFun(jsonParams);
           });
       },
 
@@ -135,25 +123,28 @@ define('lehu.h5.component.coupondetail', [
           .done(function(data) {
             util.tip(data.msg);
 
-            if (util.isMobile.WeChat()) {
-              setTimeout(function() {
-                window.location.href = "http://www.lehumall.com/ios/huiyin_ios_download/nearShop_-1.html";
-              }, 2000);
-            }
+            $(".bt_get").addClass("end");
+            $(".coupons_main").addClass("end");
+
+            // if (util.isMobile.WeChat()) {
+            //   setTimeout(function() {
+            //     window.location.href = "http://www.lehumall.com/ios/huiyin_ios_download/nearShop_-1.html";
+            //   }, 2000);
+            // }
           })
           .fail(function(error) {
             util.tip(error.msg);
           });
       },
 
-      ".coupons_box_r click": function(element, event) {
+      ".bt_get click": function(element, event) {
         var couponid = element.attr("data-id");
         var param = can.deparam(window.location.search.substr(1));
 
         this.userId = busizutil.getUserId();
         if (!this.userId) {
           if (util.isMobile.WeChat() || param.from == 'share' || !param.appinner) {
-            location.href = "login.html?from=coupon.html";
+            location.href = "login.html?from=" + escape(location.href);
             return false;
           } else {
             var jsonParams = {
@@ -171,25 +162,9 @@ define('lehu.h5.component.coupondetail', [
         this.getCoupon(this.userId, couponid);
       },
 
-      '.back click': function() {
+      '.foot_text click': function() {
 
-        if (util.isMobile.Android() || util.isMobile.iOS()) {
-          var jsonParams = {
-            'funName': 'back_fun',
-            'params': {
-              "backurl": "index"
-            }
-          };
-          LHHybrid.nativeFun(jsonParams);
-          console.log('back_fun');
-        } else {
-          if (history.length == 1) {
-            window.opener = null;
-            window.close();
-          } else {
-            history.go(-1);
-          }
-        }
+        window.location.href = "http://www.lehumall.com/ios/huiyin_ios_download/nearShop_-1.html";
 
       }
     });

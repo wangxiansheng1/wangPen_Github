@@ -38,7 +38,7 @@ define('lehu.h5.component.index', [
 
         this.bindEvent();
 
-        this.shouldShowCoupon();
+        // this.shouldShowCoupon();
       },
 
       shouldShowCoupon: function() {
