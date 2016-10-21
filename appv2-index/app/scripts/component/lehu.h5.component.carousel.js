@@ -358,6 +358,24 @@ define('lehu.h5.component.carousel', [
       shareLog: function() {
         var that = this;
 
+        this.userId = busizutil.getUserId();
+        if (!this.userId) {
+          if (util.isMobile.WeChat() || param.from == 'share' || !param.appinner) {
+            location.href = "login.html?from=" + escape(location.href);
+            return false;
+          } else {
+            var jsonParams = {
+              'funName': 'login',
+              'params': {
+                "backurl": "index"
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+
+            return false;
+          }
+        }
+
         this.param = {
           "userId": this.userId + ""
         }
