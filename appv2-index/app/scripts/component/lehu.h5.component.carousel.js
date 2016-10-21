@@ -335,21 +335,50 @@ define('lehu.h5.component.carousel', [
 
         if (util.isMobile.WeChat()) {
           $("#sharetip").show();
+          this.shareLog();
           return false;
         }
 
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
-            'title': "汇银乐虎全球购-领券中心",
+            'title': "汇银乐虎全球购-幸运大转盘",
             'type': "1",
             'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
+            'shareUrl': 'http://' + window.location.host + "/html5/app/carousel.html?from=share",
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
-            'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
+            'text': "汇银乐虎全球购，幸运大转盘，奖品抽到你手软！"
           }
         };
         LHHybrid.nativeFun(jsonParams);
+
+        this.shareLog();
+      },
+
+      shareLog: function() {
+        var that = this;
+
+        this.param = {
+          "userId": this.userId + ""
+        }
+
+        busizutil.encription(this.param);
+
+        var tempUrl = "http://172.16.201.227:8082/lehu-app-back/addShareHistory.do";
+
+        var api = new LHAPI({
+          // url: this.URL.SERVER_URL + "addShareHistory.do",
+          url: tempUrl,
+          data: this.param,
+          method: 'post'
+        });
+        api.sendRequest()
+          .done(function(data) {
+            debugger;
+          })
+          .fail(function(error) {
+            util.tip(error.msg);
+          });
       }
     });
 
