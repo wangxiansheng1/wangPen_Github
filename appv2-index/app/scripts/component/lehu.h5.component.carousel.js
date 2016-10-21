@@ -65,7 +65,7 @@ define('lehu.h5.component.carousel', [
         lottery.times = 0;
         click = false;
         util.tip(tip);
-        $("#lottery-bt").removeClass("disable");
+        $(".lottery-bt").removeClass("disable");
       } else {
         if (lottery.times < lottery.cycle) {
           lottery.speed -= 10;
@@ -83,7 +83,7 @@ define('lehu.h5.component.carousel', [
         if (lottery.speed < 40) {
           lottery.speed = 40;
         };
-        //console.log(lottery.times+'^^^^^^'+lottery.speed+'^^^^^^^'+lottery.prize);
+
         lottery.timer = setTimeout(function() {
           roll(lotteryIndex, tip);
         }, lottery.speed);
@@ -181,7 +181,6 @@ define('lehu.h5.component.carousel', [
 
             lottery.init('lottery');
             that.scrollZhongjiangjilu();
-            // that.factory("info");
           })
           .fail(function(error) {
             util.tip(error.msg);
@@ -195,14 +194,6 @@ define('lehu.h5.component.carousel', [
           scrollNews($this);
         }, 2000);
 
-        // $this.hover(function() {
-        //   clearInterval(scrollTimer);
-        // }, function() {
-        //   scrollTimer = setInterval(function() {
-        //     scrollNews($this);
-        //   }, 2000);
-        // }).trigger("mouseout");
-
         function scrollNews(obj) {
           var $self = obj.find("ul:first");
           var lineHeight = $self.find("li:first").height();
@@ -214,22 +205,6 @@ define('lehu.h5.component.carousel', [
             }).find("li:first").appendTo($self);
           })
         };
-      },
-
-      factory: function(tag) {
-        var that = this;
-
-        var map = {
-          "info": function() {
-            if (that.options.luckProbabilityList.length < 8) {
-              for (var i = 0; i < 8 - that.options.luckProbabilityList.length; i++)
-                that.options.luckProbabilityList.push({
-                  "PRIZENAME": "谢谢参与",
-                  "type": ""
-                })
-            }
-          }
-        }
       },
 
       getLottery: function() {
@@ -245,7 +220,7 @@ define('lehu.h5.component.carousel', [
         var tempUrl = "http://172.16.201.227:8082/lehu-app-back/singleLuckdraw.do";
 
         var api = new LHAPI({
-          // url: this.URL.SERVER_URL + "singlesDayInit.do",
+          // url: this.URL.SERVER_URL + "singleLuckdraw.do",
           url: tempUrl,
           data: this.param,
           method: 'post'
@@ -296,11 +271,13 @@ define('lehu.h5.component.carousel', [
       },
 
       "#lottery a click": function() {
-        $("#lottery-bt").addClass("disable");
 
-        if ($("#lottery-bt").hasClass("disable")) {
+        if ($(".lottery-bt").hasClass("disable")) {
           return false;
         }
+
+        $(".lottery-bt").addClass("disable");
+
 
         var param = can.deparam(window.location.search.substr(1));
 
