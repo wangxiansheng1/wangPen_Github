@@ -169,8 +169,8 @@ define('lehu.h5.component.carousel', [
             // 奖品
             that.options.luckProbabilityList = data.luckProbabilityList;
 
-            // 是否登录
-            that.options.loginMessage = "";
+            // 剩余次数
+            that.options.lasttimes = data.num;
 
             // luck_id
             that.luckId = that.options.luckProbabilityList[0].LUCK_ID;
@@ -392,7 +392,7 @@ define('lehu.h5.component.carousel', [
         });
         api.sendRequest()
           .done(function(data) {
-            debugger;
+            console.log("分析成功")
           })
           .fail(function(error) {
             util.tip(error.msg);
