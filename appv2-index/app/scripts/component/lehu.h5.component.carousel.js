@@ -151,6 +151,15 @@ define('lehu.h5.component.carousel', [
       },
 
       render: function() {
+
+        this.userId = busizutil.getUserId();
+
+        var params = {};
+
+        if (this.userId) {
+          params.userId = this.userId
+        }
+
         var that = this;
 
         var tempUrl = "http://172.16.201.227:8082/lehu-app-back/singlesDayInit.do";
@@ -158,7 +167,7 @@ define('lehu.h5.component.carousel', [
         var api = new LHAPI({
           // url: this.URL.SERVER_URL + "singlesDayInit.do",
           url: tempUrl,
-          data: {},
+          data: params,
           method: 'post'
         });
         api.sendRequest()
@@ -170,7 +179,9 @@ define('lehu.h5.component.carousel', [
             that.options.luckProbabilityList = data.luckProbabilityList;
 
             // 剩余次数
-            that.options.lasttimes = data.num;
+            that.options.data = new can.Map({
+              "lasttimes": data.num
+            });
 
             // luck_id
             that.luckId = that.options.luckProbabilityList[0].LUCK_ID;
@@ -181,6 +192,14 @@ define('lehu.h5.component.carousel', [
 
             lottery.init('lottery');
             that.scrollZhongjiangjilu();
+
+            if (!that.userId) {
+              $("#nologin").show();
+              $("#alreadylogin").hide();
+            } else {
+              $("#nologin").hide();
+              $("#alreadylogin").show();
+            }
           })
           .fail(function(error) {
             util.tip(error.msg);
@@ -227,6 +246,9 @@ define('lehu.h5.component.carousel', [
         });
         api.sendRequest()
           .done(function(data) {
+
+            //重置抽奖次数
+            that.options.data.attr("lasttimes", data.surplusNum);
 
             var lotteryIndex = -1;
             var lotteryInfo = null;
