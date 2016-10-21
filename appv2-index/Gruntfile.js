@@ -953,12 +953,12 @@ module.exports = function(grunt) {
           insertRequire: ['lehu.h5.page.coupondetail']
         }
       },
-      wheel: {
+      carousel: {
         options: {
           optimize: 'none',
           preserveLicenseComments: false,
           baseUrl: './app/',
-          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.wheel.js',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.carousel.js',
           mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
           paths: {
             'moment': '../bower_components/momentjs/min/moment.min',
@@ -966,9 +966,9 @@ module.exports = function(grunt) {
           },
           include: [
             'lehu.helpers',
-            'lehu.h5.page.wheel'
+            'lehu.h5.page.carousel'
           ],
-          insertRequire: ['lehu.h5.page.wheel']
+          insertRequire: ['lehu.h5.page.carousel']
         }
       },
       activity1111: {

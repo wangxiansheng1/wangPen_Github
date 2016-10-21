@@ -196,13 +196,28 @@ require(['lehu.h5.page.index']);
 
 <style type="text/css">
     /*首页弹出层*/
-.index_popup{ width:100%; height:100%; position:fixed; z-index:999; background:rgba(0,0,0,.7);}
+/*.index_popup{ width:100%; height:100%; position:fixed; z-index:999; background:rgba(0,0,0,.7);}
 .index_popup_box{ width:83%; height:7.86rem; display: block; float:left; margin:1.2rem 8.5% 0; background: url(images/1111/popup_bj.png) no-repeat; background-size:100%; position:relative;}
 .index_popup_box_close{ width:.8rem; height:.8rem;position:absolute; top:0; right:0;}
 .index_popup_box_get{ width:3.2rem; height:1.2rem;position:absolute; bottom:.2rem; left:1.1rem;}
 .index_popup_box_main{ width:4.6rem; height:4.3rem; display:block; float:left; margin:1.9rem .37rem 0;}
 .index_popup_box_main p{ width:100%; height:1.2rem;  display:block; float:left;}
 .index_popup_box_main p em{ font-size:.2rem; color:#ff0000; font-weight:bold;font-family:arial;display:block;float: left;margin: .5rem 0 0 1.2rem;}
+.index_popup_box_main p i{ font-size:.6rem; color:#ff002d; font-weight:bold;margin:0 .1rem;}
+.index_popup_box_main p span{ font-size:.3rem; color:#333333; font-weight:bold; margin-top:-1rem;}*/
+
+/*首页弹出层*/
+.index_popup{ width:100%; height:100%; position:fixed; z-index:999; background:rgba(0,0,0,.7);}
+.index_popup_box{ width:83%; height:9.21rem; display: block; float:left; margin:1.2rem 8.5% 0; background: url(images/1111/popup_bj.png) no-repeat; background-size:100%; position:relative;animation:zoomIn 1s forwards;-webkit-animation:zoomIn 1s forwards;}
+@-webkit-keyframes zoomIn {0%{opacity: 0;-webkit-transform: scale3d(.3, .3, .3);transform: scale3d(.3, .3, .3);}50% {opacity: 1;}}
+@keyframes zoomIn {0% {opacity: 0;-webkit-transform: scale3d(.3, .3, .3);transform: scale3d(.3, .3, .3);}50% {opacity: 1;}}
+.index_popup_box_close{ width:.8rem; height:.8rem;position:absolute; top:0; right:0;}
+.index_popup_box_get{ width:3.2rem; height:1.2rem;position:absolute; bottom:.3rem; left:1.5rem;}
+.index_popup_box_main{ width:75%; height:4.64rem; display:block; float:left; margin:1.9rem 12.5% 0; background: url(images/1111/popup_box.png) no-repeat; background-size:100%;opacity:0;animation:move 1.5s ease forwards 1s;-webkit-animation:move 1.5s ease forwards 1s; }
+@-webkit-keyframes move{0%{height:0;opacity:0;}100%{height:50%;opacity:1;}}
+@keyframes move{0%{height:0;opacity:0;}100%{height:50%;opacity:1;}}
+.index_popup_box_main p{ width:100%; height:1.23rem;  display:block; float:left;}
+.index_popup_box_main p em{ font-size:.2rem; color:#ff0000; font-weight:bold;font-family:arial;display:block;float: left;margin: .5rem 0 0 1rem;}
 .index_popup_box_main p i{ font-size:.6rem; color:#ff002d; font-weight:bold;margin:0 .1rem;}
 .index_popup_box_main p span{ font-size:.3rem; color:#333333; font-weight:bold; margin-top:-1rem;}
 </style>

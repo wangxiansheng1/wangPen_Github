@@ -1,4 +1,4 @@
-define('lehu.h5.page.wheel', [
+define('lehu.h5.page.carousel', [
         'can',
         'zepto',
         'fastclick',
@@ -9,17 +9,17 @@ define('lehu.h5.page.wheel', [
 
         'lehu.h5.header.footer',
 
-        'lehu.h5.component.wheel'
+        'lehu.h5.component.carousel'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
         LHFooter,
-        LHWheel) {
+        LHCarousel) {
         'use strict';
 
         Fastclick.attach(document.body);
 
-        var Wheel = can.Control.extend({
+        var carousel = can.Control.extend({
 
             /**
              * [init 初始化]
@@ -27,10 +27,10 @@ define('lehu.h5.page.wheel', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
-                var wheel = new LHWheel("#content");
+                var wheel = new LHCarousel("#content");
                 new LHFooter();
             }
         });
 
-        new Wheel('#content');
+        new carousel('#content');
     });

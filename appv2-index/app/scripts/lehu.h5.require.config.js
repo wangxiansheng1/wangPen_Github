@@ -54,7 +54,7 @@ requirejs.config({
         "lehu.h5.page.forgetpassword": "scripts/page/lehu.h5.page.forgetpassword",
         "lehu.h5.page.coupon": "scripts/page/lehu.h5.page.coupon",
         "lehu.h5.page.coupondetail": "scripts/page/lehu.h5.page.coupondetail",
-        "lehu.h5.page.wheel": "scripts/page/lehu.h5.page.wheel",
+        "lehu.h5.page.carousel": "scripts/page/lehu.h5.page.carousel",
         "lehu.h5.page.activity1111": "scripts/page/lehu.h5.page.activity1111",
         "lehu.h5.page.activity11112": "scripts/page/lehu.h5.page.activity11112",
 
@@ -71,7 +71,7 @@ requirejs.config({
         "lehu.h5.component.forgetpassword": "scripts/component/lehu.h5.component.forgetpassword",
         "lehu.h5.component.coupon": "scripts/component/lehu.h5.component.coupon",
         "lehu.h5.component.coupondetail": "scripts/component/lehu.h5.component.coupondetail",
-        "lehu.h5.component.wheel": "scripts/component/lehu.h5.component.wheel",
+        "lehu.h5.component.carousel": "scripts/component/lehu.h5.component.carousel",
         "lehu.h5.component.activity1111": "scripts/component/lehu.h5.component.activity1111",
         "lehu.h5.component.activity11112": "scripts/component/lehu.h5.component.activity11112",
 
@@ -94,7 +94,7 @@ requirejs.config({
         "template_components_forgetpassword": "templates/components/lehu.h5.components.forgetpassword.mustache",
         "template_components_coupon": "templates/components/lehu.h5.components.coupon.mustache",
         "template_components_coupondetail": "templates/components/lehu.h5.components.coupondetail.mustache",
-        "template_components_wheel": "templates/components/lehu.h5.components.wheel.mustache",
+        "template_components_carousel": "templates/components/lehu.h5.components.carousel.mustache",
         "template_components_activity1111": "templates/components/lehu.h5.components.activity1111.mustache",
         "template_components_activity11112": "templates/components/lehu.h5.components.activity11112.mustache",
 
