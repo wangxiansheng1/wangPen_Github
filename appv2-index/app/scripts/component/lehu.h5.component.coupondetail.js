@@ -60,7 +60,7 @@ define('lehu.h5.component.coupondetail', [
                 $(".coupons_main").addClass("end");
               } else {
                 $(".bt_get").removeClass("end");
-                $(".coupons_main").addClass("end");
+                $(".coupons_main").removeClass("end");
               }
             })
             .fail(function(error) {

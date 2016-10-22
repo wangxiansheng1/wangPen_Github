@@ -164,7 +164,6 @@ define('lehu.h5.component.carousel', [
 
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + "singlesDayInit.do",
-          url: tempUrl,
           data: params,
           method: 'post'
         });
@@ -236,7 +235,6 @@ define('lehu.h5.component.carousel', [
 
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + "singleLuckdraw.do",
-          url: tempUrl,
           data: this.param,
           method: 'post'
         });
@@ -402,7 +400,6 @@ define('lehu.h5.component.carousel', [
 
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + "addShareHistory.do",
-          url: tempUrl,
           data: this.param,
           method: 'post'
         });
