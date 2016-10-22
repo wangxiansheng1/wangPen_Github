@@ -33,7 +33,24 @@
 
         <div class="list_box_cont">
             {{#each goodsList}}
-            <a href="javascript:;" data-goods-id={{GOODS_ID}} data-goods-no={{GOODS_NO}} data-store-id={{STORE_ID}}><img src="{{imgprefix}}{{IMG}}"><span>{{GOODS_NAME}}</span><i>¥ {{GOODS_PRICE}}</i></a>
+            <a href="javascript:;" data-goods-id={{GOODS_ID}} data-goods-no={{GOODS_NO}} data-store-id={{STORE_ID}}><img src="{{imgprefix}}{{IMG}}"><span>{{GOODS_NAME}}</span>
+
+            <div class="nlist_list_jiage">
+
+                {{^lehu-showDis DISCOUNT_PRICE GOODS_PRICE}}
+                <i>¥ {{GOODS_PRICE}}</i>
+                {{/lehu-showDis}}
+
+                {{#lehu-showDis DISCOUNT_PRICE GOODS_PRICE}}
+                <i>¥ {{DISCOUNT_PRICE}}</i>
+                <span style="margin-top: 7px;color: #aaaaaa;font-size: 0.18rem; width: 30%">
+                    ￥<del style="text-decoration: line-through;">{{GOODS_PRICE}}</del>
+                </span>
+                {{/lehu-showDis}}
+
+            </div>
+
+            </a>
             {{/each}}
         </div>
 
@@ -68,7 +85,7 @@
     }
 
     .list_box_cont a i {
-        width: 100%;
+        width: 1.0rem;
     }
 
     .list_box_cont a img {

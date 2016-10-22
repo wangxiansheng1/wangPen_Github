@@ -174,6 +174,10 @@ define('lehu.h5.component.coupondetail', [
       },
 
       ".bt_get click": function(element, event) {
+        if ($(".bt_get").hasClass("end")) {
+          return false;
+        }
+
         var couponid = element.attr("data-id");
         var param = can.deparam(window.location.search.substr(1));
 

@@ -30,7 +30,15 @@ define('lehu.h5.component.activities', [
           }
 
           return imgprefix + img;
-        }
+        },
+
+        'lehu-showDis': function(discount, price, options) {
+          if (discount < price && discount != 0) {
+            return options.fn(options.contexts || this);
+          } else {
+            return options.inverse(options.contexts || this);
+          }
+        },
       },
 
       init: function() {
@@ -41,7 +49,8 @@ define('lehu.h5.component.activities', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL = 'http://app.lehumall.com/'
+        this.URL.SERVER_URL = 'http://172.16.201.68:8082/'
+          // this.URL.SERVER_URL = 'http://app.lehumall.com/'
       },
 
       render: function() {
@@ -88,6 +97,8 @@ define('lehu.h5.component.activities', [
             that.options.tabWidth = Math.floor(100 / (dataCollection.length));
 
             that.options.data = dataCollection;
+            // test
+            // dataCollection[0].goodsList[0].DISCOUNT_PRICE = "200";
 
             var renderFn = can.view.mustache(template_components_activities);
             var html = renderFn(that.options, that.helpers);
