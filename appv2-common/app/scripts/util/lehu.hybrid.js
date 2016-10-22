@@ -34,6 +34,9 @@ define(
     var getUrl = function() {
       var url = {};
 
+      //南京服务端地址
+      url.SERVER_URL_NJ = "http://172.16.201.68:8082/";
+
       if (LHUtil.isMobile.Android() && window.JSInterface) {
         url.SERVER_URL = JSInterface.getServerUrl();
         url.IMAGE_URL = JSInterface.getImageUrl();
