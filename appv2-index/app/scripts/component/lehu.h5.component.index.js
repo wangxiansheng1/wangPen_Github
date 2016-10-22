@@ -57,12 +57,8 @@ define('lehu.h5.component.index', [
 
         busizutil.encription(this.param);
 
-        // TODO
-        // var tempURL = "http://172.16.201.84:8080/lehu-app-back/";
-
         var api = new LHAPI({
-          url: this.URL.SERVER_URL + "judgeLHTicketReceived.do",
-          // url: tempURL + "judgeLHTicketReceived.do",
+          url: this.URL.SERVER_URL_NJ + "judgeLHTicketReceived.do",
           data: this.param,
           method: 'post'
         });

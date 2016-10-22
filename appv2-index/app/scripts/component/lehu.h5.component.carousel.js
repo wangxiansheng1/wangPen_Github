@@ -162,10 +162,8 @@ define('lehu.h5.component.carousel', [
 
         var that = this;
 
-        var tempUrl = "http://172.16.201.227:8082/lehu-app-back/singlesDayInit.do";
-
         var api = new LHAPI({
-          // url: this.URL.SERVER_URL + "singlesDayInit.do",
+          url: this.URL.SERVER_URL_NJ + "singlesDayInit.do",
           url: tempUrl,
           data: params,
           method: 'post'
@@ -236,10 +234,8 @@ define('lehu.h5.component.carousel', [
 
         busizutil.encription(this.param);
 
-        var tempUrl = "http://172.16.201.227:8082/lehu-app-back/singleLuckdraw.do";
-
         var api = new LHAPI({
-          // url: this.URL.SERVER_URL + "singleLuckdraw.do",
+          url: this.URL.SERVER_URL_NJ + "singleLuckdraw.do",
           url: tempUrl,
           data: this.param,
           method: 'post'
@@ -404,10 +400,8 @@ define('lehu.h5.component.carousel', [
 
         busizutil.encription(this.param);
 
-        var tempUrl = "http://172.16.201.227:8082/lehu-app-back/addShareHistory.do";
-
         var api = new LHAPI({
-          // url: this.URL.SERVER_URL + "addShareHistory.do",
+          url: this.URL.SERVER_URL_NJ + "addShareHistory.do",
           url: tempUrl,
           data: this.param,
           method: 'post'
