@@ -57,6 +57,8 @@ requirejs.config({
         "lehu.h5.page.carousel": "scripts/page/lehu.h5.page.carousel",
         "lehu.h5.page.activity1111": "scripts/page/lehu.h5.page.activity1111",
         "lehu.h5.page.activity11112": "scripts/page/lehu.h5.page.activity11112",
+        "lehu.h5.page.group": "scripts/page/lehu.h5.page.group",
+        "lehu.h5.page.groupdetail": "scripts/page/lehu.h5.page.groupdetail",
 
         "lehu.h5.component.index": "scripts/component/lehu.h5.component.index",
         "lehu.h5.component.list": "scripts/component/lehu.h5.component.list",
@@ -74,6 +76,8 @@ requirejs.config({
         "lehu.h5.component.carousel": "scripts/component/lehu.h5.component.carousel",
         "lehu.h5.component.activity1111": "scripts/component/lehu.h5.component.activity1111",
         "lehu.h5.component.activity11112": "scripts/component/lehu.h5.component.activity11112",
+        "lehu.h5.component.group": "scripts/component/lehu.h5.component.group",
+        "lehu.h5.component.groupdetail": "scripts/component/lehu.h5.component.groupdetail",
 
         "template_page_registerhelp": "templates/page/lehu.h5.page.registerhelp.mustache",
 
@@ -97,6 +101,8 @@ requirejs.config({
         "template_components_carousel": "templates/components/lehu.h5.components.carousel.mustache",
         "template_components_activity1111": "templates/components/lehu.h5.components.activity1111.mustache",
         "template_components_activity11112": "templates/components/lehu.h5.components.activity11112.mustache",
+        "template_components_group": "templates/components/lehu.h5.components.group.mustache",
+        "template_components_groupdetail": "templates/components/lehu.h5.components.groupdetail.mustache",
 
         'lehu.utils.busizutil': 'scripts/utils/lehu.utils.busizutil',
 

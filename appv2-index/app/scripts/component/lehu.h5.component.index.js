@@ -39,7 +39,31 @@ define('lehu.h5.component.index', [
         this.bindEvent();
 
         this.shouldShowCoupon();
+
+        // this.lazyLoadPrice();
       },
+
+      // lazyLoadPrice: function() {
+      //   var priceModules = $('.cms-module-fillprice');
+      //   var getPriceList = function(priceModules) {
+      //     var currentView;
+      //     _.each(priceModules, function(priceModule) {
+      //       currentView = $(priceModule).position().top;
+
+      //       if ($(window).scrollTop() + window.screen.height > currentView) {
+      //         if (!$(priceModule).hasClass("price-loaded")) {
+      //           $(priceModule).addClass("price-loaded");
+      //           new price($(priceModule));
+      //         }
+      //       }
+
+      //     });
+      //   };
+      //   new getPriceList(priceModules);
+      //   $(window).scroll(function() {
+      //     new getPriceList(priceModules);
+      //   });
+      // },
 
       shouldShowCoupon: function() {
         var activeIds = $(".index_popup_box_get").attr("data-acitveIds");
@@ -123,7 +147,7 @@ define('lehu.h5.component.index', [
         // var tempURL = "http://172.16.201.84:8080/lehu-app-back/";
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL + "getMultipleLHTicket.do",
+          url: this.URL.SERVER_URL_NJ + "getMultipleLHTicket.do",
           // url: tempURL + "getMultipleLHTicket.do",
           data: this.param,
           method: 'post'
@@ -552,7 +576,7 @@ define('lehu.h5.component.index', [
         var prommotionLayout = data.prommotionLayout;
 
         for (var k = 0; k < prommotionLayout.length; k++) {
-          html += "<div class='ntuijian'><div class='ntuijian_top'><span><em>" + prommotionLayout[k]['PROMOTION_NAME'] + "</em></span></div>";
+          html += "<div class='ntuijian cms-module-fillprice'><div class='ntuijian_top'><span><em>" + prommotionLayout[k]['PROMOTION_NAME'] + "</em></span></div>";
 
           html += "<div class='ntuijian_ad'><a href='javascript:;' data-id='" + prommotionLayout[k]['ID'] + "'   data-promotion_name='" + prommotionLayout[k]['PROMOTION_NAME'] + "'   data-detail_layout='" + prommotionLayout[k]['DETAIL_LAYOUT'] + "' class='prommotionLayout_ad'><img class='lazyload' data-original=" + that.URL.IMAGE_URL + prommotionLayout[k]['PROMOTION_BANNER'] + "></a></div>";
 

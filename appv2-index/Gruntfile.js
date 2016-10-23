@@ -1006,6 +1006,42 @@ module.exports = function(grunt) {
           ],
           insertRequire: ['lehu.h5.page.activity11112']
         }
+      },
+      group: {
+        options: {
+          optimize: 'none',
+          preserveLicenseComments: false,
+          baseUrl: './app/',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.group.js',
+          mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
+          paths: {
+            'moment': '../bower_components/momentjs/min/moment.min',
+            'fastclick': '../bower_components/fastclick/lib/fastclick'
+          },
+          include: [
+            'lehu.helpers',
+            'lehu.h5.page.group'
+          ],
+          insertRequire: ['lehu.h5.page.group']
+        }
+      },
+      groupdetail: {
+        options: {
+          optimize: 'none',
+          preserveLicenseComments: false,
+          baseUrl: './app/',
+          out: './<%= config.tmp %>/concat/scripts/lehu.h5.page.groupdetail.js',
+          mainConfigFile: "./<%= config.app %>/scripts/lehu.h5.require.config.js",
+          paths: {
+            'moment': '../bower_components/momentjs/min/moment.min',
+            'fastclick': '../bower_components/fastclick/lib/fastclick'
+          },
+          include: [
+            'lehu.helpers',
+            'lehu.h5.page.groupdetail'
+          ],
+          insertRequire: ['lehu.h5.page.groupdetail']
+        }
       }
     }
   });
