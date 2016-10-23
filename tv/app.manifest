@@ -1,10 +1,10 @@
 CACHE MANIFEST
-#v1.1.06
+#v1.2.09
 
 CACHE:
 index.html
 css/global_m.css
-css/layout_2015.css
+css/layout_2015_2.css
 css/plus/swiper.min.css
 js/zepto.min.js
 js/plus/fx.js
@@ -12,13 +12,13 @@ js/plus/swiper.jquery.min.js
 js/base.js
 js/huiyin/common/url.js
 js/native.js
-js/huiyin/http/index.js
+js/huiyin/http/index_2.js
 images/f5.jpg
-images/index_08.jpg
-images/index_10.jpg
-images/index_12.jpg
-images/index_15.jpg
-images/index_16.jpg
+images/index_08_2.jpg
+images/index_10_2.jpg
+images/index_12_2.jpg
+images/index_15_2.jpg
+images/index_16_2.jpg
 images/index_06.jpg
 images/index_07.jpg
 images/bj.jpg
