@@ -86,6 +86,7 @@ requirejs.config({
         "template_header_download": "templates/header/lehu.h5.header.download.mustache",
 
         "template_components_index": "templates/components/lehu.h5.components.index.mustache",
+        "template_components_indexpopup": "templates/components/lehu.h5.components.indexpopup.mustache",
         "template_components_list": "templates/components/lehu.h5.components.list.mustache",
         "template_components_detail": "templates/components/lehu.h5.components.detail.mustache",
         "template_components_comment": "templates/components/lehu.h5.components.comment.mustache",

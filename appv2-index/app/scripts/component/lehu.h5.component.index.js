@@ -36,8 +36,6 @@ define('lehu.h5.component.index', [
           that.sendRequest.apply(that);
         }, 0);
 
-        this.bindEvent();
-
         this.shouldShowCoupon();
 
         // this.lazyLoadPrice();
@@ -66,11 +64,14 @@ define('lehu.h5.component.index', [
       // },
 
       shouldShowCoupon: function() {
+        var that = this;
+
         var activeIds = $(".index_popup_box_get").attr("data-acitveIds");
 
         this.userId = busizutil.getUserId();
         if (!this.userId) {
           $(".index_popup").show();
+          this.bindEvent();
           return false;
         }
 
@@ -93,6 +94,7 @@ define('lehu.h5.component.index', [
               $(".index_popup").hide();
             } else {
               $(".index_popup").show();
+              that.bindEvent();
             }
           })
           .fail(function(error) {
@@ -104,25 +106,40 @@ define('lehu.h5.component.index', [
         var that = this;
 
         $('.index_popup_box_close').on('click', function() {
+          // alert("click");
           $(".index_popup").hide();
         });
 
-        $(".index_popup_box_get").on('click', function() {
+        // $(".index_popup_box_get").on('click', function() {
+        //   that.getCoupon();
+        // });
+
+        $('.index_popup_box_get')[0].onclick = function() {
+          // alert("1");
           that.getCoupon();
-        });
+        };
       },
 
+      // ".index_popup_box_get touch": function(element, event) {
+      //   alert(1);
+      // },
+
       getCoupon: function() {
+        // alert("getcoupon");
         var activeIds = $(".index_popup_box_get").attr("data-acitveIds");
 
         var param = can.deparam(window.location.search.substr(1));
 
         this.userId = busizutil.getUserId();
+        // alert("userid1:" + param.userid);
+        // alert("userid" + this.userId);
         if (!this.userId) {
+          // alert(2);
           if (util.isMobile.WeChat()) {
             location.href = "login.html?from=index.html";
             return false;
           } else {
+            // alert(3);
             var jsonParams = {
               'funName': 'login',
               'params': {
@@ -145,7 +162,7 @@ define('lehu.h5.component.index', [
         busizutil.encription(this.param);
 
         // var tempURL = "http://172.16.201.84:8080/lehu-app-back/";
-
+        // alert("action");
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + "getMultipleLHTicket.do",
           // url: tempURL + "getMultipleLHTicket.do",
@@ -154,10 +171,12 @@ define('lehu.h5.component.index', [
         });
         api.sendRequest()
           .done(function(data) {
+            // alert("success");
             $(".index_popup").hide();
             util.tip(data.msg);
           })
           .fail(function(error) {
+            $(".index_popup").hide();
             util.tip(error.msg);
           });
       },
@@ -216,7 +235,11 @@ define('lehu.h5.component.index', [
             'hotline': hotline
           }
         };
-        LHHybrid.nativeFun(jsonParams);
+
+        try {
+          LHHybrid.nativeFun(jsonParams);
+        } catch (e) {}
+
       },
 
       initData: function() {
@@ -580,7 +603,7 @@ define('lehu.h5.component.index', [
 
           html += "<div class='ntuijian_ad'><a href='javascript:;' data-id='" + prommotionLayout[k]['ID'] + "'   data-promotion_name='" + prommotionLayout[k]['PROMOTION_NAME'] + "'   data-detail_layout='" + prommotionLayout[k]['DETAIL_LAYOUT'] + "' class='prommotionLayout_ad'><img class='lazyload' data-original=" + that.URL.IMAGE_URL + prommotionLayout[k]['PROMOTION_BANNER'] + "></a></div>";
 
-          html += "<div class='ntuijian_main'><div class='swiper-container' style=''><div class='swiper-wrapper'>";
+          html += "<div class='ntuijian_main'><div class='swiper-container' style=''><div class='swiper-wrapper' style='overflow-scrolling:touch'>";
 
           var prommotionLayout_detail = data.prommotionLayout[k]['goodsList'];
 
