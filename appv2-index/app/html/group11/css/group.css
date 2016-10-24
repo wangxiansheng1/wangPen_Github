@@ -1,0 +1,17 @@
+.tabs{ width:100%; height:1rem; display:block; position:fixed; top:0; left:0; background:#444649; z-index:9;}
+.tabs a{ width:33.333%; height:1rem; display:block; float:left; line-height:1rem; font-size:.34rem; color:#ffffff; text-align:center;}
+.tabs a.active{ background:url(../img/pt_nav.png) no-repeat center bottom #ff7e1f; background-size:.4rem;}
+.group_main{ width:100%; height:auto; display:block; float:left; margin:1rem 0 .5rem 0!important;}
+.group_main_box{ width:100%; height:auto; display:block; float:left; margin:.4rem 0 0;}
+.group_main_img{ width:26%; height:auto; display:block; float:left; margin:0 0 0 4%;}
+.group_main_img img{ width:100%; height:auto; display: block; float:left;}
+.group_main_title{ width:60%; height:1.05rem; overflow:hidden; color:#323232; font-size:.26rem; line-height:.35rem; display:block; float:right; margin-right:4%;word-break:break-all;}
+.group_main_msg{ width:64%; height:auto; display:block; float:right; border-bottom:1px solid #e1e1e1; position:relative; padding-bottom:.1rem;}
+.group_main_msg em,.group_main_msg del{ width:100%; height:auto;display:block; float:left;}
+.group_main_msg em{ font-size:.36rem; color:#fe0101; font-weight:bold;}
+.group_main_msg em i{ font-size:.3rem;}
+.group_main_msg del{ font-size:.18rem; color:#909090; text-decoration:line-through; margin:.1rem 0 .15rem;}
+.group_main_msg span{ width:70%; height:auto; display:block; float:left; font-size:.2rem; color:#999999;line-height: .3rem;}
+.group_main_msg span img{ width:.25rem; height:auto; display:block; float:left; margin:0 .1rem 0 0;}
+.group_main_bt{ width:auto; height:.6rem; line-height:.6rem; display:block; float:right; margin:-.38rem .24rem .1rem 0; padding:0 .25rem; border-radius:.1rem; background:#f74e4d; font-size:.22rem; color:#ffffff; position:absolute; bottom:0.05rem; right:0;}
+.group_main_msg span i{ color:#fe0101; margin-left:.15rem;}
