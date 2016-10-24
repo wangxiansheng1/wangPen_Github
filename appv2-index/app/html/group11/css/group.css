@@ -17,8 +17,9 @@
 .group_main_msg span i{ color:#fe0101; margin-left:.15rem;}
 
 .footer{ width:100%; height:1rem; height:auto; display:block; float:left; position:fixed; left:0; bottom:0; background:#ffffff; z-index:9; overflow:hidden;}
-.footer_msg{ width:32%; height:1rem; display:block; float:left; border-top:1px solid #e1e1e1; text-align:center; line-height:1rem; font-size:.24rem; color:#323232;}
-.footer_msg img{ width:.4rem; height:auto; display:inline-block; margin-right:.1rem; margin-top:-.1rem;}
+.footer_msg,.footer_time{ width:32%; height:1rem; display:block; float:left; border-top:1px solid #e1e1e1; text-align:center; line-height:1rem; font-size:.24rem; color:#323232;}
+.footer_msg img,.footer_time img{ width:.4rem; height:auto; display:inline-block; margin-right:.1rem; margin-top:-.1rem;}
+.footer_time img{ width:.3rem;}
 .footer_buy{ width:34%; height:1rem; display:block; float:left;border-top:1px solid #ffc001; background:#ffc001;text-align:center; line-height:.3rem; font-size:.24rem; color:#ffffff;}
 .footer_open{ width:34%; height:1rem; display:block; float:left;border-top:1px solid #f5174b; background:#f5174b;text-align:center; line-height:.3rem; font-size:.24rem; color:#ffffff;}
 .footer_buy i,.footer_open i{ width:100%; height:.3rem; display:block; float:left; margin:.25rem 0 0;}
@@ -35,7 +36,7 @@
 .open_title em{ font-size:.38rem; color:#f5174b;}
 .open_title em i{ font-size:.24rem;}
 .open_title del{ font-size:.24rem; color:#999999; text-decoration:line-through; margin:.3rem 0 0 .2rem;}
-.open_card,.open_main{width:94%; height:auto; display:block; float:left; border-bottom:.2rem solid #f5f5f5; padding:.2rem 3%;}
+.open_card,.open_main,.jion{width:94%; height:auto; display:block; float:left; border-bottom:.2rem solid #f5f5f5; padding:.2rem 3%;}
 .open_head{ width:100%; height:.7rem; line-height:.7rem; display:block; float:left; font-size:.28rem; color:#323232;}
 .open_card_box{ width:100%; height:2.09rem;display:block; float:left;}
 .open_card_box p{border:1px solid #e1e1e1;border-right:0; border-radius:.2rem 0 0 .2rem; width:32%; height:2.09rem; font-size:.27rem; color:#8c8c8c; text-align:center; display:block; float:left;}
@@ -45,7 +46,14 @@
 .open_card_box span{border:1px solid #e1e1e1;border-left:0; border-radius:0 .2rem .2rem 0; width:60%; height:1.39rem; font-size:.27rem; color:#8c8c8c; display:block; float:left; padding:.7rem 0 0 2%; line-height:.47rem;}
 .open_main{ margin-bottom:1.5rem; border-bottom:0;}
 .open_main img{ width:100%; height:auto;}
-
+.jion_box{ width:100%; height:auto; border:1px solid #e1e1e1; border-radius:.5rem; line-height:.9rem; font-size:.24rem; color:#323232; display:block; float:left;}
+.jion_box img{ width:.6rem; height:.6rem; display:block; float:left; margin:.15rem 0 0 .2rem; border-radius:.6rem;}
+.jion_box em{ width:auto; height:.2rem; display:block; float:left; margin:.1rem 0 0 -.2rem; border-radius:.2rem; font-size:.16rem; color:#ffffff; background:#fe4141; border:1px solid #ffffff; line-height:.2rem; padding:.01rem .1rem;}
+.jion_box span{ width:1.1rem; height:.9rem; border-radius:0 .5rem .5rem 0; line-height:.9rem; background:#f5174b; display:block; float:right; padding:0 .2rem; font-size:.24rem; color:#ffffff; }
+.jion_box span i{ background:url(../img/pt_jt.png) no-repeat center center; background-size:100%; width:.16rem; height:.9rem; display:block; float:right;}
+.jion_box p{ width:27%; height:.7rem;  line-height:.3rem; padding:.15rem .2rem 0 0; display:block; float:right; font-size:.24rem; color:#323232;text-align:right;}
+.jion_box p i{ width:100%; display:block; float:left; color:#f5174b;}
+.jion_box b{ width:1.5rem; display:block; float:left; overflow:hidden; height:.9rem;}
 
 
 
