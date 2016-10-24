@@ -603,7 +603,7 @@ define('lehu.h5.component.index', [
 
           html += "<div class='ntuijian_ad'><a href='javascript:;' data-id='" + prommotionLayout[k]['ID'] + "'   data-promotion_name='" + prommotionLayout[k]['PROMOTION_NAME'] + "'   data-detail_layout='" + prommotionLayout[k]['DETAIL_LAYOUT'] + "' class='prommotionLayout_ad'><img class='lazyload' data-original=" + that.URL.IMAGE_URL + prommotionLayout[k]['PROMOTION_BANNER'] + "></a></div>";
 
-          html += "<div class='ntuijian_main'><div class='swiper-container' style=''><div class='swiper-wrapper' style='overflow-scrolling:touch'>";
+          html += "<div class='ntuijian_main'><div class='swiper-container' style='-webkit-overflow-scrolling:touch'><div class='swiper-wrapper' style='-webkit-overflow-scrolling:touch'>";
 
           var prommotionLayout_detail = data.prommotionLayout[k]['goodsList'];
 
