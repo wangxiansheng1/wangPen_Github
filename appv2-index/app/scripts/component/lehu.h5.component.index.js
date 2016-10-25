@@ -37,31 +37,7 @@ define('lehu.h5.component.index', [
         }, 0);
 
         this.shouldShowCoupon();
-
-        // this.lazyLoadPrice();
       },
-
-      // lazyLoadPrice: function() {
-      //   var priceModules = $('.cms-module-fillprice');
-      //   var getPriceList = function(priceModules) {
-      //     var currentView;
-      //     _.each(priceModules, function(priceModule) {
-      //       currentView = $(priceModule).position().top;
-
-      //       if ($(window).scrollTop() + window.screen.height > currentView) {
-      //         if (!$(priceModule).hasClass("price-loaded")) {
-      //           $(priceModule).addClass("price-loaded");
-      //           new price($(priceModule));
-      //         }
-      //       }
-
-      //     });
-      //   };
-      //   new getPriceList(priceModules);
-      //   $(window).scroll(function() {
-      //     new getPriceList(priceModules);
-      //   });
-      // },
 
       shouldShowCoupon: function() {
         var that = this;
@@ -106,40 +82,25 @@ define('lehu.h5.component.index', [
         var that = this;
 
         $('.index_popup_box_close').on('click', function() {
-          // alert("click");
           $(".index_popup").hide();
         });
 
-        // $(".index_popup_box_get").on('click', function() {
-        //   that.getCoupon();
-        // });
-
         $('.index_popup_box_get')[0].onclick = function() {
-          // alert("1");
           that.getCoupon();
         };
       },
 
-      // ".index_popup_box_get touch": function(element, event) {
-      //   alert(1);
-      // },
-
       getCoupon: function() {
-        // alert("getcoupon");
         var activeIds = $(".index_popup_box_get").attr("data-acitveIds");
 
         var param = can.deparam(window.location.search.substr(1));
 
         this.userId = busizutil.getUserId();
-        // alert("userid1:" + param.userid);
-        // alert("userid" + this.userId);
         if (!this.userId) {
-          // alert(2);
           if (util.isMobile.WeChat()) {
             location.href = "login.html?from=index.html";
             return false;
           } else {
-            // alert(3);
             var jsonParams = {
               'funName': 'login',
               'params': {
@@ -161,17 +122,13 @@ define('lehu.h5.component.index', [
 
         busizutil.encription(this.param);
 
-        // var tempURL = "http://172.16.201.84:8080/lehu-app-back/";
-        // alert("action");
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + "getMultipleLHTicket.do",
-          // url: tempURL + "getMultipleLHTicket.do",
           data: this.param,
           method: 'post'
         });
         api.sendRequest()
           .done(function(data) {
-            // alert("success");
             $(".index_popup").hide();
             util.tip(data.msg);
           })
@@ -240,6 +197,12 @@ define('lehu.h5.component.index', [
           LHHybrid.nativeFun(jsonParams);
         } catch (e) {}
 
+        setTimeout(function() {
+          var lazyload = $(".lazyload");
+          _.each(lazyload, function(item) {
+            $(item).attr('src', $(item).attr('data-original'));
+          })
+        }, 100);
       },
 
       initData: function() {
@@ -300,7 +263,7 @@ define('lehu.h5.component.index', [
         var bannerList = data.bannerList;
         for (var k = 0; k < bannerList.length; k++) {
           html += "<li style='height:100%' data-ul-child='child'  class='slide-li swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
-          html += "<img style='width:100%; height: 4.8rem;' class='lazyload' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          html += "<img style='width:100%; height: 4.8rem;' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
           html += "</li>";
         }
         html += "</ul>";
@@ -387,7 +350,7 @@ define('lehu.h5.component.index', [
         localStorage.html02 = fastList_html;
 
         $("#ajax_fastList").empty().append(fastList_html);
-        this.lazyload();
+        // this.lazyload();
       },
 
       ".ntag a click": function(element, event) {
@@ -526,7 +489,7 @@ define('lehu.h5.component.index', [
             }
 
             $("#ajax_seckillList").empty().append(COMMODITY_LIST_html);
-            this.lazyload();
+            // this.lazyload();
           }
 
         } else {
@@ -571,7 +534,7 @@ define('lehu.h5.component.index', [
           localStorage.html03 = html;
 
           $("#ajax_hotRecommendation").empty().append(html);
-          this.lazyload();
+          // this.lazyload();
         }
 
 
@@ -627,7 +590,7 @@ define('lehu.h5.component.index', [
 
         $("#ajax_prommotionLayout").empty().append(html);
 
-        this.lazyload();
+        // this.lazyload();
       },
 
       ".prommotionLayout_ad,.prommotionLayout_detail_more click": function(element, event) {

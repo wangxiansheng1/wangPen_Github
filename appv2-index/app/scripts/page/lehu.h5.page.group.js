@@ -27,7 +27,7 @@ define('lehu.h5.page.group', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
-                var login = new LHLogin("#content");
+                var login = new LHGroup("#content");
                 new LHFooter();
             }
         });
