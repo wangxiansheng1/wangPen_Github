@@ -41,7 +41,8 @@ define('lehu.h5.component.activity', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL = 'http://app.lehumall.com/'
+        // this.URL.SERVER_URL = 'http://app.lehumall.com/'
+        this.URL.SERVER_URL = 'http://172.16.201.68:8082/'
       },
 
       render: function() {

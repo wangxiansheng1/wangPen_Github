@@ -175,6 +175,16 @@ define('lehu.h5.component.carousel', [
             // 奖品
             that.options.luckProbabilityList = data.luckProbabilityList;
 
+            if (that.options.luckProbabilityList.length < 8) {
+              var length = 8 - that.options.luckProbabilityList.length;
+              for (var i = 0; i < length; i++) {
+                that.options.luckProbabilityList.push({
+                  "PRIZENAME": "谢谢参与",
+                  "TYPE": ""
+                })
+              }
+            }
+
             // 剩余次数
             that.options.data = new can.Map({
               "lasttimes": data.num

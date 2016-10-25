@@ -111,7 +111,7 @@ define('lehu.h5.component.coupondetail', [
 
         var api = new LHAPI({
           // url: this.URL.SERVER_URL + LHConfig.setting.action.ticketData,
-          url: this.URL.SERVER_URL + "getTicketInfo.do",
+          url: this.URL.SERVER_URL_NJ + "getTicketInfo.do",
           data: this.param,
           method: 'post'
         });

@@ -27,7 +27,7 @@ define('lehu.h5.page.groupdetail', [
              * @param  {[type]} options 选项
              */
             init: function(element, options) {
-                var group = new LHLogin("#content");
+                var group = new LHGroupdetail("#content");
                 new LHFooter();
             }
         });

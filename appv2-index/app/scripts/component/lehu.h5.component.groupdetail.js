@@ -62,7 +62,7 @@ define('lehu.h5.component.groupdetail', [
 
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + action,
-          data: this.param,
+          data: param,
           method: 'post'
         });
 
