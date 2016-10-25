@@ -1,4 +1,4 @@
-define('lehu.h5.component.groupdetail', [
+define('lehu.h5.component.activityreward', [
     'zepto',
     'can',
     'lehu.h5.business.config',
@@ -11,15 +11,29 @@ define('lehu.h5.component.groupdetail', [
     'imagelazyload',
     'lehu.utils.busizutil',
 
-    'text!template_components_groupdetail'
+    'text!template_components_activityreward'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid, md5, store,
     imagelazyload, busizutil,
-    template_components_groupdetail) {
+    template_components_activityreward) {
     'use strict';
 
     return can.Control.extend({
+
+      helpers: {
+        'lehu-img': function(imgprefix, img) {
+          if (_.isFunction(img)) {
+            img = img();
+          }
+
+          if (img.indexOf("http://") > -1) {
+            return img;
+          }
+
+          return imgprefix + img;
+        }
+      },
 
       param: {},
 
@@ -37,42 +51,23 @@ define('lehu.h5.component.groupdetail', [
       },
 
       render: function() {
-        var param = can.deparam(window.location.search.substr(1));
+        var that = this;
 
-        var map = {
-          "open": "queryActivityInfo.do",
-          "join": "partInActivityInfo.do",
-          "success": "getSuccGroupInfo.do"
-        }
+        this.param = {};
 
-        this.sendRequest(map[param.action], param.activityid, param.id);
-      },
-
-      /**
-       *id（团的id），activityid（活动id）
-       */
-      sendRequest: function(action, activityId, id) {
-        var param = {
-          "activityId": activityId
-        }
-
-        if (id) {
-          param.id = id;
-        }
+        busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + action,
+          url: this.URL.SERVER_URL_NJ + "queryGiftsActivityDetail.do",
           data: this.param,
           method: 'post'
         });
-
         api.sendRequest()
           .done(function(data) {
+            that.options.data = data.giftsActivityDetail;
+            that.options.imgprefix = that.URL.IMAGE_URL;
 
-            that.options.groupinfo = data.activitymap;
-            that.options.userlist = data.userlist;
-
-            var renderList = can.mustache(template_components_groupdetail);
+            var renderList = can.mustache(template_components_activityreward);
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
           })

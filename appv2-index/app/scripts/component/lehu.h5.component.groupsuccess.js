@@ -1,4 +1,4 @@
-define('lehu.h5.component.group', [
+define('lehu.h5.component.groupsuccess', [
     'zepto',
     'can',
     'lehu.h5.business.config',
@@ -11,12 +11,12 @@ define('lehu.h5.component.group', [
     'imagelazyload',
     'lehu.utils.busizutil',
 
-    'text!template_components_group'
+    'text!template_components_groupsuccess'
   ],
 
   function($, can, LHConfig, util, LHAPI, LHHybrid, md5, store,
     imagelazyload, busizutil,
-    template_components_group) {
+    template_components_groupsuccess) {
     'use strict';
 
     return can.Control.extend({
@@ -60,7 +60,7 @@ define('lehu.h5.component.group', [
           .done(function(data) {
             that.options.data.attr("grouplist", data.list);
 
-            var renderList = can.mustache(template_components_group);
+            var renderList = can.mustache(template_components_groupsuccess);
             var html = renderList(that.options.data, that.helpers);
             that.element.html(html);
           })
@@ -68,60 +68,6 @@ define('lehu.h5.component.group', [
             var renderList = can.mustache(template_components_group);
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
-            util.tip(error.msg);
-          })
-      },
-
-      ".tabs a click": function(element, event) {
-        $(".tabs .active").removeClass('active');
-        element.addClass('active');
-        var currentdetail = $(".swiper-slide").eq(element.index());
-        $(currentdetail).show().siblings().hide();
-
-        var action = null;
-        var status = null;
-        if (element.index() == 1) {
-          action = "userActivityPage.do";
-          status = 0;
-
-          if (!this.options.data.attr("joinlist")) {
-            this.sendRequest(action, status);
-          }
-
-        } else if (element.index() == 2) {
-          action = "userActivityPage.do";
-          status = 1;
-
-          if (!this.options.data.attr("successlist")) {
-            this.sendRequest(action, status);
-          }
-        }
-      },
-
-      sendRequest: function(action, status) {
-        var param = {
-          "page": 0,
-          "pageNum": "20",
-          "status": status
-        }
-
-        var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + action,
-          data: this.param,
-          method: 'post'
-        });
-
-        api.sendRequest()
-          .done(function(data) {
-
-            if (status == 0) {
-              that.options.data.attr("joinlist", data.list);
-            } else if (status == 1) {
-              that.options.data.attr("successlist", data.list);
-            }
-
-          })
-          .fail(function(error) {
             util.tip(error.msg);
           })
       },
