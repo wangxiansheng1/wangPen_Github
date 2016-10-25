@@ -10,25 +10,14 @@
     <div class="swiper-wrapper">
 
       <div class="swiper-slide">
-        <!--商品-->
+        {{#each grouplist}}
         <div class="group_main_box">
-            <a href="javascript:;" class="group_main_img"><img src="images/group/pt_listimg.jpg"></a>
-            <a href="javascript:;" class="group_main_title">【澳洲直邮】MEDIHEAL 可莱丝W.H.P美白保湿竹碳面膜10张</a>
-            <div class="group_main_msg">
-                <em><i>¥</i>79.00</em><del>¥99.00</del>
-                <span><img src="images/group/pt_q.png">12人可成团</span>
-                <a href="javascript:;" class="group_main_bt">去开团</a>
-            </div>
-        </div>
-        <!--/商品-->
-        {{#each data.grouplist}}
-        <div class="group_main_box">
-            <a href="javascript:;" class="group_main_img"><img src="{{activityImg}}"></a>
+            <a href="javascript:;" class="group_main_img"><img src="{{lehu-img imgprefix activityImg}}"></a>
             <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
                 <span><img src="images/group/pt_q.png">{{totalNum}}人可成团</span>
-                <a href="javascript:;" class="group_main_bt">去开团</a>
+                <a href="groupdetail.html?action=open&activityid=4" class="group_main_bt">去开团</a>
             </div>
         </div>
         {{/each}}
@@ -47,7 +36,7 @@
         
         {{#each data.joinlist}}
         <div class="group_main_box">
-            <a href="javascript:;" class="group_main_img"><img src="{{activityImg}}"></a>
+            <a href="javascript:;" class="group_main_img"><img src="{{lehu-img imgprefix activityImg}}"></a>
             <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
@@ -73,7 +62,7 @@
 
         {{#each data.successlist}}
           <div class="group_main_box">
-            <a href="javascript:;" class="group_main_img"><img src="{{activityImg}}"></a>
+            <a href="javascript:;" class="group_main_img"><img src="{{lehu-img imgprefix activityImg}}"></a>
             <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>

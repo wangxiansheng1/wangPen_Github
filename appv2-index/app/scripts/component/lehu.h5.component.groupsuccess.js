@@ -34,6 +34,8 @@ define('lehu.h5.component.groupsuccess', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+
+        this.URL.SERVER_URL_NJ = "http://172.16.201.21:8080/"
         this.options.data = new can.Map({
           "grouplist": null,
           "joinlist": null,
@@ -42,32 +44,47 @@ define('lehu.h5.component.groupsuccess', [
       },
 
       render: function() {
+        var param = can.deparam(window.location.search.substr(1));
+
+        var map = {
+          "open": "queryActivityInfo.do",
+          "join": "partInActivityInfo.do",
+          "success": "getSuccGroupInfo.do"
+        }
+        this.sendRequest(map[param.action], param.activityid, param.id);
+      },
+
+      /**
+       *id（团的id），activityid（活动id）
+       */
+      sendRequest: function(action, activityId, id) {
         var that = this;
 
-        this.param = {
-          "page": 0,
-          "pageNum": "20"
-        };
+        var param = {
+          "activityId": activityId
+        }
 
-        busizutil.encription(this.param);
+        if (id) {
+          param.id = id;
+        }
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "groupActivityPage.do",
-          data: this.param,
+          url: this.URL.SERVER_URL_NJ + action,
+          data: param,
           method: 'post'
         });
+
         api.sendRequest()
           .done(function(data) {
-            that.options.data.attr("grouplist", data.list);
+
+            that.options.groupinfo = data.activitymap;
+            that.options.userlist = data.userlist;
 
             var renderList = can.mustache(template_components_groupsuccess);
-            var html = renderList(that.options.data, that.helpers);
+            var html = renderList(that.options, that.helpers);
             that.element.html(html);
           })
           .fail(function(error) {
-            var renderList = can.mustache(template_components_group);
-            var html = renderList(that.options, that.helpers);
-            that.element.html(html);
             util.tip(error.msg);
           })
       },

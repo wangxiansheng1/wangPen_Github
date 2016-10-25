@@ -21,6 +21,24 @@ define('lehu.h5.component.group', [
 
     return can.Control.extend({
 
+      helpers: {
+        'lehu-img': function(imgprefix, img) {
+          if (_.isFunction(imgprefix)) {
+            imgprefix = imgprefix();
+          }
+
+          if (_.isFunction(img)) {
+            img = img();
+          }
+
+          if (img.indexOf("http://") > -1) {
+            return img;
+          }
+
+          return imgprefix + img;
+        }
+      },
+
       param: {},
 
       /**
@@ -37,7 +55,8 @@ define('lehu.h5.component.group', [
         this.options.data = new can.Map({
           "grouplist": null,
           "joinlist": null,
-          "successlist": null
+          "successlist": null,
+          "imgprefix": null
         });
       },
 
@@ -45,20 +64,21 @@ define('lehu.h5.component.group', [
         var that = this;
 
         this.param = {
-          "page": 0,
+          "page": 1,
           "pageNum": "20"
         };
 
-        busizutil.encription(this.param);
+        // busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "groupActivityPage.do",
+          url: this.URL.SERVER_URL_NJ + "groupAcFrontList.do",
           data: this.param,
           method: 'post'
         });
         api.sendRequest()
           .done(function(data) {
             that.options.data.attr("grouplist", data.list);
+            that.options.data.attr("imgprefix", that.URL.IMAGE_URL);
 
             var renderList = can.mustache(template_components_group);
             var html = renderList(that.options.data, that.helpers);
