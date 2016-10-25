@@ -668,7 +668,7 @@ define('lehu.h5.component.index', [
 
             $("#ajax_showList").empty().append(html);
 
-            that.lazyload();
+            // that.lazyload();
 
             $(".nshow_listbox").click(function() {
               var id = $(this).attr("data-id");
