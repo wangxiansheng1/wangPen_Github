@@ -21,6 +21,17 @@
             </div>
         </div>
         <!--/商品-->
+        {{#each data.grouplist}}
+        <div class="group_main_box">
+            <a href="javascript:;" class="group_main_img"><img src="{{activityImg}}"></a>
+            <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
+            <div class="group_main_msg">
+                <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
+                <span><img src="images/group/pt_q.png">{{totalNum}}人可成团</span>
+                <a href="javascript:;" class="group_main_bt">去开团</a>
+            </div>
+        </div>
+        {{/each}}
       </div>
   
       <div class="swiper-slide" style="display: none">
@@ -34,6 +45,19 @@
             </div>
         </div>
         
+        {{#each data.joinlist}}
+        <div class="group_main_box">
+            <a href="javascript:;" class="group_main_img"><img src="{{activityImg}}"></a>
+            <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
+            <div class="group_main_msg">
+                <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
+                <span><img src="images/group/pt_q.png">{{totalNum}}人可成团<i>{{partakeNum}}人已参团</i></span>
+                <a href="javascript:;" class="group_main_bt">参团</a>
+            </div>
+        </div>
+        
+        {{/each}}
+        
       </div>
       
       <div class="swiper-slide" style="display: none">
@@ -46,6 +70,18 @@
                 <a href="javascript:;" class="group_main_bt">拼团详情</a>
             </div>
         </div>
+
+        {{#each data.successlist}}
+          <div class="group_main_box">
+            <a href="javascript:;" class="group_main_img"><img src="{{activityImg}}"></a>
+            <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
+            <div class="group_main_msg">
+                <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
+                <span><img src="images/group/pt_q.png">{{totalNum}}人可成团<i>团购成功</i></span>
+                <a href="javascript:;" class="group_main_bt">拼团详情</a>
+            </div>
+        </div>
+        {{/each}}
         
       </div>
   
