@@ -31,7 +31,7 @@
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
                 <span><img src="images/group/pt_q.png">{{totalNum}}人可成团<i>{{partakeNum}}人已参团</i></span>
-                <a href="javascript:;" class="group_main_bt">参团</a>
+                <a href="groupdetail.html?action=join&activityid={{activityId}}&id={{id}}" class="group_main_bt">参团</a>
             </div>
         </div>
         
@@ -48,7 +48,7 @@
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
                 <span><img src="images/group/pt_q.png">{{totalNum}}人可成团<i>团购成功</i></span>
-                <a href="javascript:;" class="group_main_bt">拼团详情</a>
+                <a href="groupsuccess.html?action=success&activityid={{activityId}}&id={{id}}" class="group_main_bt">拼团详情</a>
             </div>
         </div>
         {{/each}}
