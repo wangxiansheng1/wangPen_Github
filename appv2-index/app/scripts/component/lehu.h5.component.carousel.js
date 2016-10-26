@@ -292,6 +292,7 @@ define('lehu.h5.component.carousel', [
             // util.tip(tip);
           })
           .fail(function(error) {
+            click = true;
             util.tip(error.msg);
           });
       },

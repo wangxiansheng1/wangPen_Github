@@ -12,12 +12,12 @@
       <div class="swiper-slide">
         {{#each grouplist}}
         <div class="group_main_box">
-            <a href="javascript:;" class="group_main_img"><img src="{{lehu-img imgprefix goodsImg}}"></a>
-            <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
+            <a href="groupdetail.html?action=open&activityid={{id}}" class="group_main_img"><img src="{{lehu-img imgprefix goodsImg}}"></a>
+            <a href="groupdetail.html?action=open&activityid={{id}}" class="group_main_title">{{activityTitle}}</a>
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
                 <span><img src="images/group/pt_q.png">{{totalNum}}人可成团</span>
-                <a href="groupdetail.html?action=open&activityid=4" class="group_main_bt">去开团</a>
+                <a href="groupdetail.html?action=open&activityid={{id}}" class="group_main_bt">去开团</a>
             </div>
         </div>
         {{/each}}
@@ -26,8 +26,8 @@
       <div class="swiper-slide" style="display: none">       
         {{#each joinlist}}
         <div class="group_main_box">
-            <a href="javascript:;" class="group_main_img"><img src="{{lehu-img imgprefix goodsImg}}"></a>
-            <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
+            <a href="groupdetail.html?action=join&activityid={{activityId}}&id={{id}}" class="group_main_bt" class="group_main_img"><img src="{{lehu-img imgprefix goodsImg}}"></a>
+            <a href="groupdetail.html?action=join&activityid={{activityId}}&id={{id}}" class="group_main_bt" class="group_main_title">{{activityTitle}}</a>
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
                 <span><img src="images/group/pt_q.png">{{totalNum}}人可成团<i>{{partakeNum}}人已参团</i></span>
@@ -43,8 +43,8 @@
 
         {{#each successlist}}
           <div class="group_main_box">
-            <a href="javascript:;" class="group_main_img"><img src="{{lehu-img imgprefix activityImg}}"></a>
-            <a href="javascript:;" class="group_main_title">{{activityTitle}}</a>
+            <a href="groupsuccess.html?action=success&activityid={{activityId}}&id={{id}}" class="group_main_img"><img src="{{lehu-img imgprefix activityImg}}"></a>
+            <a href="groupsuccess.html?action=success&activityid={{activityId}}&id={{id}}" class="group_main_title">{{activityTitle}}</a>
             <div class="group_main_msg">
                 <em><i>¥</i>{{activityPrice}}</em><del>¥{{goodsPrice}}</del>
                 <span><img src="images/group/pt_q.png">{{totalNum}}人可成团<i>团购成功</i></span>

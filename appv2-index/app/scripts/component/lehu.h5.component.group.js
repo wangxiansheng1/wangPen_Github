@@ -124,7 +124,7 @@ define('lehu.h5.component.group', [
         var that = this;
 
         var param = {
-          "page": 0,
+          "page": 1,
           "pageNum": "20",
           "status": status
         }
