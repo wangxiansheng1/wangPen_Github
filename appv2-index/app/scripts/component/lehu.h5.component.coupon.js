@@ -102,6 +102,15 @@ define('lehu.h5.component.coupon', [
           .done(function(data) {
             that.options.data = data.ticketList;
 
+            _.each(that.options.data, function(item) {
+              if (item.HQ_TYPE == "1") {
+                item.TIP = "满" + item.DEMAND + "减" + item.PRICE;
+              } else if (item.HQ_TYPE == "2") {
+                item.TIP = "面值" + item.PRICE;
+              }
+            })
+
+
             var renderList = can.mustache(template_components_coupon);
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
