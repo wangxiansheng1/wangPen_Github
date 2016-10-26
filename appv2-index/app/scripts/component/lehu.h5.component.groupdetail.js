@@ -94,13 +94,15 @@ define('lehu.h5.component.groupdetail', [
           .done(function(data) {
 
             //团信息
-            that.options.groupinfo = data.activitymap;
+            that.options.activitymap = data.activitymap;
 
             //参团用户
             that.options.userlist = data.userlist;
 
             //优惠券
             that.options.ticketmap = data.ticketmap;
+
+            that.options.groupmap = data.groupmap;
 
             if (that.options.ticketmap) {
               if (that.options.ticketmap.HQ_TYPE == "1") {
@@ -129,10 +131,10 @@ define('lehu.h5.component.groupdetail', [
           'funName': 'OriginSourcePay',
           'params': {
             "storeName": 1,
-            "goodsID": 1,
-            "goodName": 1,
-            "goodsPrice": 1,
-            "goodsImg": 1
+            "goodsID": this.options.groupinfo.GOODS_ID,
+            "goodName": this.options.groupinfo.TITLE,
+            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
+            "goodsImg": this.options.groupinfo.IMG
           }
         };
         LHHybrid.nativeFun(jsonParams);
@@ -143,10 +145,10 @@ define('lehu.h5.component.groupdetail', [
           'funName': 'GroupBuyPay',
           'params': {
             "storeName": 1,
-            "goodsID": 1,
-            "goodName": 1,
-            "goodsPrice": 1,
-            "goodsImg": 1
+            "goodsID": this.options.groupinfo.GOODS_ID,
+            "goodName": this.options.groupinfo.TITLE,
+            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
+            "goodsImg": this.options.groupinfo.IMG
           }
         };
         LHHybrid.nativeFun(jsonParams);
@@ -157,10 +159,10 @@ define('lehu.h5.component.groupdetail', [
           'funName': 'GroupBuyPay',
           'params': {
             "storeName": 1,
-            "goodsID": 1,
-            "goodName": 1,
-            "goodsPrice": 1,
-            "goodsImg": 1
+            "goodsID": this.options.groupinfo.GOODS_ID,
+            "goodName": this.options.groupinfo.TITLE,
+            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
+            "goodsImg": this.options.groupinfo.IMG
           }
         };
         LHHybrid.nativeFun(jsonParams);

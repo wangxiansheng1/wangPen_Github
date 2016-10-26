@@ -1,17 +1,17 @@
 <!--顶部-->
 <div class="open_top">
   <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="{{lehu-img imgprefix groupinfo.IMG}}" /></div>
+      <div class="swiper-slide"><img src="{{lehu-img imgprefix activitymap.IMG}}" /></div>
   </div>
   <div class="pagination"></div>  
 </div>
 
 <!--标题价格-->
 <div class="open_title">
-    <p>{{groupinfo.TITLE}}</p>
+    <p>{{activitymap.TITLE}}</p>
     <span>总重5.8-6.9斤，吃前详细看一看，松软香甜</span>
-    <em><i>￥</i>{{groupinfo.ACTIVEPRICE}}</em>
-    <del>{{groupinfo.GOODSPRICE}}</del>
+    <em><i>￥</i>{{activitymap.ACTIVEPRICE}}</em>
+    <del>{{activitymap.GOODSPRICE}}</del>
 </div>
 
 <!--券-->
@@ -30,9 +30,9 @@
 {{^if isopen}}
 <div class="jion">
   <div class="jion_box">
-    <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">过耳洞的风</b>
+    <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">{{groupmap.USER_NAME}}</b>
     <span>去参团<i></i></span>
-    <p>{{groupinfo.TOTALNUM}}人团<i>已有100人参加</i></p>
+    <p>{{activitymap.TOTALNUM}}人团<i>已有{{groupmap.PARTAKE_NUM}}人参加</i></p>
   </div>
 </div>
 {{/if}}
@@ -40,15 +40,15 @@
 <!--详情-->
 <div class="open_main">
   <div class="open_head">图文详情</div>
-  {{{groupinfo.CONTENT}}}
+  {{{activitymap.CONTENT}}}
 </div>
 
 <!--底部-->   
 {{#if isopen}}
 <div class="footer">
-  <div class="footer_msg"><img src="images/group/pt_qz.png">{{groupinfo.TOTALNUM}}人可成团</div>
-  <div class="footer_buy"><i>￥{{groupinfo.GOODSPRICE}}</i>原价买</div>
-  <div class="footer_open" id="opengroup"><i>￥{{groupinfo.ACTIVEPRICE}}</i>开团</div>
+  <div class="footer_msg"><img src="images/group/pt_qz.png">{{activitymap.TOTALNUM}}人可成团</div>
+  <div class="footer_buy"><i>￥{{activitymap.GOODSPRICE}}</i>原价买</div>
+  <div class="footer_open" id="opengroup"><i>￥{{activitymap.ACTIVEPRICE}}</i>开团</div>
 </div>
 {{/if}}
 
@@ -56,8 +56,8 @@
 {{^if isopen}}
 <div class="footer">
   <div class="footer_time"><img src="images/group/pt_js.png">08:12:35</div>
-  <div class="footer_buy"><i>￥89.90</i>原价买</div>
-  <div class="footer_open" id="joingroup"><i>￥88.00</i>参团</div>
+  <div class="footer_buy"><i>￥{{activitymap.GOODSPRICE}}</i>原价买</div>
+  <div class="footer_open" id="joingroup"><i>￥{{activitymap.ACTIVEPRICE}}</i>参团</div>
 </div>  
 {{/if}}
 
