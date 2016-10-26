@@ -31,6 +31,14 @@ define('lehu.h5.component.activity', [
           }
 
           return imgprefix + img;
+        },
+
+        'lehu-showDis': function(discount, price, options) {
+          if (discount() < price() && discount() != 0) {
+            return options.fn(options.contexts || this);
+          } else {
+            return options.inverse(options.contexts || this);
+          }
         }
       },
 

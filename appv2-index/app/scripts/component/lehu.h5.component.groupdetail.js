@@ -21,6 +21,24 @@ define('lehu.h5.component.groupdetail', [
 
     return can.Control.extend({
 
+      helpers: {
+        'lehu-img': function(imgprefix, img) {
+          if (_.isFunction(imgprefix)) {
+            imgprefix = imgprefix();
+          }
+
+          if (_.isFunction(img)) {
+            img = img();
+          }
+
+          if (img.indexOf("http://") > -1) {
+            return img;
+          }
+
+          return imgprefix + img;
+        }
+      },
+
       param: {},
 
       /**
@@ -34,10 +52,12 @@ define('lehu.h5.component.groupdetail', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL_NJ = "http://172.16.201.21:8080/"
       },
 
       render: function() {
         var param = can.deparam(window.location.search.substr(1));
+        this.action = param.action;
 
         var map = {
           "open": "queryActivityInfo.do",
@@ -45,13 +65,15 @@ define('lehu.h5.component.groupdetail', [
           "success": "getSuccGroupInfo.do"
         }
 
-        this.sendRequest(map[param.action], param.activityid, param.id);
+        this.sendRequest(map[this.action], param.activityid, param.id);
       },
 
       /**
        *id（团的id），activityid（活动id）
        */
       sendRequest: function(action, activityId, id) {
+        var that = this;
+
         var param = {
           "activityId": activityId
         }
@@ -59,6 +81,8 @@ define('lehu.h5.component.groupdetail', [
         if (id) {
           param.id = id;
         }
+
+        busizutil.encription(param);
 
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + action,
@@ -69,8 +93,27 @@ define('lehu.h5.component.groupdetail', [
         api.sendRequest()
           .done(function(data) {
 
+            //团信息
             that.options.groupinfo = data.activitymap;
+
+            //参团用户
             that.options.userlist = data.userlist;
+
+            //优惠券
+            that.options.ticketmap = data.ticketmap;
+
+            if (that.options.ticketmap) {
+              if (that.options.ticketmap.HQ_TYPE == "1") {
+                that.options.ticketmap.TIP = "满" + that.options.ticketmap.DEMAND + "使用";
+              } else if (that.options.ticketmap.HQ_TYPE == "2") {
+                that.options.ticketmap.TIP = "面值" + that.options.ticketmap.PRICE;
+              }
+            }
+
+            that.options.isopen = (typeof that.action != 'undefined' && that.action == 'open');
+
+            //图片前缀
+            that.options.imgprefix = that.URL.IMAGE_URL;
 
             var renderList = can.mustache(template_components_groupdetail);
             var html = renderList(that.options, that.helpers);
@@ -79,6 +122,48 @@ define('lehu.h5.component.groupdetail', [
           .fail(function(error) {
             util.tip(error.msg);
           })
+      },
+
+      ".footer_buy click": function() {
+        var jsonParams = {
+          'funName': 'OriginSourcePay',
+          'params': {
+            "storeName": 1,
+            "goodsID": 1,
+            "goodName": 1,
+            "goodsPrice": 1,
+            "goodsImg": 1
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      '#opengroup click': function() {
+        var jsonParams = {
+          'funName': 'GroupBuyPay',
+          'params': {
+            "storeName": 1,
+            "goodsID": 1,
+            "goodName": 1,
+            "goodsPrice": 1,
+            "goodsImg": 1
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      "#joingroup click": function() {
+        var jsonParams = {
+          'funName': 'GroupBuyPay',
+          'params': {
+            "storeName": 1,
+            "goodsID": 1,
+            "goodName": 1,
+            "goodsPrice": 1,
+            "goodsImg": 1
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       '.back click': function() {

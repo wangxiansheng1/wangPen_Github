@@ -1,8 +1,7 @@
 <!--顶部-->
 <div class="open_top">
   <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="{{groupinfo.IMG}}" /></div>
-      <div class="swiper-slide"><img src="images/group/pt_postimg.jpg" /></div>
+      <div class="swiper-slide"><img src="{{lehu-img imgprefix groupinfo.IMG}}" /></div>
   </div>
   <div class="pagination"></div>  
 </div>
@@ -16,23 +15,27 @@
 </div>
 
 <!--券-->
+{{#if isopen}}
 <div class="open_card">
     <div class="open_head">团长福利</div>
     <div class="open_card_box">
-        <p><em><i>¥</i>10</em>满199元可用</p>
+        <p><em><i>¥</i>{{ticketmap.PRICE}}</em>{{ticketmap.TIP}}</p>
         <img src="images/group/pt_q.jpg">
-        <span>使用范围：全场通用<br/>2016.8.20至2016.9.10</span>
+        <span>使用范围：全场通用<br/>{{ticketmap.START_TIME}}至{{ticketmap.END_TIME}}</span>
     </div>
 </div>
+{{/if}}
 
 <!--券-->
+{{^if isopen}}
 <div class="jion">
   <div class="jion_box">
     <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">过耳洞的风</b>
     <span>去参团<i></i></span>
-    <p>12人团<i>已有100人参加</i></p>
+    <p>{{groupinfo.TOTALNUM}}人团<i>已有100人参加</i></p>
   </div>
 </div>
+{{/if}}
 
 <!--详情-->
 <div class="open_main">
@@ -41,15 +44,20 @@
 </div>
 
 <!--底部-->   
+{{#if isopen}}
 <div class="footer">
-  <div class="footer_msg"><img src="images/group/pt_qz.png">12人可成团</div>
-  <div class="footer_buy"><i>￥89.90</i>原价买</div>
-  <div class="footer_open"><i>￥88.00</i>开团</div>
+  <div class="footer_msg"><img src="images/group/pt_qz.png">{{groupinfo.TOTALNUM}}人可成团</div>
+  <div class="footer_buy"><i>￥{{groupinfo.GOODSPRICE}}</i>原价买</div>
+  <div class="footer_open" id="opengroup"><i>￥{{groupinfo.ACTIVEPRICE}}</i>开团</div>
 </div>
+{{/if}}
 
 <!--底部-->
+{{^if isopen}}
 <div class="footer">
   <div class="footer_time"><img src="images/group/pt_js.png">08:12:35</div>
   <div class="footer_buy"><i>￥89.90</i>原价买</div>
-  <div class="footer_open"><i>￥88.00</i>参团</div>
+  <div class="footer_open" id="joingroup"><i>￥88.00</i>参团</div>
 </div>  
+{{/if}}
+

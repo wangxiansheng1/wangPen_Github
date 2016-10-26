@@ -21,7 +21,27 @@
 
     <div class="list_box_cont">
         {{#each list.pageBean}}
-        <a href="javascript:;" data-goods-id={{ID}} data-goods-no={{GOODS_NO}} data-store-id={{STORE_ID}}><img src="{{imgprefix}}{{COMMODITY_IMAGE_PATH}}"><span>{{COMMODITY_NAME}}</span><i>¥ {{PRICE}}</i></a>
+        <a href="javascript:;" data-goods-id={{ID}} data-goods-no={{GOODS_NO}} data-store-id={{STORE_ID}}>
+
+        <img src="{{imgprefix}}{{COMMODITY_IMAGE_PATH}}">
+        <span>{{COMMODITY_NAME}}</span>
+
+        <div class="nlist_list_jiage">
+
+                {{^lehu-showDis DISCOUNT_PRICE PRICE}}
+                <i>¥ {{PRICE}}</i>
+                {{/lehu-showDis}}
+
+                {{#lehu-showDis DISCOUNT_PRICE PRICE}}
+                <i>¥ {{DISCOUNT_PRICE}}</i>
+                <span style="margin-top: 7px;color: #aaaaaa;font-size: 0.24rem; width: 30%">
+                    ￥<del style="text-decoration: line-through;">{{PRICE}}</del>
+                </span>
+                {{/lehu-showDis}}
+
+            </div>
+
+        </a>
         {{/each}}
     </div>
 
@@ -59,10 +79,6 @@
 
     .list_box_cont a img {
         margin: 0rem;
-    }
-
-    .list_box_cont a i {
-        width: 100%;
     }
 
     .list_box_cont a img {
