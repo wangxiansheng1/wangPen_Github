@@ -52,6 +52,8 @@ define('lehu.h5.component.group', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL_NJ = 'http://172.16.201.80:8080/lehu-app-back/';
+
         this.options.data = new can.Map({
           "grouplist": null,
           "joinlist": null,
@@ -101,7 +103,7 @@ define('lehu.h5.component.group', [
         var action = null;
         var status = null;
         if (element.index() == 1) {
-          action = "userActivityPage.do";
+          action = "queryUserAcPageList.do";
           status = 0;
 
           if (!this.options.data.attr("joinlist")) {
@@ -109,7 +111,7 @@ define('lehu.h5.component.group', [
           }
 
         } else if (element.index() == 2) {
-          action = "userActivityPage.do";
+          action = "queryUserAcPageList.do";
           status = 1;
 
           if (!this.options.data.attr("successlist")) {
@@ -119,6 +121,8 @@ define('lehu.h5.component.group', [
       },
 
       sendRequest: function(action, status) {
+        var that = this;
+
         var param = {
           "page": 0,
           "pageNum": "20",
@@ -127,7 +131,7 @@ define('lehu.h5.component.group', [
 
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + action,
-          data: this.param,
+          data: param,
           method: 'post'
         });
 

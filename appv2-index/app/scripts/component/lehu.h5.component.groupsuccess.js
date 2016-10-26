@@ -96,6 +96,20 @@ define('lehu.h5.component.groupsuccess', [
           })
       },
 
+      ".footer_buy click": function() {
+        var jsonParams = {
+          'funName': 'OriginSourcePay',
+          'params': {
+            "storeName": 1,
+            "goodsID": this.options.groupinfo.GOODS_ID,
+            "goodName": this.options.groupinfo.TITLE,
+            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
+            "goodsImg": this.options.groupinfo.IMG
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
       '.back click': function() {
         // temp begin  
         // 在app外部使用 点击返回 如果没有可返回则关闭掉页面
