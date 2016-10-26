@@ -293,6 +293,7 @@ define('lehu.h5.component.carousel', [
           })
           .fail(function(error) {
             click = true;
+            $(".lottery-bt").removeClass("disable");
             util.tip(error.msg);
           });
       },
