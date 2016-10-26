@@ -122,7 +122,7 @@ define('lehu.h5.component.groupdetail', [
             that.element.html(html);
 
             setInterval(function() {
-              that.countDown($(".countdown"), that.options.groupmap.END_TIMESTAMP);
+              that.countDown($("#countdown"), that.options.groupmap.END_TIMESTAMP);
             }, 1000);
           })
           .fail(function(error) {
@@ -132,13 +132,29 @@ define('lehu.h5.component.groupdetail', [
 
       countDown: function(timeNode, endDate) {
         var leftTime = endDate - new Date().getTime();
+        var result = "";
 
-        var leftsecond = parseInt(leftTime / 1000);
-        var day1 = Math.floor(leftTime / (60 * 60 * 24));
-        var hour = Math.floor((leftTime - day1 * 24 * 60 * 60) / 3600);
-        var minute = Math.floor((leftTime - day1 * 24 * 60 * 60 - hour * 3600) / 60);
-        var second = Math.floor(leftTime - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
-        timeNode.html(day1 + "天" + hour + "小时" + minute + "分" + second + "秒");
+        if (leftTime > 0) {
+          var leftsecond = parseInt(leftTime / 1000);
+          var day1 = Math.floor(leftsecond / (60 * 60 * 24));
+          var hour = Math.floor((leftsecond - day1 * 24 * 60 * 60) / 3600);
+          var minute = Math.floor((leftsecond - day1 * 24 * 60 * 60 - hour * 3600) / 60);
+          var second = Math.floor(leftsecond - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
+          if (day1 > 0) {
+            result += day1 + "天";
+          }
+          if (hour > 0) {
+            result += hour + "小时";
+          }
+          if (minute > 0) {
+            result += minute + "分";
+          }
+          result += second + "秒";
+        } else {
+          result = "已结束"
+        }
+
+        timeNode.html(result);
       },
 
       ".footer_buy click": function() {
