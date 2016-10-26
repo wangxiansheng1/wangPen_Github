@@ -7,14 +7,14 @@
 <!--标题价格-->
 <div class="open_ok_title">
   <img src="images/group/pt_listimg.jpg">
-    <p>【澳洲直邮】MEDIHEAL 可莱丝W.H.P美白保湿竹碳面膜10张</p>
-    <em><i>￥</i>88.00</em><del>¥ 89.00</del>
+    <p>{{activitymap.TITLE}}</p>
+    <em><i>￥</i>{{activitymap.ACTIVEPRICE}}</em><del>¥ {{activitymap.GOODSPRICE}}</del>
     <b></b>
 </div>
 
 <!--人数-->
 <div class="open_ok_mun">
-  <p><img src="images/group/pt_qz.png">12人参团</p>
+  <p><img src="images/group/pt_qz.png">{{activitymap.TOTALNUM}}人参团</p>
     <span>
         <img src="images/group/pt_tx.png"><em>团长</em>
         <img src="images/group/pt_tx.png"><em class="other">沙发</em>
@@ -30,24 +30,21 @@
 
     <div class="open_ok_listbox open_ok_listfirst">
       <i></i>
-      <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">过耳洞的风</b><time>2016.10.10 22:22:22</time>开团
+      <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">{{firstUser.USER_NAME}}</b><time>{{firstUser.CREATE_TIME}}</time>开团
     </div>
     <div class="open_ok_list_xian"></div>
     
     <div class="open_ok_listbox open_ok_listtwo">
-      <img src="images/group/pt_tx.png"><em class="other">沙发</em><b class="ell">过耳洞的风</b><time>2016.10.10 22:22:22</time>参团
-    </div>
-    <div class="open_ok_list_xian"></div>
-    
-    <div class="open_ok_listbox">
-      <img src="images/group/pt_tx.png"><b class="ell left">过耳洞的风</b><time>2016.10.10 22:22:22</time>参团
-    </div>
-    <div class="open_ok_list_xian"></div>
-    
-    <div class="open_ok_listbox">
-      <img src="images/group/pt_tx.png"><b class="ell left">过耳洞的风</b><time>2016.10.10 22:22:22</time>参团
+      <img src="images/group/pt_tx.png"><em class="other">沙发</em><b class="ell">{{secondUser.USER_NAME}}</b><time>{{secondUser.CREATE_TIME}}</time>参团
     </div>
 
+    {{#each lastUser}}
+    <div class="open_ok_list_xian"></div>
+    
+    <div class="open_ok_listbox">
+      <img src="images/group/pt_tx.png"><b class="ell left">{{USER_NAME}}</b><time>{{CREATE_TIME}}</time>参团
+    </div>
+    {{/each}}
 </div>
 
 <!--底部-->   

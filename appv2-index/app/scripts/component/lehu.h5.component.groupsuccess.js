@@ -77,8 +77,15 @@ define('lehu.h5.component.groupsuccess', [
         api.sendRequest()
           .done(function(data) {
 
-            that.options.groupinfo = data.activitymap;
+            that.options.activitymap = data.activitymap;
             that.options.userlist = data.userlist;
+
+            that.options.firstUser = that.options.userlist[0];
+            that.options.secondUser = that.options.userlist[1];
+
+            if (that.options.userlist.length > 2) {
+              that.options.lastUser = that.options.userlist.slice(2);
+            }
 
             var renderList = can.mustache(template_components_groupsuccess);
             var html = renderList(that.options, that.helpers);

@@ -120,10 +120,25 @@ define('lehu.h5.component.groupdetail', [
             var renderList = can.mustache(template_components_groupdetail);
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
+
+            setInterval(function() {
+              that.countDown($(".countdown"), that.options.groupmap.END_TIMESTAMP);
+            }, 1000);
           })
           .fail(function(error) {
             util.tip(error.msg);
           })
+      },
+
+      countDown: function(timeNode, endDate) {
+        var leftTime = endDate - new Date().getTime();
+
+        var leftsecond = parseInt(leftTime / 1000);
+        var day1 = Math.floor(leftTime / (60 * 60 * 24));
+        var hour = Math.floor((leftTime - day1 * 24 * 60 * 60) / 3600);
+        var minute = Math.floor((leftTime - day1 * 24 * 60 * 60 - hour * 3600) / 60);
+        var second = Math.floor(leftTime - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
+        timeNode.html(day1 + "天" + hour + "小时" + minute + "分" + second + "秒");
       },
 
       ".footer_buy click": function() {
