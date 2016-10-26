@@ -32,11 +32,14 @@
       <i></i>
       <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">{{firstUser.USER_NAME}}</b><time>{{firstUser.CREATE_TIME}}</time>开团
     </div>
+
+    {{#secondUser}}
     <div class="open_ok_list_xian"></div>
     
     <div class="open_ok_listbox open_ok_listtwo">
       <img src="images/group/pt_tx.png"><em class="other">沙发</em><b class="ell">{{secondUser.USER_NAME}}</b><time>{{secondUser.CREATE_TIME}}</time>参团
     </div>
+    {{/secondUser}}
 
     {{#each lastUser}}
     <div class="open_ok_list_xian"></div>
