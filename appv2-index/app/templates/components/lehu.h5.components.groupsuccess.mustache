@@ -1,4 +1,15 @@
 <!--顶部-->
+<header class="header">
+    <a href="javascript:;" class="back"></a>
+    <h2>拼团</h2>
+    <a href="javascript:;" class="rightlink" id="share"><img src="images/coupon/share.png" style="
+    height: 0.33rem;
+    width: 0.33rem;
+    padding: 0.275rem 0rem 0.275rem 0.275rem;
+"></a>
+</header>
+
+<!--顶部-->
 <div class="open_ok_top">
   <img src="images/group/pt_topok.png">拼团成功
     <p>我们会尽快为您发货，请耐心等待！</p>
@@ -53,5 +64,27 @@
 <!--底部-->   
 <div class="footer footer_ok">
   <div class="footer_time"><img src="images/group/pt_qz.png">拼团成功</div>
-    <div class="footer_buy"><i>￥89.90</i>原价买</div>
+    <div class="footer_buy"><i>￥{{activitymap.GOODSPRICE}}</i>原价买</div>
 </div>  
+
+<div id="sharetip" style="width: 100%; height: 100%; position: fixed; top: 0px; display:none">
+  <div class="mask" style="background: rgba(0,0,0,0.6);height: 100%;"></div>
+  <div class="share" style="z-index:999"></div>
+</div>
+
+<style type="text/css">
+.share {
+    background: url(images/coupon/sharetip.png) no-repeat;
+    background-size: 270px;
+    width: 270px;
+    height: 308px;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    position: fixed;
+    z-index: 1111;
+}
+.mask{
+    background:rgba(0,0,0,0.8)
+}
+</style>

@@ -21,7 +21,7 @@
 <!--标题价格-->
 <div class="open_title">
     <p>{{activitymap.TITLE}}</p>
-    <span>总重5.8-6.9斤，吃前详细看一看，松软香甜</span>
+    <span>{{activitymap.SUBNAME}}</span>
     <em><i>￥</i>{{activitymap.ACTIVEPRICE}}</em>
     <del>{{activitymap.GOODSPRICE}}</del>
 </div>
@@ -72,4 +72,27 @@
   <div class="footer_open" id="joingroup"><i>￥{{activitymap.ACTIVEPRICE}}</i>参团</div>
 </div>  
 {{/if}}
+
+
+<div id="sharetip" style="width: 100%; height: 100%; position: fixed; top: 0px; display:none">
+  <div class="mask" style="background: rgba(0,0,0,0.6);height: 100%;"></div>
+  <div class="share" style="z-index:999"></div>
+</div>
+
+<style type="text/css">
+.share {
+    background: url(images/coupon/sharetip.png) no-repeat;
+    background-size: 270px;
+    width: 270px;
+    height: 308px;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    position: fixed;
+    z-index: 1111;
+}
+.mask{
+    background:rgba(0,0,0,0.8)
+}
+</style>
 
