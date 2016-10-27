@@ -208,11 +208,14 @@ define('lehu.h5.component.groupdetail', [
         var jsonParams = {
           'funName': 'GroupBuyPay',
           'params': {
+            "storeId": this.options.activitymap.STORE_ID,
             "storeName": 1,
             "goodsID": this.options.activitymap.GOODS_ID,
             "goodName": this.options.activitymap.TITLE,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG
+            "goodsImg": this.options.activitymap.IMG,
+            "activityId": this.options.activitymap.ID, //活动id
+            "userActivityId": 0 //团id
           }
         };
         LHHybrid.nativeFun(jsonParams);
@@ -227,11 +230,14 @@ define('lehu.h5.component.groupdetail', [
         var jsonParams = {
           'funName': 'GroupBuyPay',
           'params': {
+            "storeId": this.options.activitymap.STORE_ID,
             "storeName": 1,
             "goodsID": this.options.activitymap.GOODS_ID,
             "goodName": this.options.activitymap.TITLE,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG
+            "goodsImg": this.options.activitymap.IMG,
+            "activityId": this.options.activitymap.ID, //活动id
+            "userActivityId": 0 //团id
           }
         };
         LHHybrid.nativeFun(jsonParams);
