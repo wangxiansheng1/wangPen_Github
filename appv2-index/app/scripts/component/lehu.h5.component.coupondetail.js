@@ -97,6 +97,7 @@ define('lehu.h5.component.coupondetail', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL = 'http://172.16.201.68:8082/';
       },
 
       render: function() {
@@ -111,7 +112,7 @@ define('lehu.h5.component.coupondetail', [
 
         var api = new LHAPI({
           // url: this.URL.SERVER_URL + LHConfig.setting.action.ticketData,
-          url: this.URL.SERVER_URL_NJ + "getTicketInfo.do",
+          url: this.URL.SERVER_URL + "getTicketInfo.do",
           data: this.param,
           method: 'post'
         });
@@ -126,7 +127,7 @@ define('lehu.h5.component.coupondetail', [
 
             if (data.ticketList.length > 0) {
               that.options.data = data.ticketList[0];
-              document.title = "汇银乐虎";
+              document.title = "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！";
             }
 
             if (that.options.data.HQ_TYPE == "1") {
