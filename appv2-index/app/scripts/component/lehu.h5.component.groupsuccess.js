@@ -34,8 +34,6 @@ define('lehu.h5.component.groupsuccess', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-
-        this.URL.SERVER_URL_NJ = "http://172.16.201.21:8080/"
         this.options.data = new can.Map({
           "grouplist": null,
           "joinlist": null,
@@ -101,10 +99,10 @@ define('lehu.h5.component.groupsuccess', [
           'funName': 'OriginSourcePay',
           'params': {
             "storeName": 1,
-            "goodsID": this.options.groupinfo.GOODS_ID,
-            "goodName": this.options.groupinfo.TITLE,
-            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
-            "goodsImg": this.options.groupinfo.IMG
+            "goodsID": this.options.activitymap.GOODS_ID,
+            "goodName": this.options.activitymap.TITLE,
+            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
+            "goodsImg": this.options.activitymap.IMG
           }
         };
         LHHybrid.nativeFun(jsonParams);

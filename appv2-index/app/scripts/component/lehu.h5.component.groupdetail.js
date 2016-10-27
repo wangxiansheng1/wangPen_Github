@@ -52,7 +52,6 @@ define('lehu.h5.component.groupdetail', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL_NJ = "http://172.16.201.21:8080/"
       },
 
       render: function() {
@@ -121,9 +120,11 @@ define('lehu.h5.component.groupdetail', [
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
 
-            setInterval(function() {
-              that.countDown($("#countdown"), that.options.groupmap.END_TIMESTAMP);
-            }, 1000);
+            if (that.options.groupmap) {
+              setInterval(function() {
+                that.countDown($("#countdown"), that.options.groupmap.END_TIMESTAMP);
+              }, 1000);
+            }
           })
           .fail(function(error) {
             util.tip(error.msg);
@@ -157,43 +158,80 @@ define('lehu.h5.component.groupdetail', [
         timeNode.html(result);
       },
 
+      isLogin: function() {
+        this.userId = busizutil.getUserId();
+        if (!this.userId) {
+          if (util.isMobile.WeChat() || param.from == 'share' || !param.appinner) {
+            location.href = "login.html?from=" + escape(location.href);
+            return false;
+          } else {
+            var jsonParams = {
+              'funName': 'login',
+              'params': {
+                "backurl": "index"
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+
+            return false;
+          }
+        }
+
+        return true;
+      },
+
       ".footer_buy click": function() {
+
+        if (!this.isLogin()) {
+          return false;
+        }
+
         var jsonParams = {
           'funName': 'OriginSourcePay',
           'params': {
             "storeName": 1,
-            "goodsID": this.options.groupinfo.GOODS_ID,
-            "goodName": this.options.groupinfo.TITLE,
-            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
-            "goodsImg": this.options.groupinfo.IMG
+            "goodsID": this.options.activitymap.GOODS_ID,
+            "goodName": this.options.activitymap.TITLE,
+            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
+            "goodsImg": this.options.activitymap.IMG
           }
         };
         LHHybrid.nativeFun(jsonParams);
       },
 
       '#opengroup click': function() {
+
+        if (!this.isLogin()) {
+          return false;
+        }
+
         var jsonParams = {
           'funName': 'GroupBuyPay',
           'params': {
             "storeName": 1,
-            "goodsID": this.options.groupinfo.GOODS_ID,
-            "goodName": this.options.groupinfo.TITLE,
-            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
-            "goodsImg": this.options.groupinfo.IMG
+            "goodsID": this.options.activitymap.GOODS_ID,
+            "goodName": this.options.activitymap.TITLE,
+            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
+            "goodsImg": this.options.activitymap.IMG
           }
         };
         LHHybrid.nativeFun(jsonParams);
       },
 
       "#joingroup click": function() {
+
+        if (!this.isLogin()) {
+          return false;
+        }
+
         var jsonParams = {
           'funName': 'GroupBuyPay',
           'params': {
             "storeName": 1,
-            "goodsID": this.options.groupinfo.GOODS_ID,
-            "goodName": this.options.groupinfo.TITLE,
-            "goodsPrice": this.options.groupinfo.ACTIVEPRICE,
-            "goodsImg": this.options.groupinfo.IMG
+            "goodsID": this.options.activitymap.GOODS_ID,
+            "goodName": this.options.activitymap.TITLE,
+            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
+            "goodsImg": this.options.activitymap.IMG
           }
         };
         LHHybrid.nativeFun(jsonParams);
