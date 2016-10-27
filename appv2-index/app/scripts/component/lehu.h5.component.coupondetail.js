@@ -118,6 +118,12 @@ define('lehu.h5.component.coupondetail', [
         api.sendRequest()
           .done(function(data) {
 
+            if (data.ticketList.length == 0) {
+              util.tip("客官来晚喽，券已经被领完啦");
+              $("#content").empty();
+              return false;
+            }
+
             if (data.ticketList.length > 0) {
               that.options.data = data.ticketList[0];
               document.title = "汇银乐虎";
@@ -161,6 +167,7 @@ define('lehu.h5.component.coupondetail', [
 
             $(".bt_get").addClass("end");
             $(".coupons_main").addClass("end");
+            $(".bt_get").removeClass("disabled");
 
             // if (util.isMobile.WeChat()) {
             //   setTimeout(function() {
@@ -170,13 +177,16 @@ define('lehu.h5.component.coupondetail', [
           })
           .fail(function(error) {
             util.tip(error.msg);
+            $(".bt_get").removeClass("disabled");
           });
       },
 
       ".bt_get click": function(element, event) {
-        if ($(".bt_get").hasClass("end")) {
+        if ($(".bt_get").hasClass("end") || $(".bt_get").hasClass("disabled")) {
           return false;
         }
+
+        $(".bt_get").addClass("disabled");
 
         var couponid = element.attr("data-id");
         var param = can.deparam(window.location.search.substr(1));

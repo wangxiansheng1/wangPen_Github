@@ -142,6 +142,7 @@ define('lehu.h5.component.coupon', [
         });
         api.sendRequest()
           .done(function(data) {
+            $(".coupons_box_r").removeClass("disabled");
             util.tip(data.msg);
 
             if (util.isMobile.WeChat()) {
@@ -151,6 +152,7 @@ define('lehu.h5.component.coupon', [
             }
           })
           .fail(function(error) {
+            $(".coupons_box_r").removeClass("disabled");
             util.tip(error.msg);
           });
       },
@@ -176,6 +178,12 @@ define('lehu.h5.component.coupon', [
             return false;
           }
         }
+
+        if ($(".coupons_box_r").hasClass("disabled")) {
+          return false;
+        }
+
+        $(".coupons_box_r").addClass("disabled");
 
         this.getCoupon(this.userId, couponid);
       },

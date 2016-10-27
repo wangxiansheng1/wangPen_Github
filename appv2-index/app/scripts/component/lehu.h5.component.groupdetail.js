@@ -159,9 +159,11 @@ define('lehu.h5.component.groupdetail', [
       },
 
       isLogin: function() {
+        var param = can.deparam(window.location.search.substr(1));
+
         this.userId = busizutil.getUserId();
         if (!this.userId) {
-          if (util.isMobile.WeChat() || param.from == 'share' || !param.appinner) {
+          if (util.isMobile.WeChat() || param.from == 'share') {
             location.href = "login.html?from=" + escape(location.href);
             return false;
           } else {
@@ -205,11 +207,27 @@ define('lehu.h5.component.groupdetail', [
           return false;
         }
 
+        // // test
+        // var GOODS_ID = "86773";
+        // var GOODS_NO = "77770058";
+        // var STORE_ID = "1031";
+
+        // var jsonParams = {
+        //   'funName': 'good_detail_fun',
+        //   'params': {
+        //     'STORE_ID': STORE_ID,
+        //     'GOODS_NO': GOODS_NO,
+        //     'GOODS_ID': GOODS_ID
+        //   }
+        // };
+        // LHHybrid.nativeFun(jsonParams);
+        // // test
+
         var jsonParams = {
-          'funName': 'GroupBuyPay',
+          'funName': 'group_buy_pay',
           'params': {
             "storeId": this.options.activitymap.STORE_ID,
-            "storeName": 1,
+            "storeName": "1",
             "goodsID": this.options.activitymap.GOODS_ID,
             "goodName": this.options.activitymap.TITLE,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
@@ -228,10 +246,10 @@ define('lehu.h5.component.groupdetail', [
         }
 
         var jsonParams = {
-          'funName': 'GroupBuyPay',
+          'funName': 'group_buy_pay',
           'params': {
             "storeId": this.options.activitymap.STORE_ID,
-            "storeName": 1,
+            "storeName": "1",
             "goodsID": this.options.activitymap.GOODS_ID,
             "goodName": this.options.activitymap.TITLE,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
