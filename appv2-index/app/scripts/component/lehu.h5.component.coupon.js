@@ -78,7 +78,7 @@ define('lehu.h5.component.coupon', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL = 'http://172.16.201.68:8082/'
+        // this.URL.SERVER_URL = 'http://172.16.201.68:8082/'
       },
 
       render: function() {
