@@ -36,7 +36,7 @@ define('lehu.h5.component.index', [
           that.sendRequest.apply(that);
         }, 0);
 
-        this.shouldShowCoupon();
+        // this.shouldShowCoupon();
       },
 
       shouldShowCoupon: function() {
@@ -394,9 +394,8 @@ define('lehu.h5.component.index', [
 
       tagMap: {
         "17": {
-          type: "h5",
-          name: "大转盘",
-          url: 'carousel.html'
+          type: "native",
+          name: "摇一摇"
         },
         "22": {
           type: "native",
