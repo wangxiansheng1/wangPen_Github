@@ -48,6 +48,7 @@ define('lehu.h5.component.activityreward', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
       },
 
       render: function() {
@@ -74,6 +75,82 @@ define('lehu.h5.component.activityreward', [
           .fail(function(error) {
             util.tip(error.msg);
           })
+      },
+
+      //去商品详情
+      ".fullgive_list img click": function(element, event) {
+        var goodsid = element.attr("data-goodsid");
+        var goodsno = element.attr("data-goodsno");
+        var storeid = element.attr("data-storeid");
+
+        this.toDetail(storeid, goodsno, goodsid);
+      },
+
+      isLogin: function() {
+        var param = can.deparam(window.location.search.substr(1));
+
+        this.userId = busizutil.getUserId();
+        if (!this.userId) {
+          if (util.isMobile.WeChat() || param.from == 'share') {
+            location.href = "login.html?from=" + escape(location.href);
+            return false;
+          } else {
+            var jsonParams = {
+              'funName': 'login',
+              'params': {
+                "backurl": "index"
+              }
+            };
+            LHHybrid.nativeFun(jsonParams);
+
+            return false;
+          }
+        }
+
+        return true;
+      },
+
+      //加入购物车
+      ".fullgive_list i click": function(element, event) {
+
+        if (!this.isLogin()) {
+          return false;
+        }
+        var goodsid = element.attr("data-goodsid");
+        var goodsno = element.attr("data-goodsno");
+        var storeid = element.attr("data-storeid");
+
+        var jsonParams = {
+          'funName': 'addto_shopping_cart',
+          'params': {
+            'select_good_Num': 1,
+            'goods_no': goodsno,
+            'goods_id': goodsid
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      //去购物车
+      "#gotocart click": function(element, event) {
+
+        var jsonParams = {
+          'funName': 'goto_shopping_cart',
+          'params': {}
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
+        var jsonParams = {
+          'funName': 'good_detail_fun',
+          'params': {
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
       },
 
       '.back click': function() {

@@ -1,3 +1,10 @@
+<!--顶部-->
+<header class="header" style="z-index: 9; position: fixed;">
+    <a href="javascript:;" class="back"></a>
+    <h2>满赠</h2>
+    <a href="javascript:;" class="rightlink" id="gotocart">查看购物车</a>
+</header>
+
 <!--顶部-->   
 <img src="images/activityreward/mz_topimg.jpg" class="fullgive_ad">
 <div class="fullgive_msg">
@@ -8,6 +15,6 @@
 <!--列表-->
 <ul class="fullgive_list">
     {{#each data}}
-        <li><a href="javascript:;"><img src="{{lehu-img imgprefix IMG}}"><span>{{GOODS_NAME}}</span><em>乐虎价：¥ {{GOODS_PRICE}}</em><i></i></a></li>
+        <li><a href="javascript:;"><img data-goodsid="{{GOODS_ID}}" data-goodsno="{{GOODS_NO}}" data-storeid="{{STORE_ID}}" src="{{lehu-img imgprefix IMG}}"><span>{{GOODS_NAME}}</span><em>乐虎价：¥ {{GOODS_PRICE}}</em><i data-goodsid="{{GOODS_ID}}" data-goodsno="{{GOODS_NO}}" data-storeid="{{STORE_ID}}"></i></a></li>
     {{/each}}
 </ul>

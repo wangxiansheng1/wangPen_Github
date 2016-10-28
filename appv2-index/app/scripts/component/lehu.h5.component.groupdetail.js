@@ -56,6 +56,7 @@ define('lehu.h5.component.groupdetail', [
       },
 
       render: function() {
+        var that = this;
         var param = can.deparam(window.location.search.substr(1));
         this.action = param.action;
 
@@ -63,6 +64,28 @@ define('lehu.h5.component.groupdetail', [
           "open": "queryActivityInfo.do",
           "join": "partInActivityInfo.do",
           "success": "getSuccGroupInfo.do"
+        }
+
+        //根据orderCode获得团id
+        if (param.ordercode) {
+          var api = new LHAPI({
+            url: this.URL.SERVER_URL_NJ + "getUserAc.do",
+            data: {
+              "orderCode": param.ordercode
+            },
+            method: 'post'
+          });
+
+          api.sendRequest()
+            .done(function(data) {
+
+              that.options.userActivityId = data.userActivityId;
+              //直接走渲染
+              that.sendRequest(map[that.action], that.options.activityid, param.id);
+
+              return false;
+            })
+          return false;
         }
 
         this.sendRequest(map[this.action], param.activityid, param.id);
@@ -220,6 +243,38 @@ define('lehu.h5.component.groupdetail', [
           }
         };
         LHHybrid.nativeFun(jsonParams);
+      },
+
+      opencheck: function() {
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL_NJ + "openActivity.do",
+          data: {
+            "userId": this.userId,
+            "activityId": this.options.activitymap.ID
+          },
+          method: 'post'
+        });
+
+        api.sendRequest()
+          .done(function(data) {
+
+          });
+      },
+
+      joincheck: function() {
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL_NJ + "partakeActivity.do",
+          data: {
+            "userId": this.userId,
+            "userActivityId": ""
+          },
+          method: 'post'
+        });
+
+        api.sendRequest()
+          .done(function(data) {
+
+          });
       },
 
       "#joingroup click": function() {
