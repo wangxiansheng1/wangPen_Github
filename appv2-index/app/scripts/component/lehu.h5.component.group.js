@@ -52,7 +52,7 @@ define('lehu.h5.component.group', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        // this.URL.SERVER_URL_NJ = 'http://172.16.201.80:8080/lehu-app-back/';
+        this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
 
         this.options.data = new can.Map({
           "grouplist": null,

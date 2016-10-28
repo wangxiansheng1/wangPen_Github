@@ -34,6 +34,7 @@ define('lehu.h5.component.groupsuccess', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
         this.options.data = new can.Map({
           "grouplist": null,
           "joinlist": null,

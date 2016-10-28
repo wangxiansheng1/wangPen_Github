@@ -52,6 +52,7 @@ define('lehu.h5.component.groupdetail', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
+        this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
       },
 
       render: function() {
@@ -182,23 +183,21 @@ define('lehu.h5.component.groupdetail', [
         return true;
       },
 
-      ".footer_buy click": function() {
-
-        if (!this.isLogin()) {
-          return false;
-        }
-
+      toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
         var jsonParams = {
-          'funName': 'OriginSourcePay',
+          'funName': 'good_detail_fun',
           'params': {
-            "storeName": 1,
-            "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
-            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
           }
         };
         LHHybrid.nativeFun(jsonParams);
+      },
+
+      ".footer_buy click": function() {
+
+        this.toDetail(this.options.activitymap.STORE_ID, 2, this.options.activitymap.GOODS_ID);
       },
 
       '#opengroup click': function() {
@@ -207,27 +206,11 @@ define('lehu.h5.component.groupdetail', [
           return false;
         }
 
-        // // test
-        // var GOODS_ID = "86773";
-        // var GOODS_NO = "77770058";
-        // var STORE_ID = "1031";
-
-        // var jsonParams = {
-        //   'funName': 'good_detail_fun',
-        //   'params': {
-        //     'STORE_ID': STORE_ID,
-        //     'GOODS_NO': GOODS_NO,
-        //     'GOODS_ID': GOODS_ID
-        //   }
-        // };
-        // LHHybrid.nativeFun(jsonParams);
-        // // test
-
         var jsonParams = {
           'funName': 'group_buy_pay',
           'params': {
             "storeId": this.options.activitymap.STORE_ID,
-            "storeName": "1",
+            "storeName": this.options.activitymap.STORE_NAME,
             "goodsID": this.options.activitymap.GOODS_ID,
             "goodName": this.options.activitymap.TITLE,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
