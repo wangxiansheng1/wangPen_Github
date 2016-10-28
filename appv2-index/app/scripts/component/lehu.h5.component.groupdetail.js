@@ -219,7 +219,6 @@ define('lehu.h5.component.groupdetail', [
       },
 
       ".footer_buy click": function() {
-
         this.toDetail(this.options.activitymap.STORE_ID, 2, this.options.activitymap.GOODS_ID);
       },
 
@@ -258,6 +257,9 @@ define('lehu.h5.component.groupdetail', [
         api.sendRequest()
           .done(function(data) {
 
+          })
+          .fail(function(error) {
+
           });
       },
 
@@ -273,6 +275,9 @@ define('lehu.h5.component.groupdetail', [
 
         api.sendRequest()
           .done(function(data) {
+
+          })
+          .fail(function(error) {
 
           });
       },
@@ -319,12 +324,12 @@ define('lehu.h5.component.groupdetail', [
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
-            'title': "汇银乐虎全球购-领券中心",
+            'title': "汇银乐虎全球购-拼团",
             'type': "1",
             'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
+            'shareUrl': 'http://' + window.location.host + "/html5/app/group.html?from=share",
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
-            'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
+            'text': "汇银乐虎全球购，拼团！"
           }
         };
         LHHybrid.nativeFun(jsonParams);

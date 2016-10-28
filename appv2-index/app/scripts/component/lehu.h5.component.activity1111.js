@@ -75,7 +75,7 @@ define('lehu.h5.component.activity1111', [
         location.href = "activities.html?ids=961|959|960|958&pageIndex=1&flag=2";
       },
 
-      '#meirongproduct1 click': function(element, event) {
+      '#meizhuang1 click': function(element, event) {
         //TODO
         var GOODS_ID = "86773";
         var GOODS_NO = "77770058";
@@ -84,7 +84,23 @@ define('lehu.h5.component.activity1111', [
         this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
       },
 
-      '#meirongproduct2 click': function(element, event) {
+      '#meizhuang2 click': function(element, event) {
+        var GOODS_ID = "86356";
+        var GOODS_NO = "666666666";
+        var STORE_ID = "1031";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+      '#meizhuang1 click': function(element, event) {
+        //TODO
+        var GOODS_ID = "86773";
+        var GOODS_NO = "77770058";
+        var STORE_ID = "1031";
+
+        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      },
+
+      '#meizhuang2 click': function(element, event) {
         var GOODS_ID = "86356";
         var GOODS_NO = "666666666";
         var STORE_ID = "1031";
