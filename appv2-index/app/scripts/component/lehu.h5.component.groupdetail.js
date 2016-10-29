@@ -53,6 +53,7 @@ define('lehu.h5.component.groupdetail', [
       initData: function() {
         this.URL = LHHybrid.getUrl();
         this.URL.SERVER_URL_NJ = 'http://172.16.201.21:8080/';
+        this.URL.SERVER_URL_NJ_TEMP = 'http://172.16.201.222:7070/';
       },
 
       render: function() {
@@ -256,7 +257,7 @@ define('lehu.h5.component.groupdetail', [
       opencheck: function(successCallback) {
         var that = this;
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "openActivity.do",
+          url: this.URL.SERVER_URL_NJ_TEMP + "openActivity.do",
           data: {
             "userId": this.userId,
             "activityId": this.options.activitymap.ID
@@ -277,7 +278,7 @@ define('lehu.h5.component.groupdetail', [
         var that = this;
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "partakeActivity.do",
+          url: this.URL.SERVER_URL_NJ_TEMP + "partakeActivity.do",
           data: {
             "userId": this.userId,
             "userActivityId": this.options.userActivityId //userActivityId团id
