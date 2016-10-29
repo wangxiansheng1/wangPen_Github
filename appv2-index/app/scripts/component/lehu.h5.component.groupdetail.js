@@ -108,7 +108,7 @@ define('lehu.h5.component.groupdetail', [
         }
 
         if (id) {
-          param.id = id;
+          param.id = id + "";
         }
 
         busizutil.encription(param);
