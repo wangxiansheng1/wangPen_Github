@@ -125,6 +125,11 @@ define('lehu.h5.component.groupdetail', [
             //团信息
             that.options.activitymap = data.activitymap;
 
+            if (that.action == 'join') {
+              var tempMap = _.pick(data.groupmap, 'ACTIVEPRICE', 'CONTENT', 'GOODSPRICE', 'GOODS_ID', 'GOODS_IMG', 'GOODS_NAME', 'GOODS_NO', 'IMG', 'STORE_ID', 'STORE_NAME', 'TITLE', 'TOTALNUM');
+              _.extend(that.options.activitymap, tempMap);
+            }
+
             //参团用户
             that.options.userlist = data.userlist;
 

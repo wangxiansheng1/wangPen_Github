@@ -59,7 +59,7 @@ define('lehu.h5.component.index', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "judgeLHTicketReceived.do",
+          url: this.URL.SERVER_URL + "judgeLHTicketReceived.do",
           data: this.param,
           method: 'post'
         });
@@ -123,7 +123,7 @@ define('lehu.h5.component.index', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "getMultipleLHTicket.do",
+          url: this.URL.SERVER_URL + "getMultipleLHTicket.do",
           data: this.param,
           method: 'post'
         });
