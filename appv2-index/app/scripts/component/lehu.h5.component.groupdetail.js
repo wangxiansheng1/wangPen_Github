@@ -246,7 +246,7 @@ define('lehu.h5.component.groupdetail', [
             "goodsID": this.options.activitymap.GOODS_ID,
             "goodName": this.options.activitymap.GOODS_NAME,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG,
+            "goodsImg": this.options.activitymap.GOODS_IMG,
             "activityId": this.options.activitymap.ID, //活动id
             "userActivityId": 0 //团id
           }
@@ -304,7 +304,7 @@ define('lehu.h5.component.groupdetail', [
             "goodsID": this.options.activitymap.GOODS_ID,
             "goodName": this.options.activitymap.GOODS_NAME,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG,
+            "goodsImg": this.options.activitymap.GOODS_IMG,
             "activityId": this.options.activitymap.ID, //活动id
             "userActivityId": this.options.userActivityId //团id
           }
