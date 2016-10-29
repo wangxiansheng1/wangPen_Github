@@ -52,7 +52,7 @@ define('lehu.h5.component.groupdetail', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
+        this.URL.SERVER_URL_NJ = 'http://172.16.201.21:8080/';
       },
 
       render: function() {
@@ -219,7 +219,7 @@ define('lehu.h5.component.groupdetail', [
       },
 
       ".footer_buy click": function() {
-        this.toDetail(this.options.activitymap.STORE_ID, 2, this.options.activitymap.GOODS_ID);
+        this.toDetail(this.options.activitymap.STORE_ID, this.options.activitymap.GOODS_NO, this.options.activitymap.GOODS_ID);
       },
 
       '#opengroup click': function() {
@@ -234,7 +234,7 @@ define('lehu.h5.component.groupdetail', [
             "storeId": this.options.activitymap.STORE_ID,
             "storeName": this.options.activitymap.STORE_NAME,
             "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
+            "goodName": this.options.activitymap.GOODS_NAME,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
             "goodsImg": this.options.activitymap.IMG,
             "activityId": this.options.activitymap.ID, //活动id
@@ -292,9 +292,9 @@ define('lehu.h5.component.groupdetail', [
           'funName': 'group_buy_pay',
           'params': {
             "storeId": this.options.activitymap.STORE_ID,
-            "storeName": "1",
+            "storeName": this.options.activitymap.STORE_NAME,
             "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
+            "goodName": this.options.activitymap.GOODS_NAME,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
             "goodsImg": this.options.activitymap.IMG,
             "activityId": this.options.activitymap.ID, //活动id
