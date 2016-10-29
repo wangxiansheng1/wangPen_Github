@@ -75,7 +75,7 @@ define('lehu.h5.component.groupdetail', [
         //根据orderCode获得团id
         if (param.ordercode) {
           var api = new LHAPI({
-            url: this.URL.SERVER_URL_NJ + "getUserAc.do",
+            url: this.URL.SERVER_URL_NJ_TEMP + "getUserAc.do",
             data: {
               "orderCode": param.ordercode
             },
@@ -87,7 +87,7 @@ define('lehu.h5.component.groupdetail', [
 
               that.options.userActivityId = data.userActivityId;
               //直接走渲染
-              that.sendRequest(map[that.action], that.options.activityid, param.id);
+              that.sendRequest(map[that.action], param.activityid, that.options.userActivityId);
 
               return false;
             })
