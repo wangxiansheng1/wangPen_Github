@@ -155,10 +155,19 @@ define('lehu.h5.component.groupdetail', [
                 that.countDown($("#countdown"), that.options.groupmap.END_TIMESTAMP);
               }, 1000);
             }
+
+            that.doOther();
           })
           .fail(function(error) {
             util.tip(error.msg);
           })
+      },
+
+      doOther: function() {
+        var param = can.deparam(window.location.search.substr(1));
+        if (param.share) {
+          this.toShare();
+        }
       },
 
       countDown: function(timeNode, endDate) {
@@ -326,6 +335,10 @@ define('lehu.h5.component.groupdetail', [
       },
 
       "#share click": function(element, event) {
+        this.toShare();
+      },
+
+      toShare: function() {
         var param = can.deparam(window.location.search.substr(1));
         var version = param.version;
         if (!version && !util.isMobile.WeChat()) {
