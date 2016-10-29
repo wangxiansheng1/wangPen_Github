@@ -60,6 +60,11 @@ define('lehu.h5.component.groupdetail', [
         var param = can.deparam(window.location.search.substr(1));
         this.action = param.action;
 
+        //团id
+        if (param.id) {
+          this.options.userActivityId = param.id;
+        }
+
         var map = {
           "open": "queryActivityInfo.do",
           "join": "partInActivityInfo.do",
@@ -228,6 +233,10 @@ define('lehu.h5.component.groupdetail', [
           return false;
         }
 
+        this.opencheck(this.opengroup);
+      },
+
+      opengroup: function() {
         var jsonParams = {
           'funName': 'group_buy_pay',
           'params': {
@@ -244,7 +253,8 @@ define('lehu.h5.component.groupdetail', [
         LHHybrid.nativeFun(jsonParams);
       },
 
-      opencheck: function() {
+      opencheck: function(successCallback) {
+        var that = this;
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + "openActivity.do",
           data: {
@@ -256,38 +266,35 @@ define('lehu.h5.component.groupdetail', [
 
         api.sendRequest()
           .done(function(data) {
-
+            successCallback.apply(that);
           })
           .fail(function(error) {
-
+            util.tip(error.msg);
           });
       },
 
-      joincheck: function() {
+      joincheck: function(successCallback) {
+        var that = this;
+
         var api = new LHAPI({
           url: this.URL.SERVER_URL_NJ + "partakeActivity.do",
           data: {
             "userId": this.userId,
-            "userActivityId": ""
+            "userActivityId": this.options.userActivityId //userActivityId团id
           },
           method: 'post'
         });
 
         api.sendRequest()
           .done(function(data) {
-
+            successCallback.apply(that);
           })
           .fail(function(error) {
-
+            util.tip(error.msg);
           });
       },
 
-      "#joingroup click": function() {
-
-        if (!this.isLogin()) {
-          return false;
-        }
-
+      joingroup: function() {
         var jsonParams = {
           'funName': 'group_buy_pay',
           'params': {
@@ -298,10 +305,19 @@ define('lehu.h5.component.groupdetail', [
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
             "goodsImg": this.options.activitymap.IMG,
             "activityId": this.options.activitymap.ID, //活动id
-            "userActivityId": 0 //团id
+            "userActivityId": this.options.userActivityId //团id
           }
         };
         LHHybrid.nativeFun(jsonParams);
+      },
+
+      "#joingroup click": function() {
+
+        if (!this.isLogin()) {
+          return false;
+        }
+
+        this.joincheck(this.joingroup);
       },
 
       "#sharetip click": function(element, event) {
@@ -327,7 +343,7 @@ define('lehu.h5.component.groupdetail', [
             'title': "汇银乐虎全球购-拼团",
             'type': "1",
             'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/group.html?from=share",
+            'shareUrl': location.href,
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
             'text': "汇银乐虎全球购，拼团！"
           }

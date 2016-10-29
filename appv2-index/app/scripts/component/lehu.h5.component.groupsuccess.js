@@ -132,7 +132,7 @@ define('lehu.h5.component.groupsuccess', [
             'title': "汇银乐虎全球购-领券中心",
             'type': "1",
             'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
+            'shareUrl': location.href,
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
             'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
           }
