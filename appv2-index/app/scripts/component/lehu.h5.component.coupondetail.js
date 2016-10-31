@@ -48,7 +48,7 @@ define('lehu.h5.component.coupondetail', [
           busizutil.encription(this.param);
 
           var api = new LHAPI({
-            url: this.URL.SERVER_URL_NJ + "judgeLHTicketReceived.do",
+            url: this.URL.SERVER_URL + "judgeLHTicketReceived.do",
             data: this.param,
             method: 'post'
           });
@@ -111,7 +111,7 @@ define('lehu.h5.component.coupondetail', [
 
         var api = new LHAPI({
           // url: this.URL.SERVER_URL + LHConfig.setting.action.ticketData,
-          url: this.URL.SERVER_URL_NJ + "getTicketInfo.do",
+          url: this.URL.SERVER_URL + "getTicketInfo.do",
           data: this.param,
           method: 'post'
         });

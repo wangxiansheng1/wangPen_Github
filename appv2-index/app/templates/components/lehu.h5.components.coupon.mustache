@@ -3,7 +3,7 @@
 </div>
 
 <!--顶部-->
-<header class="header" style="border-bottom: 0px">
+<header class="header" style="z-index: 9; position: fixed; border-bottom: 0px">
     <a href="javascript:;" class="back"></a>
     <h2>领券中心</h2>
     <a href="javascript:;" class="rightlink" id="share"><img src="images/coupon/share.png" style="
@@ -14,18 +14,24 @@
 </header>
 
 <!--中间-->
-<section class="coupons_main">
+<section class="coupons_main" style="margin: 1rem 3% 0;">
 
     {{#each data}}
+
     <div class="coupons_box">
-    	<div class="coupons_box_l">
-    		<em><b>{{TIP}}</b></em>
-            <ul><li>使用范围：{{RANGE_NAME}}</li><li>{{START_TIME}}至{{END_TIME}}</li></ul>
-    	</div>
+        <div class="coupons_box_l">
+            <em>¥<b>{{PRICE}}</b></em>
+            <span>{{TIP}}</span>
+        </div>
         <div class="coupons_box_c">
         </div>
-        <div class="coupons_box_r" data-id="{{ACTIVE_ID}}">立即领取&nbsp;></div>
+        <div class="coupons_box_r" data-id="{{ACTIVE_ID}}">
+            <em>乐虎券</em>
+            <span>{{RANGE_NAME}},{{TIP}}</span>
+            <p>{{START_TIME}}至{{END_TIME}}<i>点击领取</i></p>
+        </div>
     </div>
+
     {{/each}}
 
     {{#hasnodata data}}

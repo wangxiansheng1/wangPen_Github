@@ -104,7 +104,7 @@ define('lehu.h5.component.coupon', [
 
             _.each(that.options.data, function(item) {
               if (item.HQ_TYPE == "1") {
-                item.TIP = "满" + item.DEMAND + "减" + item.PRICE;
+                item.TIP = "满" + item.DEMAND + "立减";
               } else if (item.HQ_TYPE == "2") {
                 item.TIP = "面值" + item.PRICE;
               }
