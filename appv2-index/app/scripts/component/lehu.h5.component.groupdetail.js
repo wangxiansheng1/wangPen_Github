@@ -107,7 +107,7 @@ define('lehu.h5.component.groupdetail', [
           "activityId": activityId
         }
 
-        if (id) {
+        if (typeof id != 'undefined') {
           param.id = id + "";
         }
 

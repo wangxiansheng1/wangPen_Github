@@ -422,6 +422,33 @@ define('lehu.h5.component.carousel', [
           .fail(function(error) {
             util.tip(error.msg);
           });
+      },
+
+      '.back click': function() {
+        // temp begin  
+        // 在app外部使用 点击返回 如果没有可返回则关闭掉页面
+        var param = can.deparam(window.location.search.substr(1));
+        if (!param.version) {
+          if (history.length == 1) {
+            window.opener = null;
+            window.close();
+          } else {
+            history.go(-1);
+          }
+          return false;
+        }
+        // temp end
+
+        if (util.isMobile.Android() || util.isMobile.iOS()) {
+          var jsonParams = {
+            'funName': 'back_fun',
+            'params': {}
+          };
+          LHHybrid.nativeFun(jsonParams);
+          console.log('back_fun');
+        } else {
+          history.go(-1);
+        }
       }
     });
 
