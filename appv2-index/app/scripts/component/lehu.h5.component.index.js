@@ -166,7 +166,7 @@ define('lehu.h5.component.index', [
             that.renderProductList(data);
 
             // 发现
-            that.renderDiscovery(data);
+            // that.renderDiscovery(data);
 
             // 绑定滚动事件
             that.bindScroll();
