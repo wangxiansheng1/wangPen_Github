@@ -26,6 +26,10 @@ define('lehu.h5.header.download', [
        * @description 初始化方法
        */
       init: function(element, options) {
+        this.options.title = options.title || "下载领取150元新人大红包";
+        this.options.subtitle = options.subtitle || "还有188元优惠券等你拿！";
+        this.options.canotclose = options.canotclose;
+
         var renderDownload = can.mustache(template_header_download);
         var html = renderDownload(this.options);
         $("#download").html(html);

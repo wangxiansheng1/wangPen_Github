@@ -34,7 +34,10 @@ define('lehu.h5.page.groupdetail', [
                 var param = can.deparam(window.location.search.substr(1));
                 if (!param.version) {
                     new LHDownload(null, {
-                        'position': 'bottom'
+                        'position': 'bottom',
+                        'title': '下载app，拼团更优惠!',
+                        'subtitle': '汇银乐虎全球家',
+                        'canotclose': true
                     });
                 }
             }
