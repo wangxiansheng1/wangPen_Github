@@ -44,7 +44,7 @@
 .open_card_box p em i{ font-size:.3rem;}
 .open_card_box img{ height:2.09rem; width:auto; display:block; float:left;}
 .open_card_box span{border:1px solid #e1e1e1;border-left:0; border-radius:0 .2rem .2rem 0; width:60%; height:1.39rem; font-size:.27rem; color:#8c8c8c; display:block; float:left; padding:.7rem 0 0 2%; line-height:.47rem;}
-.open_main{ margin-bottom:1.5rem; border-bottom:0;}
+.open_main{ margin-bottom:1.5rem; border-bottom:0; font-size: .32rem}
 .open_main img{ width:100%; height:auto;}
 .jion_box{ width:100%; height:auto; border:1px solid #e1e1e1; border-radius:.5rem; line-height:.9rem; font-size:.24rem; color:#323232; display:block; float:left;}
 .jion_box img,.open_ok_mun span img,.open_ok_listbox img{ width:.6rem; height:.6rem; display:block; float:left; margin:.15rem 0 0 .2rem; border-radius:.6rem;}
