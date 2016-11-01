@@ -153,9 +153,9 @@ define('lehu.h5.component.groupdetail', [
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
 
-            if (that.options.groupmap) {
+            if (that.options.activitymap) {
               setInterval(function() {
-                that.countDown($("#countdown"), that.options.groupmap.END_TIMESTAMP);
+                that.countDown($("#countdown"), that.options.activitymap.END_TIMESTAMP);
               }, 1000);
             }
 
