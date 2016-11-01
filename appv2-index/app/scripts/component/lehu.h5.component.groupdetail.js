@@ -324,6 +324,15 @@ define('lehu.h5.component.groupdetail', [
         LHHybrid.nativeFun(jsonParams);
       },
 
+      ".jion_box click": function() {
+
+        if (!this.isLogin()) {
+          return false;
+        }
+
+        this.joincheck(this.joingroup);
+      },
+
       "#joingroup click": function() {
 
         if (!this.isLogin()) {
