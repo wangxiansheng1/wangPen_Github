@@ -31,11 +31,11 @@ define('lehu.h5.page.activity1111', [
                 var activity1111 = new LHActivity1111("#content");
                 new LHFooter();
 
-                var param = can.deparam(window.location.search.substr(1));
+                // var param = can.deparam(window.location.search.substr(1));
 
-                if (!param.version) {
-                    new LHDownload();
-                }
+                // if (!param.version) {
+                //     new LHDownload();
+                // }
             }
         });
 

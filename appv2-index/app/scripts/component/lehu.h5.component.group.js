@@ -52,7 +52,7 @@ define('lehu.h5.component.group', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
+        // this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
 
         this.options.data = new can.Map({
           "grouplist": null,
@@ -73,7 +73,7 @@ define('lehu.h5.component.group', [
         // busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "groupAcFrontList.do",
+          url: this.URL.SERVER_URL + "groupAcFrontList.do",
           data: this.param,
           method: 'post'
         });
@@ -130,7 +130,7 @@ define('lehu.h5.component.group', [
         }
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + action,
+          url: this.URL.SERVER_URL + action,
           data: param,
           method: 'post'
         });

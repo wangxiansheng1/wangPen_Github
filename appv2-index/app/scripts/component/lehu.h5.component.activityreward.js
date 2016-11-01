@@ -48,7 +48,7 @@ define('lehu.h5.component.activityreward', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
+        // this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
       },
 
       render: function() {
@@ -59,7 +59,7 @@ define('lehu.h5.component.activityreward', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "queryGiftsActivityDetail.do",
+          url: this.URL.SERVER_URL + "queryGiftsActivityDetail.do",
           data: this.param,
           method: 'post'
         });

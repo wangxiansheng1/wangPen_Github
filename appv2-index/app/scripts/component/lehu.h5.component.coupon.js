@@ -108,8 +108,9 @@ define('lehu.h5.component.coupon', [
               } else if (item.HQ_TYPE == "2") {
                 item.TIP = "面值" + item.PRICE;
               }
+              item.START_TIME = item.START_TIME.replace(/-/g, ".");
+              item.END_TIME = item.END_TIME.replace(/-/g, ".")
             })
-
 
             var renderList = can.mustache(template_components_coupon);
             var html = renderList(that.options, that.helpers);
