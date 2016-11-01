@@ -94,18 +94,20 @@ define('lehu.h5.component.groupsuccess', [
           })
       },
 
-      ".footer_buy click": function() {
+      toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
         var jsonParams = {
-          'funName': 'OriginSourcePay',
+          'funName': 'good_detail_fun',
           'params': {
-            "storeName": 1,
-            "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
-            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
           }
         };
         LHHybrid.nativeFun(jsonParams);
+      },
+
+      ".footer_buy click": function() {
+        this.toDetail(this.options.activitymap.STORE_ID, this.options.activitymap.GOODS_NO, this.options.activitymap.GOODS_ID);
       },
 
       "#sharetip click": function(element, event) {
