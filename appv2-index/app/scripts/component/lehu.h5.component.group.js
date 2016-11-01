@@ -150,6 +150,12 @@ define('lehu.h5.component.group', [
           })
       },
 
+      '.group_main_box click': function(element, event) {
+        var href = element.attr("data-href");
+        location.href = href;
+        return false;
+      },
+
       '.back click': function() {
         // temp begin  
         // 在app外部使用 点击返回 如果没有可返回则关闭掉页面
