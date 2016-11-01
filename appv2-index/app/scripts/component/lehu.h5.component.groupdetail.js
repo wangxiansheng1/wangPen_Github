@@ -363,13 +363,21 @@ define('lehu.h5.component.groupdetail', [
           return false;
         }
 
+        var paramObj = can.deparam(window.location.search.substr(1));
+        delete paramObj.version;
+        delete paramObj.userid;
+        delete paramObj.youtui;
+        var paramStr = can.param(paramObj);
+
+        var shareURL = 'http://' + location.host + location.pathname + "?" + paramStr;
+
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
             'title': "汇银乐虎全球购-拼团",
             'type': "1",
             'video_img': "",
-            'shareUrl': location.href,
+            'shareUrl': shareURL,
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
             'text': "汇银乐虎全球购，拼团！"
           }
