@@ -102,6 +102,8 @@ define('lehu.h5.component.group', [
         var currentdetail = $(".swiper-slide").eq(element.index());
         $(currentdetail).show().siblings().hide();
 
+        store.set("groupselectedindex", element.index());
+
         var action = null;
         var status = null;
         if (element.index() == 1) {
@@ -153,15 +155,9 @@ define('lehu.h5.component.group', [
       },
 
       dealhash: function() {
+        var selectedIndex = store.get("groupselectedindex");
 
-        var hash = location.hash;
-        if (hash == "#open" || hash == "") {
-          $(".tabs a").eq(0).click()
-        } else if (hash == "#join") {
-          $(".tabs a").eq(1).click()
-        } else if (hash == "#success") {
-          $(".tabs a").eq(2).click()
-        }
+        $(".tabs a").eq(selectedIndex).click();
       },
 
       '.group_main_box click': function(element, event) {
