@@ -259,7 +259,7 @@ define('lehu.h5.component.groupdetail', [
             "goodName": this.options.activitymap.GOODS_NAME,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
             "goodsImg": this.options.activitymap.GOODS_IMG,
-            "activityId": this.options.activitymap.ID, //活动id
+            "activityId": this.options.activitymap.ACTIVITY_ID, //活动id
             "userActivityId": 0 //团id
           }
         };
@@ -317,7 +317,7 @@ define('lehu.h5.component.groupdetail', [
             "goodName": this.options.activitymap.GOODS_NAME,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
             "goodsImg": this.options.activitymap.GOODS_IMG,
-            "activityId": this.options.activitymap.ID, //活动id
+            "activityId": this.options.activitymap.ACTIVITY_ID, //活动id
             "userActivityId": this.options.userActivityId //团id
           }
         };
