@@ -85,6 +85,8 @@ define('lehu.h5.component.group', [
             var renderList = can.mustache(template_components_group);
             var html = renderList(that.options.data, that.helpers);
             that.element.html(html);
+
+            that.dealhash();
           })
           .fail(function(error) {
             var renderList = can.mustache(template_components_group);
@@ -148,6 +150,18 @@ define('lehu.h5.component.group', [
           .fail(function(error) {
             util.tip(error.msg);
           })
+      },
+
+      dealhash: function() {
+
+        var hash = location.hash;
+        if (hash == "#open" || hash == "") {
+          $(".tabs a").eq(0).click()
+        } else if (hash == "#join") {
+          $(".tabs a").eq(1).click()
+        } else if (hash == "#success") {
+          $(".tabs a").eq(2).click()
+        }
       },
 
       '.group_main_box click': function(element, event) {
