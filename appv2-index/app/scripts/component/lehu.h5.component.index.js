@@ -86,6 +86,10 @@ define('lehu.h5.component.index', [
         });
 
         $('.index_popup_box_get')[0].onclick = function() {
+          if ($(".index_popup_box_get").hasClass("disabled")) {
+            return false;
+          }
+          $(".index_popup_box_get").addClass("disabled");
           that.getCoupon();
         };
       },
@@ -97,6 +101,7 @@ define('lehu.h5.component.index', [
 
         this.userId = busizutil.getUserId();
         if (!this.userId) {
+          $(".index_popup_box_get").removeClass("disabled");
           if (util.isMobile.WeChat()) {
             location.href = "login.html?from=index.html";
             return false;
@@ -129,10 +134,12 @@ define('lehu.h5.component.index', [
         });
         api.sendRequest()
           .done(function(data) {
+            $(".index_popup_box_get").removeClass("disabled");
             $(".index_popup").hide();
             util.tip(data.msg);
           })
           .fail(function(error) {
+            $(".index_popup_box_get").removeClass("disabled");
             $(".index_popup").hide();
             util.tip(error.msg);
           });
