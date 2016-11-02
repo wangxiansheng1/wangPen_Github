@@ -50,7 +50,7 @@ define('lehu.h5.header.download', [
         // return false;
         //暂时关闭
 
-        if (isHideAd) {
+        if (isHideAd && !this.options.canotclose) {
           $('.downloadapp').hide();
         } else {
           $('.downloadapp').css({
