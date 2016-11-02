@@ -56,6 +56,7 @@ require(['lehu.h5.page.groupdetail']);
         	var id = param.id;
         	var ordercode = param.ordercode;
         	var from = param.from;
+            var sharefromapp = param.sharefromapp;
 
         	var url = "?action=" + action;
         	if (activityid) {
@@ -73,6 +74,9 @@ require(['lehu.h5.page.groupdetail']);
         	if (from) {
         		url += ("&from=" + from);
         	}
+            if (sharefromapp) {
+                url += ("&sharefromapp=" + sharefromapp);
+            }
 
             new Mlink({
                 mlink : "http://a.mlinks.cc/AARV" + url,

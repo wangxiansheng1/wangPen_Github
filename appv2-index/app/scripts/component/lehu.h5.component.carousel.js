@@ -163,7 +163,7 @@ define('lehu.h5.component.carousel', [
         var that = this;
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "singlesDayInit.do",
+          url: this.URL.SERVER_URL + "singlesDayInit.do",
           data: params,
           method: 'post'
         });
@@ -244,7 +244,7 @@ define('lehu.h5.component.carousel', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "singleLuckdraw.do",
+          url: this.URL.SERVER_URL + "singleLuckdraw.do",
           data: this.param,
           method: 'post'
         });
@@ -411,7 +411,7 @@ define('lehu.h5.component.carousel', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "addShareHistory.do",
+          url: this.URL.SERVER_URL + "addShareHistory.do",
           data: this.param,
           method: 'post'
         });
