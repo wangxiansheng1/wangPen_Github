@@ -99,8 +99,11 @@ define('lehu.h5.component.activityreward', [
         var that = this;
 
         this.pageIndex = cparams.pageIndex;
+        if (!this.pageIndex) {
+          this.pageIndex = DEFAULT_PAGE_INDEX;
+        }
         var query = can.param({
-          pageIndex: this.pageIndex || DEFAULT_PAGE_INDEX
+          pageIndex: this.pageIndex
         });
 
         var that = this;
