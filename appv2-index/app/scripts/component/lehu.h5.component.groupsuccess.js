@@ -77,11 +77,13 @@ define('lehu.h5.component.groupsuccess', [
 
             that.options.activitymap = data.activitymap;
             that.options.userlist = data.userlist;
+            that.options.partake_num = data.partake_num;
 
             that.options.firstUser = that.options.userlist[0];
             that.options.secondUser = that.options.userlist[1];
 
             if (that.options.userlist.length > 2) {
+              that.options.thirdUser = that.options.userlist[2];
               that.options.lastUser = that.options.userlist.slice(2);
             }
 

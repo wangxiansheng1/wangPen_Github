@@ -19,12 +19,21 @@ define('lehu.h5.component.activityreward', [
     template_components_activityreward) {
     'use strict';
 
+    var DEFAULT_PAGE_INDEX = 1;
+    var NODATA = false;
+
+    can.route.ready();
+
     return can.Control.extend({
 
       helpers: {
         'lehu-img': function(imgprefix, img) {
           if (_.isFunction(img)) {
             img = img();
+          }
+
+          if (_.isFunction(imgprefix)) {
+            imgprefix = imgprefix();
           }
 
           if (img.indexOf("http://") > -1) {
@@ -51,29 +60,136 @@ define('lehu.h5.component.activityreward', [
         // this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
       },
 
+      // render: function() {
+      //   var that = this;
+
+      //   this.param = {};
+
+      //   busizutil.encription(this.param);
+
+      //   var api = new LHAPI({
+      //     url: this.URL.SERVER_URL + "queryGiftsActivityDetail.do",
+      //     data: this.param,
+      //     method: 'post'
+      //   });
+      //   api.sendRequest()
+      //     .done(function(data) {
+      //       that.options.data = data.giftsActivityDetail;
+      //       that.options.imgprefix = that.URL.IMAGE_URL;
+
+      //       var renderList = can.mustache(template_components_activityreward);
+      //       var html = renderList(that.options, that.helpers);
+      //       that.element.html(html);
+      //     })
+      //     .fail(function(error) {
+      //       util.tip(error.msg);
+      //     })
+      // },
+
       render: function() {
+        var params = can.deparam(window.location.search.substr(1));
+        params = _.extend(params, can.route.attr());
+
+        this.request({
+          pageIndex: params.pageIndex
+        });
+      },
+
+      request: function(cparams) {
         var that = this;
 
-        this.param = {};
+        this.pageIndex = cparams.pageIndex;
+        var query = can.param({
+          pageIndex: this.pageIndex || DEFAULT_PAGE_INDEX
+        });
 
-        busizutil.encription(this.param);
-
+        var that = this;
         var api = new LHAPI({
-          url: this.URL.SERVER_URL + "queryGiftsActivityDetail.do",
-          data: this.param,
-          method: 'post'
+          url: this.URL.SERVER_URL + 'queryGiftsActivityDetail.do?' + query,
+          data: {}
         });
         api.sendRequest()
           .done(function(data) {
-            that.options.data = data.giftsActivityDetail;
-            that.options.imgprefix = that.URL.IMAGE_URL;
-
-            var renderList = can.mustache(template_components_activityreward);
-            var html = renderList(that.options, that.helpers);
-            that.element.html(html);
+            that.paint(data);
           })
-          .fail(function(error) {
-            util.tip(error.msg);
+      },
+
+      paint: function(data) {
+        var params = can.deparam(window.location.search.substr(1));
+        params = _.extend(params, can.route.attr());
+        var renderFn = can.view.mustache(template_components_activityreward);
+
+        data.supplement = {
+          onLoadingData: false
+        };
+        this.options.data = new can.Map(data);
+        this.options.data.attr("imgprefix", this.URL.IMAGE_URL);
+        this.options.data.attr("pageIndex", this.pageIndex);
+        this.options.data.attr("supplement.noData", false);
+        var html = renderFn(this.options.data, this.helpers);
+        this.element.html(html);
+
+        this.initLoadDataEvent();
+      },
+
+      /**
+       * @author zhangke
+       * @description 初始化上拉加载数据事件
+       */
+      initLoadDataEvent: function() {
+        var that = this;
+        var renderData = this.options.data;
+        //节流阀
+        var loadingDatas = function() {
+          if (that.options.data.attr("supplement.noData") || that.options.data.attr("supplement.onLoadingData")) {
+            return false;
+          }
+          var srollPos = $(window).scrollTop(); //滚动条距离顶部的高度
+          var windowHeight = $(window).height(); //窗口的高度
+          var dbHiht = $("#content").height(); //整个页面文件的高度
+
+          if ((windowHeight + srollPos + 200) >= (dbHiht)) {
+
+            that.loadingData();
+          }
+        };
+
+        $(window).scroll(_.throttle(loadingDatas, 200));
+      },
+
+      loadingData: function(cparams) {
+
+        var that = this;
+        that.options.data.attr("supplement.onLoadingData", true);
+
+        var params = can.deparam(window.location.search.substr(1));
+        params = _.extend(params, can.route.attr());
+
+        var query = can.param({
+          pageIndex: parseInt(this.options.data.pageIndex) + 1,
+        });
+
+        var that = this;
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL + 'queryGiftsActivityDetail.do?' + query,
+          data: {}
+        });
+        api.sendRequest()
+          .done(function(data) {
+
+            that.options.data.attr("supplement.onLoadingData", false);
+
+            if (data.giftsActivityDetail) {
+              _.each(data.giftsActivityDetail, function(item) {
+                that.options.data.giftsActivityDetail.push(item);
+              });
+
+              that.options.data.attr("pageIndex", parseInt(that.options.data.pageIndex) + 1);
+              that.options.data.attr("supplement.onLoadingData", false);
+            } else {
+              that.options.data.attr("supplement.noData", true);
+            }
+
           })
       },
 

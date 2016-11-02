@@ -1,6 +1,7 @@
 define('lehu.h5.component.index', [
     'zepto',
     'can',
+    'store',
     'lehu.h5.business.config',
     'lehu.util',
     'lehu.h5.api',
@@ -13,7 +14,7 @@ define('lehu.h5.component.index', [
     'imagelazyload'
   ],
 
-  function($, can, LHConfig, util, LHAPI, LHHybrid,
+  function($, can, store, LHConfig, util, LHAPI, LHHybrid,
     busizutil,
     slide, imagelazyload) {
     'use strict';

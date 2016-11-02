@@ -19,7 +19,19 @@
     
 <!--列表-->
 <ul class="fullgive_list">
-    {{#each data}}
+
+    {{#each giftsActivityDetail}}
         <li><a href="javascript:;"><img data-goodsid="{{GOODS_ID}}" data-goodsno="{{GOODS_NO}}" data-storeid="{{STORE_ID}}" src="{{lehu-img imgprefix IMG}}"><span>{{GOODS_NAME}}</span><em>乐虎价：¥ {{GOODS_PRICE}}</em><i data-goodsid="{{GOODS_ID}}" data-goodsno="{{GOODS_NO}}" data-storeid="{{STORE_ID}}"></i></a></li>
+        
     {{/each}}
+
+
+    
 </ul>
+
+{{#if supplement.onLoadingData}}
+        <div style="text-align: center;padding: 10px 0;font-size: 0.3rem;line-height: 0.7rem;"><span class="loading"></span>客官，正在加载，请稍等...</div>
+    {{/if}}
+    {{#if supplement.noData}}
+        <div style="text-align: center;padding: 10px 0;font-size: 0.3rem;line-height: 0.7rem;"><span class="loading"></span>客官，没有更多了/(ㄒoㄒ)/~~</div>
+    {{/if}}
