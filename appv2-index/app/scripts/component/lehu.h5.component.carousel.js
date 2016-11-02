@@ -417,7 +417,7 @@ define('lehu.h5.component.carousel', [
         });
         api.sendRequest()
           .done(function(data) {
-            console.log("分析成功")
+            console.log("分享成功")
           })
           .fail(function(error) {
             util.tip(error.msg);
