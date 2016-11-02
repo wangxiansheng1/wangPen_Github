@@ -128,6 +128,7 @@ define('lehu.h5.component.groupsuccess', [
         }
 
         var paramObj = can.deparam(window.location.search.substr(1));
+        paramObj.sharefromapp = true;
         delete paramObj.version;
         delete paramObj.userid;
         delete paramObj.youtui;

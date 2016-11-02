@@ -210,6 +210,9 @@ define('lehu.h5.component.index', [
             $(item).attr('src', $(item).attr('data-original'));
           })
         }, 100);
+
+        //删除拼团的storeindex
+        store.remove("groupselectedindex");
       },
 
       initData: function() {

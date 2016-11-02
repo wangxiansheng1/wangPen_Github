@@ -157,7 +157,19 @@ define('lehu.h5.component.group', [
       dealhash: function() {
         var selectedIndex = store.get("groupselectedindex");
 
-        $(".tabs a").eq(selectedIndex).click();
+        // ios
+        if (typeof selectedIndex != 'undefined') {
+          $(".tabs a").eq(selectedIndex).click()
+        } else {
+          var hash = location.hash;
+          if (hash == "#open" || hash == "") {
+            $(".tabs a").eq(0).click()
+          } else if (hash == "#join") {
+            $(".tabs a").eq(1).click()
+          } else if (hash == "#success") {
+            $(".tabs a").eq(2).click()
+          }
+        }
       },
 
       '.group_main_box click': function(element, event) {
