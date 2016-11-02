@@ -172,7 +172,7 @@ define('lehu.h5.component.groupdetail', [
           this.toShare();
         }
 
-        if (param.sharefromapp) {
+        if (!param.version) {
           $("#middlejoin").hide();
         }
       },
@@ -209,7 +209,7 @@ define('lehu.h5.component.groupdetail', [
 
         this.userId = busizutil.getUserId();
         if (!this.userId) {
-          if (util.isMobile.WeChat() || param.from == 'sharefromapp') {
+          if (util.isMobile.WeChat() || !param.version) {
             location.href = "login.html?from=" + escape(location.href);
             return false;
           } else {
@@ -331,7 +331,7 @@ define('lehu.h5.component.groupdetail', [
       ".jion_box click": function() {
 
         var param = can.deparam(window.location.search.substr(1));
-        if (param.sharefromapp) {
+        if (!param.version) {
           return false;
         }
 
@@ -373,7 +373,7 @@ define('lehu.h5.component.groupdetail', [
         }
 
         var paramObj = can.deparam(window.location.search.substr(1));
-        paramObj.sharefromapp = true;
+        // paramObj.sharefromapp = true;
         delete paramObj.version;
         delete paramObj.userid;
         delete paramObj.youtui;

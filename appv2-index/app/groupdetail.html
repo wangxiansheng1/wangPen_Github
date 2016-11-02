@@ -74,9 +74,11 @@ require(['lehu.h5.page.groupdetail']);
         	if (from) {
         		url += ("&from=" + from);
         	}
-            if (sharefromapp) {
-                url += ("&sharefromapp=" + sharefromapp);
-            }
+            // if (sharefromapp) {
+            //     url += ("&sharefromapp=" + sharefromapp);
+            // }
+
+            // alert("test马上删除" + url);
 
             new Mlink({
                 mlink : "http://a.mlinks.cc/AARV" + url,
