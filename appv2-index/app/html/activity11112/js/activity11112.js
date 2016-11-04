@@ -14,3 +14,10 @@
     doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
 
+
+
+window.onload = function() {
+    //淡入
+    $("body").css("visibility", "visible");
+    $("body").addClass("jbox");
+};
