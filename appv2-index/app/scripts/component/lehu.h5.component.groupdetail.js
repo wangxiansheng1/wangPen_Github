@@ -244,7 +244,31 @@ define('lehu.h5.component.groupdetail', [
         this.toDetail(this.options.activitymap.STORE_ID, this.options.activitymap.GOODS_NO, this.options.activitymap.GOODS_ID);
       },
 
+      isNeedUpdate: function() {
+        var result = false;
+        var param = can.deparam(window.location.search.substr(1));
+        if (param.version) {
+          if (util.isMobile.Android()) {
+            if (param.version < "164") {
+              result = true;
+            }
+          }
+          if (util.isMobile.iOS()) {
+            if (param.version < "1.5.0") {
+              result = true;
+            }
+          }
+        } else {
+          result = true;
+        }
+        return result;
+      },
+
       '#opengroup click': function() {
+        if (this.isNeedUpdate()) {
+          util.tip("请升级app到最新版本后使用!");
+          return false;
+        }
 
         if (!this.isLogin()) {
           return false;
@@ -329,6 +353,10 @@ define('lehu.h5.component.groupdetail', [
       },
 
       ".jion_box click": function() {
+        if (this.isNeedUpdate()) {
+          util.tip("请升级app到最新版本后使用!");
+          return false;
+        }
 
         var param = can.deparam(window.location.search.substr(1));
         if (!param.version) {
@@ -343,6 +371,10 @@ define('lehu.h5.component.groupdetail', [
       },
 
       "#joingroup click": function() {
+        if (this.isNeedUpdate()) {
+          util.tip("请升级app到最新版本后使用!");
+          return false;
+        }
 
         if (!this.isLogin()) {
           return false;
