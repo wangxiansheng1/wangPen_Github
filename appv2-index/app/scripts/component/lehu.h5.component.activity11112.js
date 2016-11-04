@@ -70,191 +70,37 @@ define('lehu.h5.component.activity11112', [
           LHHybrid.nativeFun(jsonParams);
         },
 
-        //美容彩妆
-        '#meirongactivity click': function(element, event) {
-          location.href = "activities.html?ids=1175|1176&pageIndex=1&flag=2";
+        ".sale_box a click": function(element, event) {
+          var goodsid = element.attr("data-goodsid");
+          var goodsno = element.attr("data-goodsno");
+          var storeid = element.attr("data-storeid");
+          this.toDetail(storeid, goodsno, goodsid);
         },
 
-        '#meirongproduct1 click': function(element, event) {
-          //TODO
-          var GOODS_ID = "86917";
-          var GOODS_NO = "77770058";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+        '.activity_rlle click': function(element, event) {
+          window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1175|1176&pageIndex=1&flag=2";
         },
 
-        '#meirongproduct2 click': function(element, event) {
-          var GOODS_ID = "85888";
-          var GOODS_NO = "77770007";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+        '.activity_box_01 .activity_box_top click': function(element, event) {
+          window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1272|1273|1274|1275|1276|1277&pageIndex=1&flag=2";
         },
 
-        '#meirongproduct3 click': function(element, event) {
-          var GOODS_ID = "93074";
-          var GOODS_NO = "8012712";
-          var STORE_ID = "0";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+        '.activity_box_02 .activity_box_top click': function(element, event) {
+          window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1278|1279|1280|1281|1282|1283&pageIndex=1&flag=2";
         },
 
-        '#meirongproduct4 click': function(element, event) {
-          var GOODS_ID = "86121";
-          var GOODS_NO = "10020049";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+        '.activity_box_03 .activity_box_top click': function(element, event) {
+          window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1284|1285|1286|1287|1288|1289&pageIndex=1&flag=2";
         },
 
-        //母婴专区
-        '#moyingactivity click': function(element, event) {
-          location.href = "activities.html?ids=1278|1279|1280|1281|1282|1283&pageIndex=1&flag=2";
+        '.activity_box_04 .activity_box_top click': function(element, event) {
+          window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1302|1303|1304|1305|1306|1307&pageIndex=1&flag=2";
         },
 
-        '#moyingproduct1 click': function(element, event) {
-          var GOODS_ID = "91697";
-          var GOODS_NO = "8015527";
-          var STORE_ID = "0";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+        '.activity_box_05 .activity_box_top click': function(element, event) {
+          window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1290|1291|1292|1293|1294|1295&pageIndex=1&flag=2";
         },
 
-        '#moyingproduct2 click': function(element, event) {
-          var GOODS_ID = "86078";
-          var GOODS_NO = "10020005";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#moyingproduct3 click': function(element, event) {
-          var GOODS_ID = "86250";
-          var GOODS_NO = "10020124";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#moyingproduct4 click': function(element, event) {
-          var GOODS_ID = "96829";
-          var GOODS_NO = "51000074";
-          var STORE_ID = "1082";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        //营养保健
-        '#yingyangactivity click': function(element, event) {
-          location.href = "activities.html?ids=1284|1285|1286|1287|1288|1289&pageIndex=1&flag=2";
-        },
-
-        '#yingyangproduct1 click': function(element, event) {
-          var GOODS_ID = "89956";
-          var GOODS_NO = "10030100";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#yingyangproduct2 click': function(element, event) {
-          var GOODS_ID = "86259";
-          var GOODS_NO = "10020084";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#yingyangproduct3 click': function(element, event) {
-          var GOODS_ID = "86268";
-          var GOODS_NO = "10020093";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#yingyangproduct4 click': function(element, event) {
-          var GOODS_ID = "86098";
-          var GOODS_NO = "10020104";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        //进口美食
-        '#jinkouactivity click': function(element, event) {
-          location.href = "activities.html?ids=1302|1303|1304|1305|1306|1307&pageIndex=1&flag=2";
-        },
-
-        '#jinkouproduct1 click': function(element, event) {
-          var GOODS_ID = "80970";
-          var GOODS_NO = "8021451";
-          var STORE_ID = "0";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#jinkouproduct2 click': function(element, event) {
-          var GOODS_ID = "91028";
-          var GOODS_NO = "8005616";
-          var STORE_ID = "0";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#jinkouproduct3 click': function(element, event) {
-          var GOODS_ID = "96893";
-          var GOODS_NO = "51000075";
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#jinkouproduct4 click': function(element, event) {
-          var GOODS_ID = "96520";
-          var GOODS_NO = "8030381";
-          var STORE_ID = "0";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        //家居日化
-        '#jiajuactivity click': function(element, event) {
-          location.href = "activities.html?ids=1290|1291|1292|1293|1294|1295&pageIndex=1&flag=2";
-        },
-
-        '#jiajuproduct1 click': function(element, event) {
-          var GOODS_ID = "95252";
-          var GOODS_NO = "30000326"; //TODO
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#jiajuproduct2 click': function(element, event) {
-          var GOODS_ID = "91305";
-          var GOODS_NO = "8014627"; //TODO
-          var STORE_ID = "0";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#jiajuproduct3 click': function(element, event) {
-          var GOODS_ID = "97370";
-          var GOODS_NO = "8030788"; //TODO
-          var STORE_ID = "0";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
-
-        '#jiajuproduct4 click': function(element, event) {
-          var GOODS_ID = "1031";
-          var GOODS_NO = "30000011"; //TODO
-          var STORE_ID = "1031";
-
-          this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-        },
 
         encription: function(params) {
           var paramStr = this.getSignDataString(params);

@@ -74,7 +74,6 @@ define('lehu.h5.component.activity1111', [
         var goodsid = element.attr("data-goodsid");
         var goodsno = element.attr("data-goodsno");
         var storeid = element.attr("data-storeid");
-
         this.toDetail(storeid, goodsno, goodsid);
       },
 
