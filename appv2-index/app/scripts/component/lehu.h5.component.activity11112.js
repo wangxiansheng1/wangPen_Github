@@ -70,14 +70,14 @@ define('lehu.h5.component.activity11112', [
           LHHybrid.nativeFun(jsonParams);
         },
 
-        ".sale_box a click": function(element, event) {
+        ".activity_box a click": function(element, event) {
           var goodsid = element.attr("data-goodsid");
           var goodsno = element.attr("data-goodsno");
           var storeid = element.attr("data-storeid");
           this.toDetail(storeid, goodsno, goodsid);
         },
 
-        '.activity_rlle click': function(element, event) {
+        '.activity_msg click': function(element, event) {
           window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1175|1176&pageIndex=1&flag=2";
         },
 
