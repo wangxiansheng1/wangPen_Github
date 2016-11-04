@@ -29,6 +29,7 @@ publish #打包后生成目录
 3. 使用nproxy
 
 #版本管理
+
 1. master分支上只能merge代码，不能提交代码。并且和线上代码保持一致。
 2. master分支和线上保持一致原则：只有发布到线上后，才能merge到master分支。
 3. 新开发功能统一在master基础上新建分支，分支命名规则：dev.xx，发布后立即merge到master分支上。
