@@ -1,0 +1,14 @@
+body{ background:#a91bfe;}
+.dev_top,.dev_msg,.dev_box,.dev_box_top,.dev_box a img,.dev_footer_box a img{ width:100%; height:auto; display:block; float:left;}
+.dev_rule{ position: relative}
+.dev_rule a{ width:24%; height: .42rem; position: absolute; display: block; top: 11.82rem; left: 37% }
+.dev_box,.dev_footer_box{ padding-bottom:.2rem;}
+.dev_box a:nth-of-type(1),.dev_box a:nth-of-type(2),.dev_footer_box a:nth-of-type(1),.dev_footer_box a:nth-of-type(2){ width:48.5%; height:auto; display:block; float:left; margin:0 0 0 1%;}
+.dev_box a,.dev_footer_box a{ width:48.5%; height:auto; display:block; float:left; margin:.1rem 0 0 1%;}
+.foot{margin:.5rem 5% .3rem;border-top: 1px solid #ffffff;position: relative;padding-top: .21rem; float:left; width:90%;}
+.foot span{position: absolute;top: -.19rem;left: 30%;background-color: #a91bfe;padding: .05rem .15rem;color: #ffffff; font-size:.25rem;-webkit-transform: translateX(-18%);transform: translateX(-18%);}
+.dev_box_01{ background:#f53737;}
+.dev_box_02{ background:#ff8bc2;}
+.dev_box_03{ background:#4fd07e;}
+.dev_box_04{ background:#e12410;}
+.dev_box_05{ background:#00a1f2;}

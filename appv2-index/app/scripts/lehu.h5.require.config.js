@@ -1,6 +1,6 @@
 requirejs.config({
     // urlArgs: "v=1.0",
-    baseUrl: ' /',
+    baseUrl: '/',
     shim: {
         'modeecb': {
             deps: ['tripledes'],
