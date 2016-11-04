@@ -37,7 +37,7 @@ define('lehu.h5.component.index', [
           that.sendRequest.apply(that);
         }, 0);
 
-        this.shouldShowCoupon();
+        // this.shouldShowCoupon();
       },
 
       shouldShowCoupon: function() {
@@ -375,6 +375,13 @@ define('lehu.h5.component.index', [
           var type = clickedTag.type;
           if (type == 'h5') {
             window.location.href = clickedTag.url;
+            return false;
+          } else if (type == 'h5null') {
+            util.tip("全新抽奖即将上线，敬请期待!");
+            return false;
+          } else if (type == 'h5nullbobo') {
+            util.tip("全新直播即将上线，敬请期待!");
+            return false;
           } else if (type == 'native') {
             var jsonParams = {
               'funName': 'shortcut_fun',
@@ -405,7 +412,7 @@ define('lehu.h5.component.index', [
 
       tagMap: {
         "17": {
-          type: "h5",
+          type: "h5null",
           name: "大转盘",
           url: 'carousel.html'
         },
@@ -422,7 +429,7 @@ define('lehu.h5.component.index', [
           name: "红包专区"
         },
         "-1": {
-          type: "native",
+          type: "h5nullbobo",
           name: "播播直播"
         },
         "3": {

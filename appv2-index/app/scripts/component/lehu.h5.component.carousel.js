@@ -311,7 +311,7 @@ define('lehu.h5.component.carousel', [
 
         this.userId = busizutil.getUserId();
         if (!this.userId) {
-          if (util.isMobile.WeChat() || param.from == 'share' || !param.appinner) {
+          if (util.isMobile.WeChat() || !param.version) {
             location.href = "login.html?from=" + escape(location.href);
             return false;
           } else {

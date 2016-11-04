@@ -21,6 +21,24 @@ define('lehu.h5.component.groupsuccess', [
 
     return can.Control.extend({
 
+      helpers: {
+        'lehu-img': function(imgprefix, img) {
+          if (_.isFunction(imgprefix)) {
+            imgprefix = imgprefix();
+          }
+
+          if (_.isFunction(img)) {
+            img = img();
+          }
+
+          if (img.indexOf("http://") > -1) {
+            return img;
+          }
+
+          return imgprefix + img;
+        }
+      },
+
       param: {},
 
       /**
@@ -86,6 +104,9 @@ define('lehu.h5.component.groupsuccess', [
               that.options.thirdUser = that.options.userlist[2];
               that.options.lastUser = that.options.userlist.slice(2);
             }
+
+            //图片前缀
+            that.options.imgprefix = that.URL.IMAGE_URL;
 
             var renderList = can.mustache(template_components_groupsuccess);
             var html = renderList(that.options, that.helpers);
