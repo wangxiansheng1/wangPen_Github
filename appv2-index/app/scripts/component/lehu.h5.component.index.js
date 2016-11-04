@@ -1,6 +1,7 @@
 define('lehu.h5.component.index', [
     'zepto',
     'can',
+    'store',
     'lehu.h5.business.config',
     'lehu.util',
     'lehu.h5.api',
@@ -13,7 +14,7 @@ define('lehu.h5.component.index', [
     'imagelazyload'
   ],
 
-  function($, can, LHConfig, util, LHAPI, LHHybrid,
+  function($, can, store, LHConfig, util, LHAPI, LHHybrid,
     busizutil,
     slide, imagelazyload) {
     'use strict';
@@ -59,7 +60,7 @@ define('lehu.h5.component.index', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "judgeLHTicketReceived.do",
+          url: this.URL.SERVER_URL + "judgeLHTicketReceived.do",
           data: this.param,
           method: 'post'
         });
@@ -86,6 +87,10 @@ define('lehu.h5.component.index', [
         });
 
         $('.index_popup_box_get')[0].onclick = function() {
+          if ($(".index_popup_box_get").hasClass("disabled")) {
+            return false;
+          }
+          $(".index_popup_box_get").addClass("disabled");
           that.getCoupon();
         };
       },
@@ -97,6 +102,7 @@ define('lehu.h5.component.index', [
 
         this.userId = busizutil.getUserId();
         if (!this.userId) {
+          $(".index_popup_box_get").removeClass("disabled");
           if (util.isMobile.WeChat()) {
             location.href = "login.html?from=index.html";
             return false;
@@ -123,16 +129,18 @@ define('lehu.h5.component.index', [
         busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "getMultipleLHTicket.do",
+          url: this.URL.SERVER_URL + "getMultipleLHTicket.do",
           data: this.param,
           method: 'post'
         });
         api.sendRequest()
           .done(function(data) {
+            $(".index_popup_box_get").removeClass("disabled");
             $(".index_popup").hide();
             util.tip(data.msg);
           })
           .fail(function(error) {
+            $(".index_popup_box_get").removeClass("disabled");
             $(".index_popup").hide();
             util.tip(error.msg);
           });
@@ -166,7 +174,7 @@ define('lehu.h5.component.index', [
             that.renderProductList(data);
 
             // 发现
-            that.renderDiscovery(data);
+            // that.renderDiscovery(data);
 
             // 绑定滚动事件
             that.bindScroll();
@@ -203,6 +211,9 @@ define('lehu.h5.component.index', [
             $(item).attr('src', $(item).attr('data-original'));
           })
         }, 100);
+
+        //删除拼团的storeindex
+        store.remove("groupselectedindex");
       },
 
       initData: function() {
@@ -364,6 +375,13 @@ define('lehu.h5.component.index', [
           var type = clickedTag.type;
           if (type == 'h5') {
             window.location.href = clickedTag.url;
+            return false;
+          } else if (type == 'h5null') {
+            util.tip("全新抽奖即将上线，敬请期待!");
+            return false;
+          } else if (type == 'h5nullbobo') {
+            util.tip("全新直播即将上线，敬请期待!");
+            return false;
           } else if (type == 'native') {
             var jsonParams = {
               'funName': 'shortcut_fun',
@@ -394,8 +412,9 @@ define('lehu.h5.component.index', [
 
       tagMap: {
         "17": {
-          type: "native",
-          name: "摇一摇"
+          type: "h5null",
+          name: "大转盘",
+          url: 'carousel.html'
         },
         "22": {
           type: "native",
@@ -410,7 +429,7 @@ define('lehu.h5.component.index', [
           name: "红包专区"
         },
         "-1": {
-          type: "native",
+          type: "h5nullbobo",
           name: "播播直播"
         },
         "3": {

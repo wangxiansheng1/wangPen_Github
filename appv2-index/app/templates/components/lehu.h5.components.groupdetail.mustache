@@ -1,5 +1,5 @@
 <!--顶部-->
-<header class="header" style="z-index: 9; position: fixed;">
+<header class="header" style="z-index: 9; position: fixed;border-bottom: 0px">
     <a href="javascript:;" class="back"></a>
     <h2>拼团</h2>
     <a href="javascript:;" class="rightlink" id="share"><img src="images/coupon/share.png" style="
@@ -42,9 +42,9 @@
 {{^if isopen}}
 <div class="jion">
   <div class="jion_box">
-    <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">{{groupmap.USER_NAME}}</b>
-    <span>去参团<i></i></span>
-    <p>{{activitymap.TOTALNUM}}人团<i>已有{{groupmap.PARTAKE_NUM}}人参加</i></p>
+    <img src="images/group/pt_tx.png"><em>团长</em><b class="ell">{{activitymap.USER_NAME}}</b>
+    <span id="middlejoin">去参团<i></i></span>
+    <p>{{activitymap.TOTALNUM}}人团<i>已有{{activitymap.PARTAKE_NUM}}人参加</i></p>
   </div>
 </div>
 {{/if}}
@@ -66,7 +66,7 @@
 
 <!--底部-->
 {{^if isopen}}
-<div class="footer">
+<div class="footer" >
   <div class="footer_time"><img src="images/group/pt_js.png"><span id="countdown"></span></div>
   <div class="footer_buy"><i>￥{{activitymap.GOODSPRICE}}</i>原价买</div>
   <div class="footer_open" id="joingroup"><i>￥{{activitymap.ACTIVEPRICE}}</i>参团</div>
@@ -87,7 +87,7 @@
     height: 308px;
     position: absolute;
     right: 10px;
-    top: 0px;
+    top: 60px;
     position: fixed;
     z-index: 1111;
 }

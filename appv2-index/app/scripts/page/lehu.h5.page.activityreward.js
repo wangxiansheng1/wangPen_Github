@@ -30,12 +30,6 @@ define('lehu.h5.page.activityreward', [
             init: function(element, options) {
                 var activityreward = new LHActivityreward("#content");
                 new LHFooter();
-
-                var param = can.deparam(window.location.search.substr(1));
-
-                if (!param.version) {
-                    new LHDownload();
-                }
             }
         });
 

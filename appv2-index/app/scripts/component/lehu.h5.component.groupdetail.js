@@ -55,13 +55,41 @@ define('lehu.h5.component.groupdetail', [
       },
 
       render: function() {
+        var that = this;
         var param = can.deparam(window.location.search.substr(1));
         this.action = param.action;
+
+        //团id
+        if (param.id) {
+          this.options.userActivityId = param.id;
+        }
 
         var map = {
           "open": "queryActivityInfo.do",
           "join": "partInActivityInfo.do",
           "success": "getSuccGroupInfo.do"
+        }
+
+        //根据orderCode获得团id
+        if (param.ordercode) {
+          var api = new LHAPI({
+            url: this.URL.SERVER_URL + "getUserAc.do",
+            data: {
+              "orderCode": param.ordercode
+            },
+            method: 'post'
+          });
+
+          api.sendRequest()
+            .done(function(data) {
+
+              that.options.userActivityId = data.userActivityId;
+              //直接走渲染
+              that.sendRequest(map[that.action], param.activityid, that.options.userActivityId);
+
+              return false;
+            })
+          return false;
         }
 
         this.sendRequest(map[this.action], param.activityid, param.id);
@@ -77,14 +105,14 @@ define('lehu.h5.component.groupdetail', [
           "activityId": activityId
         }
 
-        if (id) {
-          param.id = id;
+        if (typeof id != 'undefined') {
+          param.id = id + "";
         }
 
         busizutil.encription(param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + action,
+          url: this.URL.SERVER_URL + action,
           data: param,
           method: 'post'
         });
@@ -94,6 +122,11 @@ define('lehu.h5.component.groupdetail', [
 
             //团信息
             that.options.activitymap = data.activitymap;
+
+            if (that.action == 'join') {
+              var tempMap = _.pick(data.groupmap, 'ACTIVEPRICE', 'CONTENT', 'GOODSPRICE', 'GOODS_ID', 'GOODS_IMG', 'GOODS_NAME', 'GOODS_NO', 'IMG', 'STORE_ID', 'STORE_NAME', 'TITLE', 'TOTALNUM');
+              _.extend(that.options.activitymap, tempMap);
+            }
 
             //参团用户
             that.options.userlist = data.userlist;
@@ -120,15 +153,28 @@ define('lehu.h5.component.groupdetail', [
             var html = renderList(that.options, that.helpers);
             that.element.html(html);
 
-            if (that.options.groupmap) {
+            if (that.options.activitymap) {
               setInterval(function() {
-                that.countDown($("#countdown"), that.options.groupmap.END_TIMESTAMP);
+                that.countDown($("#countdown"), that.options.activitymap.END_TIMESTAMP);
               }, 1000);
             }
+
+            that.doOther();
           })
           .fail(function(error) {
             util.tip(error.msg);
           })
+      },
+
+      doOther: function() {
+        var param = can.deparam(window.location.search.substr(1));
+        if (param.share) {
+          this.toShare();
+        }
+
+        if (!param.version) {
+          $("#middlejoin").hide();
+        }
       },
 
       countDown: function(timeNode, endDate) {
@@ -163,7 +209,7 @@ define('lehu.h5.component.groupdetail', [
 
         this.userId = busizutil.getUserId();
         if (!this.userId) {
-          if (util.isMobile.WeChat() || param.from == 'share') {
+          if (util.isMobile.WeChat() || !param.version) {
             location.href = "login.html?from=" + escape(location.href);
             return false;
           } else {
@@ -182,56 +228,65 @@ define('lehu.h5.component.groupdetail', [
         return true;
       },
 
-      ".footer_buy click": function() {
-
-        if (!this.isLogin()) {
-          return false;
-        }
-
+      toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
         var jsonParams = {
-          'funName': 'OriginSourcePay',
+          'funName': 'good_detail_fun',
           'params': {
-            "storeName": 1,
-            "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
-            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
           }
         };
         LHHybrid.nativeFun(jsonParams);
+      },
+
+      ".footer_buy click": function() {
+        this.toDetail(this.options.activitymap.STORE_ID, this.options.activitymap.GOODS_NO, this.options.activitymap.GOODS_ID);
+      },
+
+      isNeedUpdate: function() {
+        var result = false;
+        var param = can.deparam(window.location.search.substr(1));
+        if (param.version) {
+          if (util.isMobile.Android()) {
+            if (param.version < "164") {
+              result = true;
+            }
+          }
+          if (util.isMobile.iOS()) {
+            if (param.version < "1.5.0") {
+              result = true;
+            }
+          }
+        } else {
+          result = true;
+        }
+        return result;
       },
 
       '#opengroup click': function() {
+        if (this.isNeedUpdate()) {
+          util.tip("请升级app到最新版本后使用!");
+          return false;
+        }
 
         if (!this.isLogin()) {
           return false;
         }
 
-        // // test
-        // var GOODS_ID = "86773";
-        // var GOODS_NO = "77770058";
-        // var STORE_ID = "1031";
+        this.opencheck(this.opengroup);
+      },
 
-        // var jsonParams = {
-        //   'funName': 'good_detail_fun',
-        //   'params': {
-        //     'STORE_ID': STORE_ID,
-        //     'GOODS_NO': GOODS_NO,
-        //     'GOODS_ID': GOODS_ID
-        //   }
-        // };
-        // LHHybrid.nativeFun(jsonParams);
-        // // test
-
+      opengroup: function() {
         var jsonParams = {
           'funName': 'group_buy_pay',
           'params': {
             "storeId": this.options.activitymap.STORE_ID,
-            "storeName": "1",
+            "storeName": this.options.activitymap.STORE_NAME,
             "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
+            "goodName": this.options.activitymap.GOODS_NAME,
             "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG,
+            "goodsImg": this.options.activitymap.GOODS_IMG,
             "activityId": this.options.activitymap.ID, //活动id
             "userActivityId": 0 //团id
           }
@@ -239,26 +294,93 @@ define('lehu.h5.component.groupdetail', [
         LHHybrid.nativeFun(jsonParams);
       },
 
-      "#joingroup click": function() {
+      opencheck: function(successCallback) {
+        var that = this;
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL + "openActivity.do",
+          data: {
+            "userId": this.userId,
+            "activityId": this.options.activitymap.ID
+          },
+          method: 'post'
+        });
+
+        api.sendRequest()
+          .done(function(data) {
+            successCallback.apply(that);
+          })
+          .fail(function(error) {
+            util.tip(error.msg);
+          });
+      },
+
+      joincheck: function(successCallback) {
+        var that = this;
+
+        var api = new LHAPI({
+          url: this.URL.SERVER_URL + "partakeActivity.do",
+          data: {
+            "userId": this.userId,
+            "userActivityId": this.options.userActivityId //userActivityId团id
+          },
+          method: 'post'
+        });
+
+        api.sendRequest()
+          .done(function(data) {
+            successCallback.apply(that);
+          })
+          .fail(function(error) {
+            util.tip(error.msg);
+          });
+      },
+
+      joingroup: function() {
+        var jsonParams = {
+          'funName': 'group_buy_pay',
+          'params': {
+            "storeId": this.options.activitymap.STORE_ID,
+            "storeName": this.options.activitymap.STORE_NAME,
+            "goodsID": this.options.activitymap.GOODS_ID,
+            "goodName": this.options.activitymap.GOODS_NAME,
+            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
+            "goodsImg": this.options.activitymap.GOODS_IMG,
+            "activityId": this.options.activitymap.ACTIVITY_ID, //活动id
+            "userActivityId": this.options.userActivityId //团id
+          }
+        };
+        LHHybrid.nativeFun(jsonParams);
+      },
+
+      ".jion_box click": function() {
+        if (this.isNeedUpdate()) {
+          util.tip("请升级app到最新版本后使用!");
+          return false;
+        }
+
+        var param = can.deparam(window.location.search.substr(1));
+        if (!param.version) {
+          return false;
+        }
 
         if (!this.isLogin()) {
           return false;
         }
 
-        var jsonParams = {
-          'funName': 'group_buy_pay',
-          'params': {
-            "storeId": this.options.activitymap.STORE_ID,
-            "storeName": "1",
-            "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
-            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG,
-            "activityId": this.options.activitymap.ID, //活动id
-            "userActivityId": 0 //团id
-          }
-        };
-        LHHybrid.nativeFun(jsonParams);
+        this.joincheck(this.joingroup);
+      },
+
+      "#joingroup click": function() {
+        if (this.isNeedUpdate()) {
+          util.tip("请升级app到最新版本后使用!");
+          return false;
+        }
+
+        if (!this.isLogin()) {
+          return false;
+        }
+
+        this.joincheck(this.joingroup);
       },
 
       "#sharetip click": function(element, event) {
@@ -266,6 +388,10 @@ define('lehu.h5.component.groupdetail', [
       },
 
       "#share click": function(element, event) {
+        this.toShare();
+      },
+
+      toShare: function() {
         var param = can.deparam(window.location.search.substr(1));
         var version = param.version;
         if (!version && !util.isMobile.WeChat()) {
@@ -278,15 +404,24 @@ define('lehu.h5.component.groupdetail', [
           return false;
         }
 
+        var paramObj = can.deparam(window.location.search.substr(1));
+        // paramObj.sharefromapp = true;
+        delete paramObj.version;
+        delete paramObj.userid;
+        delete paramObj.youtui;
+        var paramStr = can.param(paramObj);
+
+        var shareURL = 'http://' + location.host + location.pathname + "?" + paramStr;
+
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
-            'title': "汇银乐虎全球购-领券中心",
+            'title': "汇银乐虎全球购-拼团",
             'type': "1",
             'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
+            'shareUrl': shareURL,
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
-            'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
+            'text': "汇银乐虎全球购，拼团！"
           }
         };
         LHHybrid.nativeFun(jsonParams);

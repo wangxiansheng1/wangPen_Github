@@ -1,4 +1,4 @@
-.coupons_bj{ background: url(../images/coupondetail/bj.jpg) no-repeat #fdeaa5; background-size:100%;}
+/*.coupons_bj{ background: url(../images/coupondetail/bj.jpg) no-repeat #fdeaa5; background-size:100%;}*/
 .coupons_bj .nwrapper{ height:100%; position:fixed;}
 .bt_share{ width:1.5rem; height:1rem; position:absolute; top:0; right:0;}
 .bt_get{  width:4.15rem; height:1.3rem; display:block; float:left; position:absolute; bottom:1.5rem; left:1.67rem;background:url(../images/coupondetail/get.png) no-repeat; background-size:100%;}

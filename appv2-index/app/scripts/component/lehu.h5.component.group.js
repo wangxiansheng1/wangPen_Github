@@ -52,7 +52,7 @@ define('lehu.h5.component.group', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        // this.URL.SERVER_URL_NJ = 'http://172.16.201.80:8080/lehu-app-back/';
+        // this.URL.SERVER_URL_NJ = 'http://172.16.201.68:8083/ptapp/';
 
         this.options.data = new can.Map({
           "grouplist": null,
@@ -73,7 +73,7 @@ define('lehu.h5.component.group', [
         // busizutil.encription(this.param);
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + "groupAcFrontList.do",
+          url: this.URL.SERVER_URL + "groupAcFrontList.do",
           data: this.param,
           method: 'post'
         });
@@ -85,6 +85,8 @@ define('lehu.h5.component.group', [
             var renderList = can.mustache(template_components_group);
             var html = renderList(that.options.data, that.helpers);
             that.element.html(html);
+
+            that.dealhash();
           })
           .fail(function(error) {
             var renderList = can.mustache(template_components_group);
@@ -99,6 +101,8 @@ define('lehu.h5.component.group', [
         element.addClass('active');
         var currentdetail = $(".swiper-slide").eq(element.index());
         $(currentdetail).show().siblings().hide();
+
+        store.set("groupselectedindex", element.index());
 
         var action = null;
         var status = null;
@@ -130,7 +134,7 @@ define('lehu.h5.component.group', [
         }
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + action,
+          url: this.URL.SERVER_URL + action,
           data: param,
           method: 'post'
         });
@@ -148,6 +152,30 @@ define('lehu.h5.component.group', [
           .fail(function(error) {
             util.tip(error.msg);
           })
+      },
+
+      dealhash: function() {
+        var selectedIndex = store.get("groupselectedindex");
+
+        // ios
+        if (typeof selectedIndex != 'undefined') {
+          $(".tabs a").eq(selectedIndex).click()
+        } else {
+          var hash = location.hash;
+          if (hash == "#open" || hash == "") {
+            $(".tabs a").eq(0).click()
+          } else if (hash == "#join") {
+            $(".tabs a").eq(1).click()
+          } else if (hash == "#success") {
+            $(".tabs a").eq(2).click()
+          }
+        }
+      },
+
+      '.group_main_box click': function(element, event) {
+        var href = element.attr("data-href");
+        location.href = href;
+        return false;
       },
 
       '.back click': function() {

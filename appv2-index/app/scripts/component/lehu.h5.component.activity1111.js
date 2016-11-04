@@ -70,110 +70,36 @@ define('lehu.h5.component.activity1111', [
         LHHybrid.nativeFun(jsonParams);
       },
 
-      //美容彩妆
-      '#meirongactivity click': function(element, event) {
-        location.href = "activities.html?ids=961|959|960|958&pageIndex=1&flag=2";
+      ".sale_box a click": function(element, event) {
+        var goodsid = element.attr("data-goodsid");
+        var goodsno = element.attr("data-goodsno");
+        var storeid = element.attr("data-storeid");
+
+        this.toDetail(storeid, goodsno, goodsid);
       },
 
-      '#meirongproduct1 click': function(element, event) {
-        //TODO
-        var GOODS_ID = "86773";
-        var GOODS_NO = "77770058";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      '.sale_msg click': function(element, event) {
+        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1232|1233|1234|1235|1236|1237&pageIndex=1&flag=2";
       },
 
-      '#meirongproduct2 click': function(element, event) {
-        var GOODS_ID = "86356";
-        var GOODS_NO = "666666666";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      '.sale_box_01 .sale_box_top click': function(element, event) {
+        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1238|1239|1240|1241|1242&pageIndex=1&flag=2";
       },
 
-      //母婴专区
-      '#moyingactivity click': function(element, event) {
-        location.href = "activities.html?ids=969|966|968|962&pageIndex=1&flag=2";
+      '.sale_box_02 .sale_box_top click': function(element, event) {
+        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1243|1244|1245|1246|1247&pageIndex=1&flag=2";
       },
 
-      '#moyingproduct1 click': function(element, event) {
-        var GOODS_ID = "86078";
-        var GOODS_NO = "10020005";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      '.sale_box_03 .sale_box_top click': function(element, event) {
+        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1248|1249|1252|1253|1254|1255&pageIndex=1&flag=2";
       },
 
-      '#moyingproduct2 click': function(element, event) {
-        var GOODS_ID = "95389";
-        var GOODS_NO = "10020358";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      '.sale_box_04 .sale_box_top click': function(element, event) {
+        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1256|1257|1198|1200|1201|1202&pageIndex=1&flag=2";
       },
 
-      //营养保健
-      '#yingyangactivity click': function(element, event) {
-        location.href = "activities.html?ids=956|953|954|955&pageIndex=1&flag=2";
-      },
-
-      '#yingyangproduct1 click': function(element, event) {
-        var GOODS_ID = "86260";
-        var GOODS_NO = "10020085";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-      },
-
-      '#yingyangproduct2 click': function(element, event) {
-        var GOODS_ID = "86259";
-        var GOODS_NO = "10020084";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-      },
-
-      //进口美食
-      '#jinkouactivity click': function(element, event) {
-        location.href = "activities.html?ids=977|974|975|976&pageIndex=1&flag=2";
-      },
-
-      '#jinkouproduct1 click': function(element, event) {
-        var GOODS_ID = "90100";
-        var GOODS_NO = "20000021";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-      },
-
-      '#jinkouproduct2 click': function(element, event) {
-        var GOODS_ID = "95380";
-        var GOODS_NO = "20001019";
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-      },
-
-      //家居日化
-      '#jiajuactivity click': function(element, event) {
-        location.href = "activities.html?ids=973|970|972|971&pageIndex=1&flag=2";
-      },
-
-      '#jiajuproduct1 click': function(element, event) {
-        var GOODS_ID = "95065";
-        var GOODS_NO = "8009354"; //TODO
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
-      },
-
-      '#jiajuproduct2 click': function(element, event) {
-        var GOODS_ID = "93074";
-        var GOODS_NO = "8012712"; //TODO
-        var STORE_ID = "1031";
-
-        this.toDetail(STORE_ID, GOODS_NO, GOODS_ID);
+      '.sale_box_05 .sale_box_top click': function(element, event) {
+        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1203|1204|1222|1223|1224&pageIndex=1&flag=2";
       },
 
       encription: function(params) {
@@ -242,7 +168,20 @@ define('lehu.h5.component.activity1111', [
           });
       },
 
-      '.nindex_fanhui click': function() {
+      '.back click': function() {
+        // temp begin  
+        // 在app外部使用 点击返回 如果没有可返回则关闭掉页面
+        var param = can.deparam(window.location.search.substr(1));
+        if (!param.version) {
+          if (history.length == 1) {
+            window.opener = null;
+            window.close();
+          } else {
+            history.go(-1);
+          }
+          return false;
+        }
+        // temp end
 
         if (util.isMobile.Android() || util.isMobile.iOS()) {
           var jsonParams = {

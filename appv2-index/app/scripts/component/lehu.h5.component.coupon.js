@@ -78,7 +78,6 @@ define('lehu.h5.component.coupon', [
 
       initData: function() {
         this.URL = LHHybrid.getUrl();
-        // this.URL.SERVER_URL = 'http://172.16.201.68:8082/'
       },
 
       render: function() {
@@ -105,12 +104,13 @@ define('lehu.h5.component.coupon', [
 
             _.each(that.options.data, function(item) {
               if (item.HQ_TYPE == "1") {
-                item.TIP = "满" + item.DEMAND + "减" + item.PRICE;
+                item.TIP = "满" + item.DEMAND + "立减";
               } else if (item.HQ_TYPE == "2") {
                 item.TIP = "面值" + item.PRICE;
               }
+              item.START_TIME = item.START_TIME.replace(/-/g, ".");
+              item.END_TIME = item.END_TIME.replace(/-/g, ".")
             })
-
 
             var renderList = can.mustache(template_components_coupon);
             var html = renderList(that.options, that.helpers);

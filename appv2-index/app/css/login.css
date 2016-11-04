@@ -13,7 +13,7 @@ body { visibility: hidden; /* display:none;*/ background-color:#ffffff;}
 .login_main .item{width:100%;font-size:.26rem;float:left;}
 .login_main .item.item_tips{margin-bottom:.1rem;display:none; height:.3rem;}
 .login_main .item.item_tips .err_msg {font-size: .24rem;color: #f51449;}
-.login_main .item .txt_input{width:5.89rem;height:1rem;line-height:normal;padding:0; border-bottom:1px solid #e1e1e1;font-size:.26rem;color:#666666;font-family:"Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft Yahei","微软雅黑",Tahoma,Arial,STHeiti,sans-serif; float:left;}
+.login_main .item .txt_input{width:5.89rem;height:1rem;line-height:normal;padding:0; border-bottom:1px solid #e1e1e1;font-size:.32rem;color:#666666;font-family:"Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft Yahei","微软雅黑",Tahoma,Arial,STHeiti,sans-serif; float:left;}
 .login_main .item .txt_input.txt_password{ width:4.89rem;}
 .login_main .item_login_option{ height:.7rem;}
 .login_main .item_login_option .retrieve_password{float:right;width:50%;text-align:right; line-height:.7rem;}

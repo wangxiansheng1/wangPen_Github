@@ -21,6 +21,24 @@ define('lehu.h5.component.groupsuccess', [
 
     return can.Control.extend({
 
+      helpers: {
+        'lehu-img': function(imgprefix, img) {
+          if (_.isFunction(imgprefix)) {
+            imgprefix = imgprefix();
+          }
+
+          if (_.isFunction(img)) {
+            img = img();
+          }
+
+          if (img.indexOf("http://") > -1) {
+            return img;
+          }
+
+          return imgprefix + img;
+        }
+      },
+
       param: {},
 
       /**
@@ -67,7 +85,7 @@ define('lehu.h5.component.groupsuccess', [
         }
 
         var api = new LHAPI({
-          url: this.URL.SERVER_URL_NJ + action,
+          url: this.URL.SERVER_URL + action,
           data: param,
           method: 'post'
         });
@@ -77,13 +95,18 @@ define('lehu.h5.component.groupsuccess', [
 
             that.options.activitymap = data.activitymap;
             that.options.userlist = data.userlist;
+            that.options.partake_num = data.partake_num;
 
             that.options.firstUser = that.options.userlist[0];
             that.options.secondUser = that.options.userlist[1];
 
             if (that.options.userlist.length > 2) {
+              that.options.thirdUser = that.options.userlist[2];
               that.options.lastUser = that.options.userlist.slice(2);
             }
+
+            //图片前缀
+            that.options.imgprefix = that.URL.IMAGE_URL;
 
             var renderList = can.mustache(template_components_groupsuccess);
             var html = renderList(that.options, that.helpers);
@@ -94,18 +117,20 @@ define('lehu.h5.component.groupsuccess', [
           })
       },
 
-      ".footer_buy click": function() {
+      toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
         var jsonParams = {
-          'funName': 'OriginSourcePay',
+          'funName': 'good_detail_fun',
           'params': {
-            "storeName": 1,
-            "goodsID": this.options.activitymap.GOODS_ID,
-            "goodName": this.options.activitymap.TITLE,
-            "goodsPrice": this.options.activitymap.ACTIVEPRICE,
-            "goodsImg": this.options.activitymap.IMG
+            'STORE_ID': STORE_ID,
+            'GOODS_NO': GOODS_NO,
+            'GOODS_ID': GOODS_ID
           }
         };
         LHHybrid.nativeFun(jsonParams);
+      },
+
+      ".footer_buy click": function() {
+        this.toDetail(this.options.activitymap.STORE_ID, this.options.activitymap.GOODS_NO, this.options.activitymap.GOODS_ID);
       },
 
       "#sharetip click": function(element, event) {
@@ -125,13 +150,22 @@ define('lehu.h5.component.groupsuccess', [
           return false;
         }
 
+        var paramObj = can.deparam(window.location.search.substr(1));
+        // paramObj.sharefromapp = true;
+        delete paramObj.version;
+        delete paramObj.userid;
+        delete paramObj.youtui;
+        var paramStr = can.param(paramObj);
+
+        var shareURL = 'http://' + location.host + location.pathname + "?" + paramStr;
+
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
             'title': "汇银乐虎全球购-领券中心",
             'type': "1",
             'video_img': "",
-            'shareUrl': 'http://' + window.location.host + "/html5/app/coupon.html?from=share",
+            'shareUrl': shareURL,
             'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
             'text': "汇银乐虎全球购，赶紧领取优惠券吧，手慢无！"
           }
