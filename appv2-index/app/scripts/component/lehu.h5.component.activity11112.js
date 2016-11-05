@@ -96,8 +96,6 @@ define('lehu.h5.component.activity11112', [
           window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1290|1291|1292|1293|1294|1295&pageIndex=1&flag=2";
         },
 
-
-
         '.nindex_fanhui click': function() {
 
           if (util.isMobile.Android() || util.isMobile.iOS()) {

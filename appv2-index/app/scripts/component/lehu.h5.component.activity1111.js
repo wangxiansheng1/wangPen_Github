@@ -50,7 +50,7 @@ define('lehu.h5.component.activity1111', [
         var renderFn = can.view.mustache(template_components_activity1111);
         var html = renderFn(this.options.data, this.helpers);
         this.element.html(html);
-        
+
       },
 
       toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
