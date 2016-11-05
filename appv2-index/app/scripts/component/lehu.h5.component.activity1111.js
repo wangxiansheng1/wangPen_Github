@@ -50,7 +50,7 @@ define('lehu.h5.component.activity1111', [
         var renderFn = can.view.mustache(template_components_activity1111);
         var html = renderFn(this.options.data, this.helpers);
         this.element.html(html);
-        
+
       },
 
       toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
@@ -73,7 +73,7 @@ define('lehu.h5.component.activity1111', [
       },
 
       '.sale_msg click': function(element, event) {
-        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1232|1233|1234|1235|1236|1237&pageIndex=1&flag=2";
+        window.location.href = "http://app.lehumall.com/html5/app/activityreward.html";
       },
 
       '.sale_box_01 .sale_box_top click': function(element, event) {

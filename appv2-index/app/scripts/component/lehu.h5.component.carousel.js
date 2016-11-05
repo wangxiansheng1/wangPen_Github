@@ -243,6 +243,8 @@ define('lehu.h5.component.carousel', [
 
         busizutil.encription(this.param);
 
+        // util.tip("人气太旺,请耐心等待结果", 1000);
+
         var api = new LHAPI({
           url: this.URL.SERVER_URL + "singleLuckdraw.do",
           data: this.param,
@@ -334,7 +336,7 @@ define('lehu.h5.component.carousel', [
         var param = can.deparam(window.location.search.substr(1));
 
         if (util.isMobile.WeChat() || !param.version) {
-          location.href = "login.html?from=coupon.html";
+          location.href = "login.html?from=carousel.html";
           return false;
         } else {
           var jsonParams = {

@@ -353,13 +353,15 @@ define('lehu.h5.component.groupdetail', [
       },
 
       ".jion_box click": function() {
-        if (this.isNeedUpdate()) {
-          util.tip("请升级app到最新版本后使用!");
-          return false;
-        }
 
         var param = can.deparam(window.location.search.substr(1));
         if (!param.version) {
+          return false;
+        }
+
+        // app下是否需要升级
+        if (this.isNeedUpdate()) {
+          util.tip("请升级app到最新版本后使用!");
           return false;
         }
 
@@ -416,12 +418,12 @@ define('lehu.h5.component.groupdetail', [
         var jsonParams = {
           'funName': 'share_fun',
           'params': {
-            'title': "汇银乐虎全球购-拼团",
+            'title': this.options.activitymap.GOODS_NAME + this.options.activitymap.ACTIVEPRICE,
             'type': "1",
             'video_img': "",
             'shareUrl': shareURL,
-            'shareImgUrl': "http://app.lehumall.com/html5/app/images/Shortcut_114_114.png",
-            'text': "汇银乐虎全球购，拼团！"
+            'shareImgUrl': this.options.imgprefix + this.options.activitymap.GOODS_IMG,
+            'text': this.options.activitymap.GOODS_NAME + this.options.activitymap.ACTIVEPRICE
           }
         };
         LHHybrid.nativeFun(jsonParams);
