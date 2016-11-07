@@ -41,6 +41,14 @@ define('lehu.h5.component.activityreward', [
           }
 
           return imgprefix + img;
+        },
+
+        'lehu-showDis': function(discount, price, options) {
+          if (parseFloat(discount) < parseFloat(price) && discount != 0) {
+            return options.fn(options.contexts || this);
+          } else {
+            return options.inverse(options.contexts || this);
+          }
         }
       },
 

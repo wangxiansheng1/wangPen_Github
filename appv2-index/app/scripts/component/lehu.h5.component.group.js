@@ -79,6 +79,7 @@ define('lehu.h5.component.group', [
         });
         api.sendRequest()
           .done(function(data) {
+
             that.options.data.attr("grouplist", data.list);
             that.options.data.attr("imgprefix", that.URL.IMAGE_URL);
 

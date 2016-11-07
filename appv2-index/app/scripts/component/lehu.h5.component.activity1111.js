@@ -51,11 +51,6 @@ define('lehu.h5.component.activity1111', [
         var html = renderFn(this.options.data, this.helpers);
         this.element.html(html);
 
-        //显示优惠券
-        var params = can.deparam(window.location.search.substr(1));
-        if (params.showcoupon && params.showcoupon === 'true') {
-          $(".coupon").css("display", "block");
-        }
       },
 
       toDetail: function(STORE_ID, GOODS_NO, GOODS_ID) {
@@ -74,12 +69,11 @@ define('lehu.h5.component.activity1111', [
         var goodsid = element.attr("data-goodsid");
         var goodsno = element.attr("data-goodsno");
         var storeid = element.attr("data-storeid");
-
         this.toDetail(storeid, goodsno, goodsid);
       },
 
       '.sale_msg click': function(element, event) {
-        window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1232|1233|1234|1235|1236|1237&pageIndex=1&flag=2";
+        window.location.href = "http://app.lehumall.com/html5/app/activityreward.html?test=test";
       },
 
       '.sale_box_01 .sale_box_top click': function(element, event) {
@@ -100,72 +94,6 @@ define('lehu.h5.component.activity1111', [
 
       '.sale_box_05 .sale_box_top click': function(element, event) {
         window.location.href = "http://app.lehumall.com/html5/app/activities.html?ids=1203|1204|1222|1223|1224&pageIndex=1&flag=2";
-      },
-
-      encription: function(params) {
-        var paramStr = this.getSignDataString(params);
-        params["mKey"] = paramStr;
-      },
-
-      getSignDataString: function(params) {
-        var that = this;
-        var arr = [];
-
-        // 将Map变成Array，使用key=value的方式进行拼接
-        _.each(params, function(value, key) {
-          arr.push(key);
-        });
-
-        // 以ascii进行排序
-        arr.sort();
-
-        var result = [];
-        _.each(arr, function(item) {
-          result.push(that.des3(params[item]));
-        })
-
-        // 将队列拼接成String
-        var str = result.join('');
-        str = str + KEY;
-
-        // 做md5加密
-        return md5(str);
-      },
-
-      des3: function(str) {
-
-        var keyHex = CryptoJS.enc.Utf8.parse(DES3_KEY);
-        var encrypted = CryptoJS.TripleDES.encrypt(str, keyHex, {
-          iv: CryptoJS.enc.Utf8.parse(DES3_IV),
-          mode: CryptoJS.mode.CBC,
-          padding: CryptoJS.pad.Pkcs7
-        });
-        return encrypted.toString();
-      },
-
-      getCoupon: function(userId, acitveId) {
-        var that = this;
-
-        this.param = {
-          "userId": userId,
-          "acitveId": acitveId
-        };
-
-        busizutil.encription(this.param);
-
-        var api = new LHAPI({
-          url: this.URL.SERVER_URL + LHConfig.setting.action.getLHTicket,
-          data: this.param,
-          method: 'post'
-        });
-        api.sendRequest()
-          .done(function(data) {
-            util.tip(data.msg);
-          })
-          .fail(function(error) {
-            console.log(error);
-            util.tip("领取失败");
-          });
       },
 
       '.back click': function() {

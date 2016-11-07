@@ -1,4 +1,4 @@
-define('lehu.h5.page.activity1111', [
+define('lehu.h5.page.activity11112', [
         'can',
         'zepto',
         'fastclick',
