@@ -100,7 +100,7 @@ define('lehu.h5.component.groupdetail', [
        */
       sendRequest: function(action, activityId, id) {
 
-          var that = this;
+        var that = this;
 
         var param = {
           "activityId": activityId
@@ -126,13 +126,12 @@ define('lehu.h5.component.groupdetail', [
             //queryActivityInfo.do 0表示可以开团，为1表示已经过期，不能开团，需要跳转
             //partInActivityInfo.do  0表示参团中，可以参团,1表示已经完成团购，按现在来说，时间也过了，
             //不能参团了，要跳转； 为2表示已经拼团失败，时间到期，
-
-            if(typeof that.options.activitymap.intstatus!='undefined'&&that.options.activitymap.intstatus!==0){
-                window.location.href='group.html';
-                return false;
+            if (typeof that.options.activitymap.intstatus != 'undefined' && that.options.activitymap.intstatus !== 0) {
+              window.location.href = 'group.html';
+              return false;
             };
 
-                //团信息
+            //团信息
             if (that.action == 'join') {
               var tempMap = _.pick(data.groupmap, 'ACTIVEPRICE', 'CONTENT', 'GOODSPRICE', 'GOODS_ID', 'GOODS_IMG', 'GOODS_NAME', 'GOODS_NO', 'IMG', 'STORE_ID', 'STORE_NAME', 'TITLE', 'TOTALNUM');
               _.extend(that.options.activitymap, tempMap);
