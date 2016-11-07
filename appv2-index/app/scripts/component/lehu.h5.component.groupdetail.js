@@ -121,14 +121,18 @@ define('lehu.h5.component.groupdetail', [
         api.sendRequest()
           .done(function(data) {
 
-            //团信息
             that.options.activitymap = data.activitymap;
 
-            if(that.options.activitymap.INTSTATUS==1){
+            //queryActivityInfo.do 0表示可以开团，为1表示已经过期，不能开团，需要跳转
+            //partInActivityInfo.do  0表示参团中，可以参团,1表示已经完成团购，按现在来说，时间也过了，
+            //不能参团了，要跳转； 为2表示已经拼团失败，时间到期，
 
-               window.location.href='http://172.16.201.68:8086/html5/app/group.html';
-
+            if(typeof that.options.activitymap.intstatus!='undefined'&&that.options.activitymap.intstatus!==0){
+                window.location.href='group.html';
+                return false;
             };
+
+                //团信息
             if (that.action == 'join') {
               var tempMap = _.pick(data.groupmap, 'ACTIVEPRICE', 'CONTENT', 'GOODSPRICE', 'GOODS_ID', 'GOODS_IMG', 'GOODS_NAME', 'GOODS_NO', 'IMG', 'STORE_ID', 'STORE_NAME', 'TITLE', 'TOTALNUM');
               _.extend(that.options.activitymap, tempMap);
