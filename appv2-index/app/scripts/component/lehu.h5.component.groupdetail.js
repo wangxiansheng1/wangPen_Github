@@ -130,7 +130,7 @@ define('lehu.h5.component.groupdetail', [
 
               util.tip("该团已经结束");
 
-              settimeout(function(){
+              setTimeout(function(){
                 window.location.href = 'group.html';
                 return false;
               },1000)
