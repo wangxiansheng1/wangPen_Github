@@ -37,7 +37,7 @@ define('lehu.h5.component.index', [
           that.sendRequest.apply(that);
         }, 0);
 
-        // this.shouldShowCoupon();
+        this.shouldShowCoupon();
       },
 
       shouldShowCoupon: function() {
@@ -379,9 +379,6 @@ define('lehu.h5.component.index', [
           } else if (type == 'h5null') {
             util.tip("全新抽奖即将上线，敬请期待!");
             return false;
-          } else if (type == 'h5nullbobo') {
-            util.tip("全新直播即将上线，敬请期待!");
-            return false;
           } else if (type == 'native') {
             var jsonParams = {
               'funName': 'shortcut_fun',
@@ -412,7 +409,7 @@ define('lehu.h5.component.index', [
 
       tagMap: {
         "17": {
-          type: "h5null",
+          type: "h5",
           name: "大转盘",
           url: 'carousel.html'
         },
@@ -429,7 +426,7 @@ define('lehu.h5.component.index', [
           name: "红包专区"
         },
         "-1": {
-          type: "h5nullbobo",
+          type: "native",
           name: "播播直播"
         },
         "3": {
@@ -440,9 +437,8 @@ define('lehu.h5.component.index', [
         },
         "5": {
           type: "h5",
-          name: "日韩馆",
-          url: 'list.html?originIds=42&mark=8',
-          query: 'originIds=42&mark=8'
+          name: "主会场",
+          url: 'activity1111.html'
         },
         "15": {
           type: "h5",
@@ -452,9 +448,8 @@ define('lehu.h5.component.index', [
         },
         "8": {
           type: "h5",
-          name: "欧洲馆",
-          url: 'list.html?originIds=43&mark=8',
-          query: 'originIds=43&mark=8'
+          name: "拼团",
+          url: 'group.html'
         },
         "7": {
           type: "h5",
@@ -463,6 +458,60 @@ define('lehu.h5.component.index', [
           query: 'originIds=43&mark=8'
         }
       },
+
+      // tagMap: {
+      //   "17": {
+      //     type: "h5null",
+      //     name: "大转盘",
+      //     url: 'carousel.html'
+      //   },
+      //   "22": {
+      //     type: "native",
+      //     name: "免费试用"
+      //   },
+      //   "25": {
+      //     type: "native",
+      //     name: "每日签到"
+      //   },
+      //   "6": {
+      //     type: "nativehongbao",
+      //     name: "红包专区"
+      //   },
+      //   "-1": {
+      //     type: "native",
+      //     name: "播播直播"
+      //   },
+      //   "3": {
+      //     type: "h5",
+      //     name: "海外购",
+      //     url: 'list.html?storeId=1031&mark=5',
+      //     query: 'storeId=1031&mark=5'
+      //   },
+      //   "5": {
+      //     type: "h5",
+      //     name: "日韩馆",
+      //     url: 'list.html?originIds=42&mark=8',
+      //     query: 'originIds=42&mark=8'
+      //   },
+      //   "15": {
+      //     type: "h5",
+      //     name: "澳洲馆",
+      //     url: 'list.html?originIds=44&mark=8',
+      //     query: 'originIds=44&mark=8'
+      //   },
+      //   "8": {
+      //     type: "h5",
+      //     name: "欧洲馆",
+      //     url: 'list.html?originIds=43&mark=8',
+      //     query: 'originIds=43&mark=8'
+      //   },
+      //   "7": {
+      //     type: "h5",
+      //     name: "领券中心",
+      //     url: 'coupon.html?appinner=true',
+      //     query: 'originIds=43&mark=8'
+      //   }
+      // },
 
       renderSecondkillList: function(data) {
         if (data.seckillList) {
