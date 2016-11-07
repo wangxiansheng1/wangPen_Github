@@ -73,7 +73,7 @@ define('lehu.h5.component.activity1111', [
       },
 
       '.sale_msg click': function(element, event) {
-        window.location.href = "http://app.lehumall.com/html5/app/activityreward.html";
+        window.location.href = "http://app.lehumall.com/html5/app/activityreward.html?test=test";
       },
 
       '.sale_box_01 .sale_box_top click': function(element, event) {

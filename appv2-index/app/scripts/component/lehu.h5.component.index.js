@@ -37,7 +37,7 @@ define('lehu.h5.component.index', [
           that.sendRequest.apply(that);
         }, 0);
 
-        // this.shouldShowCoupon();
+        this.shouldShowCoupon();
       },
 
       shouldShowCoupon: function() {
