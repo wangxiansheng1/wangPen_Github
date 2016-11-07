@@ -99,7 +99,8 @@ define('lehu.h5.component.groupdetail', [
        *id（团的id），activityid（活动id）
        */
       sendRequest: function(action, activityId, id) {
-        var that = this;
+
+          var that = this;
 
         var param = {
           "activityId": activityId
@@ -123,6 +124,11 @@ define('lehu.h5.component.groupdetail', [
             //团信息
             that.options.activitymap = data.activitymap;
 
+            if(that.options.activitymap.INTSTATUS==1){
+
+               window.location.href='http://172.16.201.68:8086/html5/app/group.html';
+
+            };
             if (that.action == 'join') {
               var tempMap = _.pick(data.groupmap, 'ACTIVEPRICE', 'CONTENT', 'GOODSPRICE', 'GOODS_ID', 'GOODS_IMG', 'GOODS_NAME', 'GOODS_NO', 'IMG', 'STORE_ID', 'STORE_NAME', 'TITLE', 'TOTALNUM');
               _.extend(that.options.activitymap, tempMap);
