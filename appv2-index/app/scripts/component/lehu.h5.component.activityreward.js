@@ -44,6 +44,12 @@ define('lehu.h5.component.activityreward', [
         },
 
         'lehu-showDis': function(discount, price, options) {
+          if (_.isFunction(discount)) {
+            discount = discount();
+          }
+          if (_.isFunction(price)) {
+            price = price();
+          }
           if (parseFloat(discount) < parseFloat(price) && discount != 0) {
             return options.fn(options.contexts || this);
           } else {
