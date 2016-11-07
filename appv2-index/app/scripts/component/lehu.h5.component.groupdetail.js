@@ -126,9 +126,15 @@ define('lehu.h5.component.groupdetail', [
             //queryActivityInfo.do 0表示可以开团，为1表示已经过期，不能开团，需要跳转
             //partInActivityInfo.do  0表示参团中，可以参团,1表示已经完成团购，按现在来说，时间也过了，
             //不能参团了，要跳转； 为2表示已经拼团失败，时间到期，
-            if (typeof that.options.activitymap.intstatus != 'undefined' && that.options.activitymap.intstatus !== 0) {
-              window.location.href = 'group.html';
-              return false;
+            if (typeof that.options.activitymap.INTSTATUS != 'undefined' && that.options.activitymap.INTSTATUS !== 0) {
+
+              util.tip("该团已经结束");
+
+              settimeout(function(){
+                window.location.href = 'group.html';
+                return false;
+              },1000)
+
             };
 
             //团信息
