@@ -8,12 +8,13 @@ define('lehu.h5.page.groupsuccess', [
         'lehu.hybrid',
 
         'lehu.h5.header.footer',
+        'lehu.h5.header.download',
 
         'lehu.h5.component.groupsuccess'
     ],
 
     function(can, $, Fastclick, util, LHFrameworkComm, LHConfig, LHHybrid,
-        LHFooter,
+        LHFooter, LHDownload,
         LHGroupsuccess) {
         'use strict';
 
@@ -29,6 +30,16 @@ define('lehu.h5.page.groupsuccess', [
             init: function(element, options) {
                 var login = new LHGroupsuccess("#content");
                 new LHFooter();
+
+                var param = can.deparam(window.location.search.substr(1));
+                if (!param.version) {
+                    new LHDownload(null, {
+                        'position': 'bottom',
+                        'title': '下载app，拼团更优惠!',
+                        'subtitle': '汇银乐虎全球家',
+                        'canotclose': true
+                    });
+                }
             }
         });
 
