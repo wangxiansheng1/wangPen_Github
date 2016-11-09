@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v1.4.67
+#v1.4.71
 
 CACHE:
 styles/lehu.h5.index.css
@@ -19,6 +19,7 @@ scripts/lehu.h5.page.activityreward.js
 scripts/lehu.h5.page.activity1111.js
 scripts/lehu.h5.page.group.js
 scripts/lehu.h5.page.groupdetail.js
+scripts/lehu.h5.page.groupsuccess.js
 images/wifi.png
 images/sx.png
 images/fanhui.png
