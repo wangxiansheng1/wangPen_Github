@@ -438,7 +438,7 @@ define('lehu.h5.component.index', [
         "5": {
           type: "h5",
           name: "主会场",
-          url: 'activity1111.html'
+          url: 'activity11112.html'
         },
         "15": {
           type: "h5",
