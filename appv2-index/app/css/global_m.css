@@ -79,7 +79,7 @@ body { visibility: hidden; /* display:none;*/ background-color:#ffffff;}
 
 /* 布局grid 头部、主体、主栏、侧栏、尾部 rgba(255,255,255,.7)*/
 /** 顶部导航 **/
-.nheader{position:fixed;top:0rem;z-index:99;height:1.1rem;width:100%; float:left;max-width:100%; padding-top:.3rem;}
+.nheader{position:fixed;top:0rem;z-index:99;height:1.1rem;width:100%; float:left;max-width:100%; padding-top:.1rem;}
 .nindex_shaomiao{ background-image:url(../images/shaoyishao.png); background-repeat: no-repeat; background-size:100%; width:8.5%; height:.51rem; display:block; float:left; margin:.22rem 0 0 1.5%;}
 .nindex_sousuo{ width:75%; height:.65rem; display:block; float:left; background: rgba(255,255,255,.7); border-radius:.1rem; line-height:.72rem; font-size:.26rem; color:#a0a0a0; margin:.1rem 0 0 2.5%;}
 .nindex_sousuo em{ background-image: url(../images/soshuo.png); background-repeat: no-repeat; background-size:100%; width:.3rem; height:.3rem; display:block; float:left; margin:.18rem .15rem 0rem .15rem;}
