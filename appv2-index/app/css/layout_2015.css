@@ -1,5 +1,5 @@
 /*首页 #f51449 3.2rem*/
-.nheader_cover{background: #ffffff;opacity: 0;position: absolute;width: 100%;height:1.05rem;top: 0; z-index:-1;}
+.nheader_cover{background: #ffffff;opacity: 0;position: absolute;width: 100%;height:1.2rem;top: 0; z-index:-1;}
 .nbanner{width: 100%;height: 4rem;}
 .nbanner .swiper-container,.nbanner .swiper-slide img {width: 100%;height: 100%;}
 .nbanner .swiper-pagination-bullet-active{background:#e5004f;}
