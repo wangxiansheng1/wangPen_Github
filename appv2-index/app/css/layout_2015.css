@@ -23,7 +23,7 @@
 .nmiaosha_main a span em{ font-size:.24rem;}
 .nindex_ad,.ntuijian_ad{ width:100%; height:auto; display:block; float:left;}
 .ntuijian_ad{ position: relative}
-.ntuijian_ad .triangle_ad{ display: block;width: 0; height: 0; border-left: .15rem solid transparent; border-right: .15rem solid transparent; border-bottom: .15rem solid #ffffff;position: absolute; bottom: 0px; margin-left: calc(50% - .15rem )}
+.ntuijian_ad .triangle_ad{ display: block;width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-bottom: .23rem solid #ffffff;position: absolute; bottom: 0px; margin-left: calc(50% - .3rem )}
 .nindex_ad .nindex_ad_one a,.ntuijian_ad a{ width:100%; height:auto; display:block; float:left; margin:0 0 .1rem;}
 .nindex_ad .nindex_ad_two a{ width:50%; height:auto; display:block; float:left; margin:0 0 .1rem;}
 .nindex_ad .nindex_ad_three a{ width:33.3333333%; height:auto; display:block; float:left; margin:0 0 .1rem;}
