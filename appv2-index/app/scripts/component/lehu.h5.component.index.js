@@ -409,7 +409,7 @@ define('lehu.h5.component.index', [
 
       tagMap: {
         "17": {
-          type: "h5",
+          type: "h5null",
           name: "大转盘",
           url: 'carousel.html'
         },
