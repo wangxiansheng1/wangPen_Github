@@ -1,6 +1,6 @@
 /*首页 #f51449 3.2rem*/
 .nheader_cover{background: #ffffff;opacity: 0;position: absolute;width: 100%;height:1.2rem;top: 0; z-index:-1;}
-.nbanner{width: 100%;height: 4.8rem;}
+.nbanner{width: 100%;height: 4rem;}
 .nbanner .swiper-container,.nbanner .swiper-slide img {width: 100%;height: 100%;}
 .nbanner .swiper-pagination-bullet-active{background:#e5004f;}
 .nbanner .swiper-pagination{bottom:0 !important;transition:0s !important;height:.5rem; line-height:.1rem;}
@@ -22,6 +22,8 @@
 .nmiaosha_main a del{width:1.9rem; height:auto; display:block; float:left; margin:0 .1rem; font-size:.2rem;  color: #999;text-decoration:line-through; }
 .nmiaosha_main a span em{ font-size:.24rem;}
 .nindex_ad,.ntuijian_ad{ width:100%; height:auto; display:block; float:left;}
+.ntuijian_ad{ position: relative}
+.ntuijian_ad .triangle_ad{ display: block;width: 0; height: 0; border-left: .3rem solid transparent; border-right: .3rem solid transparent; border-bottom: .23rem solid #ffffff;position: absolute; bottom: 0px; margin-left: calc(50% - .3rem )}
 .nindex_ad .nindex_ad_one a,.ntuijian_ad a{ width:100%; height:auto; display:block; float:left; margin:0 0 .1rem;}
 .nindex_ad .nindex_ad_two a{ width:50%; height:auto; display:block; float:left; margin:0 0 .1rem;}
 .nindex_ad .nindex_ad_three a{ width:33.3333333%; height:auto; display:block; float:left; margin:0 0 .1rem;}
@@ -30,9 +32,10 @@
 .nindex_ad div{ width:100%; height:auto; display:block; float:left; margin-bottom:.03rem;}
 .nindex_ad div:last-child{ margin:0;}
 
-.ntuijian_top,.nfaxian_top{ width:100%; height:.6rem; display:block; float:left;}
-.ntuijian_top span,.nfaxian_top span{ width:56%; height:.3rem; border-bottom:1px solid #b3db3a; margin:0 22%; display:block; text-align:center; float:left;}
-.ntuijian_top span em,.nfaxian_top span em{ width: auto; height:.6rem; line-height:.6rem; padding:0 .1rem; text-align:center; background:#ffffff; color:#b3db3a; font-size:.26rem; font-weight:bold;    display: table;  margin:0 auto;}
+.ntuijian_top,.nfaxian_top{ width:100%; height:.6rem; display:block; float:left; }
+.ntuijian_top{background: url(../images/background.png) no-repeat; background-size: cover}
+.ntuijian_top span,.nfaxian_top span{ width:56%; height:.3rem; margin:0 22%; display:block; text-align:center; float:left;}
+.ntuijian_top span em,.nfaxian_top span em{ width: auto; height:.6rem; line-height:.6rem; padding:0 .1rem; text-align:center; background:#ffffff; color:#000000; font-size:.26rem;    display: table;  margin:0 auto;}
 .ntuijian_main{ width:96%; height:auto; display:block; float:left; margin:.1rem 2% .2rem; }
 .ntuijian_main .swiper-container{ overflow:visible !important;padding:0 2% 0 0 !important;}
 .ntuijian_main .swiper-slide{ width:2.04rem ; height:3.1rem;/* border:1px solid #e5e5e5;*/ display:block; float:left; /*margin:.05rem 0 0 .2rem !important;*/ overflow:hidden;}

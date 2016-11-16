@@ -37,7 +37,7 @@ define('lehu.h5.component.index', [
           that.sendRequest.apply(that);
         }, 0);
 
-        this.shouldShowCoupon();
+        // this.shouldShowCoupon();
       },
 
       shouldShowCoupon: function() {
@@ -274,7 +274,7 @@ define('lehu.h5.component.index', [
         var bannerList = data.bannerList;
         for (var k = 0; k < bannerList.length; k++) {
           html += "<li style='height:100%' data-ul-child='child'  class='slide-li swiper-slide' data-SORT='" + bannerList[k]['SORT'] + "' data-BANNER_JUMP_ID='" + bannerList[k]['BANNER_JUMP_ID'] + "' data-BANNER_CONTENT='" + bannerList[k]['BANNER_CONTENT'] + "' data-BANNER_IMG='" + bannerList[k]['BANNER_IMG'] + "' data-ID='" + bannerList[k]['ID'] + "' data-BANNER_LAYOUT='" + bannerList[k]['BANNER_LAYOUT'] + "' data-BANNER_JUMP_FLAG='" + bannerList[k]['BANNER_JUMP_FLAG'] + "' data-STATUS='" + bannerList[k]['STATUS'] + "' data-NUM='" + bannerList[k]['NUM'] + "' data-BANNER_NAME='" + bannerList[k]['BANNER_NAME'] + "'>";
-          html += "<img style='width:100%; height: 4.8rem;' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
+          html += "<img style='width:100%; height: 4rem;' src=" + this.URL.IMAGE_URL + bannerList[k]['BANNER_IMG'] + " >";
           html += "</li>";
         }
         html += "</ul>";
@@ -437,8 +437,8 @@ define('lehu.h5.component.index', [
         },
         "5": {
           type: "h5",
-          name: "主会场",
-          url: 'activity1111.html'
+          name: "日韩馆",
+          url: 'list.html?originIds=42&mark=8'
         },
         "15": {
           type: "h5",
@@ -632,7 +632,7 @@ define('lehu.h5.component.index', [
         for (var k = 0; k < prommotionLayout.length; k++) {
           html += "<div class='ntuijian cms-module-fillprice'><div class='ntuijian_top'><span><em>" + prommotionLayout[k]['PROMOTION_NAME'] + "</em></span></div>";
 
-          html += "<div class='ntuijian_ad'><a href='javascript:;' data-id='" + prommotionLayout[k]['ID'] + "'   data-promotion_name='" + prommotionLayout[k]['PROMOTION_NAME'] + "'   data-detail_layout='" + prommotionLayout[k]['DETAIL_LAYOUT'] + "' class='prommotionLayout_ad'><img class='lazyload' data-original=" + that.URL.IMAGE_URL + prommotionLayout[k]['PROMOTION_BANNER'] + "></a></div>";
+          html += "<div class='ntuijian_ad'><a href='javascript:;' data-id='" + prommotionLayout[k]['ID'] + "'   data-promotion_name='" + prommotionLayout[k]['PROMOTION_NAME'] + "'   data-detail_layout='" + prommotionLayout[k]['DETAIL_LAYOUT'] + "' class='prommotionLayout_ad'><img class='lazyload' data-original=" + that.URL.IMAGE_URL + prommotionLayout[k]['PROMOTION_BANNER'] + "></a><span class='triangle_ad'></span></div>";
 
           html += "<div class='ntuijian_main'><div class='swiper-container' style='-webkit-overflow-scrolling:touch'><div class='swiper-wrapper' style='-webkit-overflow-scrolling:touch'>";
 
